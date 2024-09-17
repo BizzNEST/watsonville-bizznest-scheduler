@@ -13,6 +13,11 @@ An application to organize the weekly meetups between the interns of different l
 - [License](#license)
 - [Contact](#contact)
 
+## Project Requirements 
+- Node.js v14
+- MongoDB
+- Yarn
+
 ## Installation
 
 Step-by-step instructions on how to get the development environment running.
