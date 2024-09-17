@@ -13,6 +13,11 @@ A brief description of what this project does and who it's for.
 - [License](#license)
 - [Contact](#contact)
 
+## Project Requirements 
+- Node.js v14
+- MongoDB
+- Yarn
+
 ## Installation
 
 Step-by-step instructions on how to get the development environment running.
