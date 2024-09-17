@@ -1,6 +1,6 @@
-# Project Title
+# Watsonville Scheduler Application
 
-A brief description of what this project does and who it's for.
+An application to organize the weekly meetups between the interns of different locations and departments.
 
 ## Table of Contents
 
