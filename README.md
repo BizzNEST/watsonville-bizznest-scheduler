@@ -10,3 +10,6 @@ An application to organize the weekly meetups between the interns of different l
 ## Project setup
 - Install Dependencies
 - Run live server
+
+## Run Project
+-start liveserver
