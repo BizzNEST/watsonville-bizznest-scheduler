@@ -1,5 +1,4 @@
 # Watsonville Scheduler Application
-
 An application to organize the weekly meetups between the interns of different locations and departments.
 
 
