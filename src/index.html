@@ -1,102 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Watsonville BizzNEST Scheduler</title>
-    <script src="./script.js" ></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <h1>Watsonville BizzNEST Scheduler</h1>
-
-    <div id="employee-list"></div>
-    <div id="search-result"></div>
-
-    <input type="text" id="search-input" placeholder="Enter department or location" />
-    <button onclick="searchEmployees()">Search</button>
-
-    <script>
-        let employeeMap = {
-            department: {},
-            location: {}
-        };
-
-        async function fetchData() {
-            try {
-                const response = await fetch('interns.json');
-                const data = await response.json();
-                
-                data.info.forEach(employee => {
-                    // Add to department hash map
-                    if (!employeeMap.department[employee.department]) {
-                        employeeMap.department[employee.department] = [];
-                    }
-                    employeeMap.department[employee.department].push(employee);
-
-                    // Add to location hash map
-                    if (!employeeMap.location[employee.location]) {
-                        employeeMap.location[employee.location] = [];
-                    }
-                    employeeMap.location[employee.location].push(employee);
-                });
-
-                displayEmployees();
-                
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
-
-        function displayEmployees() {
-            const employeeList = document.getElementById('employee-list');
-            employeeList.innerHTML = ''; // Clear previous entries
-
-            // Loop through the department map and display employees
-            for (const department in employeeMap.department) {
-                const departmentDiv = document.createElement('div');
-                departmentDiv.innerHTML = `<h2>${department}</h2>`;
-                
-                employeeMap.department[department].forEach(employee => {
-                    const employeeDiv = document.createElement('div');
-                    employeeDiv.innerHTML = `${employee.name} (${employee.location})`;
-                    departmentDiv.appendChild(employeeDiv);
-                });
-                
-                employeeList.appendChild(departmentDiv);
-            }
-        }
-
-        function searchEmployees() {
-            const input = document.getElementById('search-input').value.trim().toLowerCase();
-            const resultDiv = document.getElementById('search-result');
-            resultDiv.innerHTML = ''; // Clear previous result
-
-            // Check if the input is a department
-            if (employeeMap.department[input]) {
-                resultDiv.innerHTML = `<h3>Employees in Department: ${input}</h3>`;
-                employeeMap.department[input].forEach(employee => {
-                    resultDiv.innerHTML += `<p>Name: ${employee.name}, Location: ${employee.location}</p>`;
-                });
-            }
-            // Check if the input is a location
-            else if (employeeMap.location[input]) {
-                resultDiv.innerHTML = `<h3>Employees in Location: ${input}</h3>`;
-                employeeMap.location[input].forEach(employee => {
-                    resultDiv.innerHTML += `<p>Name: ${employee.name}, Department: ${employee.department}</p>`;
-                });
-            }
-            else {
-                resultDiv.innerHTML = `<p>No employees found for "${input}".</p>`;
-            }
-        }
-
-        fetchData();
-    </script>
-
-
-
-
-
-</body>
+  </body>
 </html>
