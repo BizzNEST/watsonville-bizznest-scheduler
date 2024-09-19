@@ -1,0 +1,35 @@
+{
+
+    "intfo":[
+        {
+            "name": "Yuliana",
+            "location": "Watsonville",
+            "department": "Development"
+        },
+        {
+            "name": "Ali",
+            "location": "Watsonville",
+            "department": "Development"
+        },
+        {
+            "name": "Joel",
+            "location": "Watsonville",
+            "department": "Design"
+        },
+        {
+            "name": "Alex",
+            "location": "Salinas",
+            "department": "Video"
+        },
+        {
+            "name": "Jared",
+            "location": "Stockton",
+            "department": "Development"
+        },
+        {
+            "name": "Maria",
+            "location": "Modesto",
+            "department": "Design"
+        }
+    ]
+}
