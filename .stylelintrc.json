@@ -1,8 +1,3 @@
 {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "indentation": 2,
-      "string-quotes": "single",
-      "color-no-invalid-hex": true
-    }
-  }
+  "extends": "stylelint-config-standard"
+}
