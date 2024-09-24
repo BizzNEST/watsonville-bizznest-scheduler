@@ -1,20 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const randomButton = document.getElementById("displayPairs");
-  const displayinternNames = document.getElementById("internNames");
-
-  randomButton.addEventListener("click", function() {
-    const internValues = pairInterns(); 
-    displayInternNames(internValues);
-  });
-  function displayInternNames(internPairs) {
-    displayinternNames.innerHTML = ""; // Clear previous names
-    internPairs.forEach(pair => {
-      const nameParagraph = document.createElement("p");
-      nameParagraph.innerHTML = `${pair[0].name} & ${pair[1] ? pair[1].name : "No match"}`;
-      displayinternNames.appendChild(nameParagraph);
-    });
-  }
-  
+  let internsMap;
 
   function loadInterns() {
     return fetch("interns.json")
@@ -29,16 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error loading JSON:", error));
   }
 
-  loadInterns().then(() => {
-    const watsonvilleInterns = [];
-    internsMap.forEach((intern) => {
-      if (intern.location === "Watsonville") {
-        watsonvilleInterns.push(intern);
-      }
-    });
-    console.log(watsonvilleInterns);
-  });
-
   function pairInterns() {
     if (!internsMap || internsMap.size === 0) {
       console.error("Interns map is empty or not loaded.");
@@ -46,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const internsArray = Array.from(internsMap.values());
-    
-    // Shuffle the array 
+
+    // Shuffle the array
     for (let i = internsArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [internsArray[i], internsArray[j]] = [internsArray[j], internsArray[i]];
@@ -74,8 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return pairs;
   }
 
-  loadInterns().then(() => {
-    const pairs = pairInterns();
-    console.log("Intern Pairings:", pairs);
+  function displayPairs(pairs) {
+    const displayElement = document.getElementById("pairs-display");
+    displayElement.innerHTML = ""; // Clear previous results
+
+    pairs.forEach((pair) => {
+      const pairElement = document.createElement("div");
+      pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
+      displayElement.appendChild(pairElement);
+    });
+  }
+
+  document.getElementById("generate-pairs").addEventListener("click", () => {
+    loadInterns().then(() => {
+      const pairs = pairInterns();
+      console.log("Intern Pairings:", pairs);
+      displayPairs(pairs);
+    });
   });
 });
