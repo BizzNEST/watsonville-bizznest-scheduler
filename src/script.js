@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   let internsMap;
+  let activeCities = [];
+  document.querySelectorAll(".location-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.classList.toggle("active"); // Toggle the active class
+      updateActiveCities();
+    });
+  });
 
   function loadInterns() {
     return fetch("interns.json")
@@ -20,7 +27,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return [];
     }
 
-    const internsArray = Array.from(internsMap.values());
+    // Filter interns based on activeCities
+    const internsArray = Array.from(internsMap.values()).filter((intern) =>
+      activeCities.includes(intern.location),
+    );
+
+    if (internsArray.length < 2) {
+      console.error("Error, Not enough interns to create pairs");
+      return [];
+    }
 
     // Shuffle the array
     for (let i = internsArray.length - 1; i > 0; i--) {
@@ -60,7 +75,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function updateActiveCities() {
+    activeCities = []; // Clear the previous list
+
+    document.querySelectorAll(".location-button.active").forEach((button) => {
+      activeCities.push(button.value); // Add active button values to the list
+    });
+
+    console.log("Active Cities:", activeCities); // Log the active cities
+  }
+
   document.getElementById("generate-pairs").addEventListener("click", () => {
+    updateActiveCities(); // Update active cities before pairing
     loadInterns().then(() => {
       const pairs = pairInterns();
       console.log("Intern Pairings:", pairs);
