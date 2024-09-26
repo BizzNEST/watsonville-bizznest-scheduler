@@ -1,28 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   // initialize global hashmap and tokens
 
   const displayTable = document.getElementById("interns-display");
   let internsMap;
+  let cityTokens = [];
+  let departmentTokens = [];
+  const uniqueCheckbox = document.getElementById("unique"); // checks if uniquness triggered
 
   displayInterns();
-  
+
   function displayInterns() {
     loadInterns().then((map) => {
       internsMap = map;
       const rowTop = document.createElement("tr");
       const topWords1 = document.createElement("th");
-      topWords1.textContent = `Name`; 
+      topWords1.textContent = `Name`;
       rowTop.appendChild(topWords1);
 
       const topWords2 = document.createElement("th");
-      topWords2.textContent = `Location`; 
+      topWords2.textContent = `Location`;
       rowTop.appendChild(topWords2);
 
       const topWords3 = document.createElement("th");
-      topWords3.textContent = `Department`; 
+      topWords3.textContent = `Department`;
       rowTop.appendChild(topWords3);
-     displayTable.appendChild(rowTop);
+      displayTable.appendChild(rowTop);
 
       internsMap.forEach((intern, name) => {
         console.log(`Name: ${name}, Details:`, intern);
@@ -34,46 +36,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = document.createElement("tr");
 
     const nameIntern = document.createElement("td");
-    nameIntern.textContent = `${intern.name}`; 
+    nameIntern.textContent = `${intern.name}`;
     row.appendChild(nameIntern);
 
     const locationIntern = document.createElement("td");
-    locationIntern.textContent = `${intern.location}`; 
+    locationIntern.textContent = `${intern.location}`;
     row.appendChild(locationIntern);
 
     const departmentIntern = document.createElement("td");
-    departmentIntern.textContent = `${intern.department}`; 
+    departmentIntern.textContent = `${intern.department}`;
     row.appendChild(departmentIntern);
-    
+
     displayTable.appendChild(row);
-
   }
-
-  let activeCities = [];
-
-  const uniqueCheckbox = document.getElementById("unique"); // checks if uniquness triggered
-
-
-  document.querySelectorAll(".location-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      button.classList.toggle("active"); // Toggle the active class
-      updateActiveCities();
-    });
-  });
-  
-  function loadInterns() {
-    return fetch("interns.json")
-      .then((response) => response.json())
-      .then((data) => {
-        internsMap = new Map();
-        data.intern.forEach((intern) => {
-          internsMap.set(intern.name, intern);
-        });
-        return internsMap; // Return the map
-      })
-      .catch((error) => console.error("Error loading JSON:", error));
-  }
-  
 
   function loadInterns() {
     //simply loads interns into the hashmap along with their details
@@ -101,15 +76,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function updateActiveCities() {
+  function updateCityTokens() {
     //handles city tokens
-    activeCities = []; // Clear the previous list
-
+    cityTokens = []; // Clear the previous list
     document.querySelectorAll(".location-button.active").forEach((button) => {
-      activeCities.push(button.value); // Add active button values to the list
+      cityTokens.push(button.value); // Add active button values to the list
     });
+    console.log("Active Cities:", cityTokens); // Log the active cities
+  }
 
-    console.log("Active Cities:", activeCities); // Log the active cities
+  function updateDepartmentTokens() {
+    //handles city tokens
+    departmentTokens = []; // Clear the previous list
+    document.querySelectorAll(".department-button.active").forEach((button) => {
+      departmentTokens.push(button.value); // Add active button values to the list
+    });
+    console.log("Active Departments:", departmentTokens); // Log the active cities
   }
 
   //Randomizing Algorithim
@@ -134,7 +116,24 @@ document.addEventListener("DOMContentLoaded", () => {
       return uniqueInterns();
     }
 
-    const internsArray = Array.from(internsMap.values()); // store the selected interns within array
+    let internsArray;
+
+    if (cityTokens.length > 0 || departmentTokens.length > 0) {
+      //checks if there are tokens
+      // filter interns whose city is within the cityTokens array or department is within the departmentTokens array
+      internsArray = Array.from(internsMap.values()).filter((intern) => {
+        const cityMatch =
+          cityTokens.length === 0 || cityTokens.includes(intern.location); //checks if tokens are empty or if the intern's location is included in tokens
+        const departmentMatch =
+          departmentTokens.length === 0 ||
+          departmentTokens.includes(intern.department); //same logic as below, they are just booleans that allow interns to filter
+        return cityMatch && departmentMatch;
+      });
+    } else {
+      // If no cityTokens or departmentTokens are provided, just create the array from internsMap values
+      internsArray = Array.from(internsMap.values());
+    }
+    // store the selected interns within array
 
     // shuffle the array around to ensure randomization pairs
     for (let i = internsArray.length - 1; i > 0; i--) {
@@ -163,15 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return pairs;
   }
 
-
   function uniqueInterns() {
     console.log("success");
     const cityInternsMap = new Map(); //hashmap to hold interns structure
 
-    if (activeCities.length > 0) {
+    if (cityTokens.length > 0) {
       // if activecities, we will only use the cities specified
       internsMap.forEach((intern) => {
-        if (activeCities.includes(intern.location)) {
+        if (cityTokens.includes(intern.location)) {
           // Check if the `intern.location` exists in the `activeCities` array.
           // Only proceed with the current intern if their `location` matches one of the active cities.
           if (!cityInternsMap.has(intern.location)) {
@@ -191,17 +189,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-  function displayPairs(pairs) {
-    const displayTable = document.getElementById("pairs-display");
-   displayTable.innerHTML = ""; // Clear previous results
+    function displayPairs(pairs) {
+      const displayTable = document.getElementById("pairs-display");
+      displayTable.innerHTML = ""; // Clear previous results
 
-    pairs.forEach((pair) => {
-      const pairElement = document.createElement("div");
-      pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
-     displayTable.appendChild(pairElement);
-    });
-  }
-
+      pairs.forEach((pair) => {
+        const pairElement = document.createElement("div");
+        pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
+        displayTable.appendChild(pairElement);
+      });
+    }
 
     const pairs = [];
     const cities = Array.from(cityInternsMap.keys());
@@ -253,17 +250,23 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".location-button").forEach((button) => {
     button.addEventListener("click", () => {
       button.classList.toggle("active"); // Toggle the active class
-      updateActiveCities();
+      updateCityTokens();
+    });
+  });
+
+  document.querySelectorAll(".department-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.classList.toggle("active"); // Toggle the active class
+      updateDepartmentTokens();
     });
   });
 
   document.getElementById("generate-pairs").addEventListener("click", () => {
-    updateActiveCities(); // Update active cities before pairing
+    updateCityTokens(); // Update active cities before pairing
     loadInterns().then(() => {
       const pairs = pairInterns();
       console.log("Intern Pairings:", pairs);
       displayPairs(pairs);
     });
   });
-
 });
