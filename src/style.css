@@ -11,3 +11,10 @@
 .location-button.active {
   background-color: blue; /* Color when active */
 }
+body{
+  background-color: beige;
+}
+#interns-display{
+  background-color: white;
+  text-align: center;
+}
