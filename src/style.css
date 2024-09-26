@@ -1,5 +1,15 @@
-h1 {
-  color: purple;
+.location-button {
+  background-color: grey;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.location-button.active {
+  background-color: blue; /* Color when active */
 }
 body{
   background-color: beige;
