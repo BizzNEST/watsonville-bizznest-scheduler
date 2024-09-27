@@ -11,10 +11,22 @@
 .location-button.active {
   background-color: blue; /* Color when active */
 }
-body{
-  background-color: beige;
-}
-#interns-display{
+/* #interns-display{
   background-color: white;
   text-align: center;
+} */
+#filter-options {
+  display: flex;
+  align-items: center;
+}
+
+#filter-options label {
+  margin-right: 10px;
+}
+
+#filter-options select {
+  margin-right: 20px;
+}
+.button-spacing {
+  margin-left: 10px; /* Adjust spacing as needed */
 }

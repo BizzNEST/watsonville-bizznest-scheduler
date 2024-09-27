@@ -1,53 +1,187 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   // initialize global hashmap and tokens
-
   const displayTable = document.getElementById("interns-display");
+  displayTable.className = 'table table-hover'; 
+
   let internsMap;
 
   displayInterns();
+  displayFilters();
+  // document.getElementById('location-dropdown').addEventListener('change', filterTable);
+
+  // TESTER function to check search bar is working w/button
+  document.getElementById('search-form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    const searchValue = this.querySelector('input[type="text"]').value;
+    console.log(searchValue);
+
+});
+function filterTable() {
+  const locationDropdown = document.getElementById('locations');
+  const selectedLocation = locationDropdown.value.trim();
   
-  function displayInterns() {
-    loadInterns().then((map) => {
+  const departmentDropdown = document.getElementById('department');
+  const selectedDepartment = departmentDropdown.value.trim();
+
+  const displayTable = document.getElementById('interns-display');
+  const rows = displayTable.getElementsByTagName('tr');
+
+  for (let i = 1; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      const locationCell = cells[2].textContent.trim();
+      const departmentCell = cells[3].textContent.trim();
+
+      // Show the row if it matches both filters or if no filters are selected
+      rows[i].style.display = 
+          (locationCell === selectedLocation || selectedLocation === "") &&
+          (departmentCell === selectedDepartment || selectedDepartment === "") ? 
+          "" : "none";
+  }
+}
+function displayInterns() {
+  // Ensure the table has the Bootstrap classes applied
+  displayTable.className = 'table table-hover';
+
+  // Create the thead and tbody elements if they don't exist yet
+  const thead = document.createElement('thead');
+  const tbody = document.createElement('tbody');
+  
+  // Create the header row
+  const rowTop = document.createElement("tr");
+  const topWords0 = document.createElement("th");
+  topWords0.textContent = `Select to Exclude`; 
+  rowTop.appendChild(topWords0);
+
+  const topWords1 = document.createElement("th");
+  topWords1.textContent = `Name`; 
+  rowTop.appendChild(topWords1);
+
+  const topWords2 = document.createElement("th");
+  topWords2.textContent = `Location`; 
+  rowTop.appendChild(topWords2);
+
+  const topWords3 = document.createElement("th");
+  topWords3.textContent = `Department`; 
+  rowTop.appendChild(topWords3);
+
+  // Append header row to thead
+  thead.appendChild(rowTop);
+  displayTable.appendChild(thead); // Append thead to the table
+  displayTable.appendChild(tbody); // Append tbody to the table
+
+  loadInterns().then((map) => {
       internsMap = map;
-      const rowTop = document.createElement("tr");
-      const topWords1 = document.createElement("th");
-      topWords1.textContent = `Name`; 
-      rowTop.appendChild(topWords1);
-
-      const topWords2 = document.createElement("th");
-      topWords2.textContent = `Location`; 
-      rowTop.appendChild(topWords2);
-
-      const topWords3 = document.createElement("th");
-      topWords3.textContent = `Department`; 
-      rowTop.appendChild(topWords3);
-     displayTable.appendChild(rowTop);
-
       internsMap.forEach((intern, name) => {
-        console.log(`Name: ${name}, Details:`, intern);
-        displayInternBefore(intern);
+          console.log(`Name: ${name}, Details:`, intern);
+          displayInternRows(intern, tbody); // Pass tbody to the function
       });
-    });
-  }
-  function displayInternBefore(intern) {
-    const row = document.createElement("tr");
+  });
+}
 
-    const nameIntern = document.createElement("td");
-    nameIntern.textContent = `${intern.name}`; 
-    row.appendChild(nameIntern);
+function displayInternRows(intern, tbody) {
+  const row = document.createElement("tr");
 
-    const locationIntern = document.createElement("td");
-    locationIntern.textContent = `${intern.location}`; 
-    row.appendChild(locationIntern);
+  const checkboxCell = document.createElement("td");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkboxCell.appendChild(checkbox);
+  row.appendChild(checkboxCell);
 
-    const departmentIntern = document.createElement("td");
-    departmentIntern.textContent = `${intern.department}`; 
-    row.appendChild(departmentIntern);
-    
-    displayTable.appendChild(row);
+  const nameIntern = document.createElement("td");
+  nameIntern.textContent = `${intern.name}`; 
+  row.appendChild(nameIntern);
 
-  }
+  const locationIntern = document.createElement("td");
+  locationIntern.textContent = `${intern.location}`; 
+  row.appendChild(locationIntern);
+
+  const departmentIntern = document.createElement("td");
+  departmentIntern.textContent = `${intern.department}`; 
+  row.appendChild(departmentIntern);
+
+  tbody.appendChild(row); // Append the row to the tbody
+}
+
+function displayFilters(){
+  // Create Location Dropdown
+  const locations = [
+    { value: "", text: "Select..." },
+    { value: "Salinas", text: "Salinas" },
+    { value: "Watsonville", text: "Watsonville" },
+    { value: "Gilroy", text: "Gilroy" },
+    { value: "Stockton", text: "Stockton" },
+    { value: "Modesto", text: "Modesto" }
+];
+
+const locationSelect = document.createElement("select");
+locationSelect.id = "locations";
+locationSelect.addEventListener("change", filterTable);
+
+locations.forEach(location => {
+    const option = document.createElement("option");
+    option.value = location.value;
+    option.textContent = location.text;
+    locationSelect.appendChild(option);
+});
+
+const locationLabel = document.createElement("label");
+locationLabel.htmlFor = "locations";
+locationLabel.textContent = "Choose a location:";
+
+// Create Department Dropdown
+const departments = [
+    { value: "", text: "Select..." },
+    { value: "Development", text: "Development" },
+    { value: "Video", text: "Video" },
+    { value: "Design", text: "Design" },
+    { value: "IT", text: "IT" },
+    { value: "Marketing", text: "Marketing" }
+];
+const departmentSelect = document.createElement("select");
+departmentSelect.id = "department";
+departmentSelect.addEventListener("change", filterTable);
+
+departments.forEach(department => {
+    const option = document.createElement("option");
+    option.value = department.value;
+    option.textContent = department.text;
+    departmentSelect.appendChild(option);
+});
+
+const departmentLabel = document.createElement("label");
+departmentLabel.htmlFor = "department";
+departmentLabel.textContent = "Choose a department:";
+
+// Append everything to the dropdowns container
+const dropdownsContainer = document.getElementById("dropdowns-container");
+dropdownsContainer.appendChild(locationLabel);
+dropdownsContainer.appendChild(locationSelect);
+dropdownsContainer.appendChild(departmentLabel);
+dropdownsContainer.appendChild(departmentSelect);
+}
+
+// TESTER Functions to display selected values
+function displayLocation() {
+  const select = document.getElementById("locations");
+  const selectedValue = select.options[select.selectedIndex].value;
+  document.getElementById("selectedLocation").innerText = selectedValue ? `You selected: ${selectedValue}` : '';
+}
+
+function displayDepartment() {
+  const select = document.getElementById("department");
+  const selectedValue = select.options[select.selectedIndex].value;
+  document.getElementById("selectedDepartment").innerText = selectedValue ? `You selected: ${selectedValue}` : '';
+}
+// SELECT ALL CHECKBOXES
+function selectAllCheckboxes() {
+  // Get all checkboxes in the table
+  const checkboxes = displayTable.querySelectorAll('input[type="checkbox"]');
+  // Iterate through each checkbox and set it to checked
+  checkboxes.forEach(checkbox => {
+      checkbox.checked = true;
+  });
+}
 
   let activeCities = [];
 
@@ -74,20 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error loading JSON:", error));
   }
   
-
-  function loadInterns() {
-    //simply loads interns into the hashmap along with their details
-    return fetch("interns.json")
-      .then((response) => response.json())
-      .then((data) => {
-        internsMap = new Map();
-        data.intern.forEach((intern) => {
-          internsMap.set(intern.name, intern);
-        });
-        return internsMap; // Return the map
-      })
-      .catch((error) => console.error("Error loading JSON:", error));
-  }
 
   function displayPairs(pairs) {
     //simply displays the pairs of interns
@@ -265,5 +385,20 @@ document.addEventListener("DOMContentLoaded", () => {
       displayPairs(pairs);
     });
   });
+  document.getElementById("select-all-button").addEventListener("click", () => {
+    // Get all checkbox inputs in the table
+    const checkboxes = displayTable.querySelectorAll("input[type='checkbox']");
+
+    // Loop through each checkbox and set its checked property to true
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+    });
+});
+document.getElementById("deselect-all-button").addEventListener("click", () => {
+  const checkboxes = displayTable.querySelectorAll("input[type='checkbox']");
+  checkboxes.forEach(checkbox => {
+      checkbox.checked = false; // Set checked property to false to uncheck
+  });
+});
 
 });
