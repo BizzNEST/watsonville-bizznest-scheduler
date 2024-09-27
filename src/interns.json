@@ -12,17 +12,17 @@
     },
     {
       "name": "Joel",
-      "location": "Watsonville",
+      "location": "Stockton",
       "department": "Design"
     },
     {
       "name": "Alex",
-      "location": "Modesto",
+      "location": "Stockton",
       "department": "Video"
     },
     {
       "name": "Jared",
-      "location": "Stockton",
+      "location": "Modesto",
       "department": "Development"
     },
     {
@@ -33,6 +33,11 @@
     {
       "name": "Ion",
       "location": "Modesto",
+      "department": "Design"
+    },
+    {
+      "name": "Earl",
+      "location": "Stockton",
       "department": "Design"
     }
   ]
