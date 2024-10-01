@@ -20,6 +20,18 @@
       crossorigin="anonymous"
     ></script>
     <h1>Watsonville BizzNEST Scheduler</h1>
+    <form id="search-form">
+      <input type="text" placeholder="search">
+      <button type="submit">Submit</button>
+    </form>    
+    <div id="filter-options">
+      <p>Filter: </p>
+      <div id="dropdowns-container"></div>
+      <p id="selectedLocation"></p>
+      <p id="selectedDepartment"></p>
+      <button id="select-all-button">Select All</button>
+      <button id="deselect-all-button" class="button-spacing">Deselect All</button>
+  </div>
 
     <table id="interns-display" class="table table-striped table-hover"></table>
     <div>
@@ -53,5 +65,7 @@
     </div>
     <button id="generate-pairs">Generate Random Pairs</button>
     <div id="pairs-display"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
