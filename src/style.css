@@ -8,16 +8,35 @@
   transition: background-color 0.3s;
 }
 
-.location-button.active {
-  background-color: blue; /* Color when active */
+.department-button {
+  background-color: grey;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
-body{
+
+/* style.css */
+.location-button.active {
+  background-color: blue;
+  color: white; /* This will ensure the text color is visible */
+}
+
+.department-button.active {
+  background-color: greenyellow;
+  color: black; /* This will ensure the text color is visible */
+}
+
+body {
   background-color: beige;
 }
-#interns-display{
+#interns-display {
   background-color: white;
   text-align: center;
 }
+
 
 .main-con{
   display: flex;
