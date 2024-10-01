@@ -30,3 +30,13 @@
 .button-spacing {
   margin-left: 10px; /* Adjust spacing as needed */
 }
+.pairing-table {
+  width: 100%; /* Full width */
+  border-collapse: collapse; /* Collapse borders */
+}
+.pairing-table td, 
+.pairing-table th {
+  border: 1px solid #ccc; /* Add border to cells */
+  padding: 10px; /* Add padding */
+  text-align: left; /* Align text */
+}

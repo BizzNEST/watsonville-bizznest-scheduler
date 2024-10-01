@@ -3,11 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // initialize global hashmap and tokens
   const displayTable = document.getElementById("interns-display");
   displayTable.className = 'table table-hover'; 
+  displayInterns();
+  displayFilters();
+  const pairingTable = document.getElementById("pairing-intern-display");
+  pairingTable.className = 'table table-hover'; 
 
   let internsMap;
 
-  displayInterns();
-  displayFilters();
+  // displayInterns();
+  // displayFilters();
   // document.getElementById('location-dropdown').addEventListener('change', filterTable);
 
   // TESTER function to check search bar is working w/button
@@ -15,6 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault(); 
     const searchValue = this.querySelector('input[type="text"]').value.toLowerCase();
     filterTableBySearch(searchValue);
+});
+document.getElementById('reset').addEventListener('click', function() {
+  // original table
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
 });
 
 function filterTableBySearch(searchValue) {
@@ -226,18 +235,48 @@ function selectAllCheckboxes() {
       .catch((error) => console.error("Error loading JSON:", error));
   }
   
-
   function displayPairs(pairs) {
-    //simply displays the pairs of interns
-    const displayElement = document.getElementById("pairs-display");
-    displayElement.innerHTML = ""; // Clear previous results
+    const pairingTableBody = document.getElementById("pairing-intern-display").querySelector("tbody");
+    pairingTableBody.innerHTML = ""; // Clear existing rows
 
-    pairs.forEach((pair) => {
-      const pairElement = document.createElement("div");
-      pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
-      displayElement.appendChild(pairElement);
+    pairs.forEach((group, index) => {
+        const row = document.createElement("tr");
+
+        // Create cell for the group
+        const groupCell = document.createElement("td");
+        groupCell.textContent = `Group ${index + 1}`;
+        row.appendChild(groupCell);
+
+        // Create cells for the interns in the group
+        group.forEach((intern) => {
+            const internCell = document.createElement("td");
+            internCell.textContent = intern.name + ", "+intern.location +", "+ intern.department; // Access intern name
+            row.appendChild(internCell);
+        });
+
+        // Check if it's the first group and adjust accordingly
+        if (index === 0 && group.length > 0) {
+            // Add a placeholder for the third column if it's the first group
+            while (row.children.length < 3) {
+                const placeholderCell = document.createElement("td");
+                row.appendChild(placeholderCell);
+            }
+        }
+
+        pairingTableBody.appendChild(row);
     });
-  }
+}
+  // function displayPairs(pairs) {
+  //   //simply displays the pairs of interns
+  //   const displayElement = document.getElementById("pairs-display");
+  //   displayElement.innerHTML = ""; // Clear previous results
+
+  //   pairs.forEach((pair) => {
+  //     const pairElement = document.createElement("div");
+  //     pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
+  //     displayElement.appendChild(pairElement);
+  //   });
+  // }
 
   function updateActiveCities() {
     //handles city tokens
@@ -329,16 +368,17 @@ function selectAllCheckboxes() {
       });
     }
 
-  function displayPairs(pairs) {
-    const displayTable = document.getElementById("pairs-display");
-   displayTable.innerHTML = ""; // Clear previous results
+  // function displayPairs(pairs) {
+  //   const displayTable = document.getElementById("pairs-display");
+  //  displayTable.innerHTML = ""; // Clear previous results
 
-    pairs.forEach((pair) => {
-      const pairElement = document.createElement("div");
-      pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
-     displayTable.appendChild(pairElement);
-    });
-  }
+  //   pairs.forEach((pair) => {
+  //     const pairElement = document.createElement("div");
+  //     pairElement.textContent = pair.map((intern) => intern.name).join(" & ");
+  //    displayTable.appendChild(pairElement);
+  //   });
+  // }
+
 
 
     const pairs = [];
@@ -396,6 +436,8 @@ function selectAllCheckboxes() {
   });
 
   document.getElementById("generate-pairs").addEventListener("click", () => {
+    document.getElementById('interns-display').style.display = 'none';
+    document.getElementById('pairing-intern-display').style.display = 'table';
     updateActiveCities(); // Update active cities before pairing
     loadInterns().then(() => {
       const pairs = pairInterns();
@@ -403,6 +445,7 @@ function selectAllCheckboxes() {
       displayPairs(pairs);
     });
   });
+  
   document.getElementById("select-all-button").addEventListener("click", () => {
     // Get all checkbox inputs in the table
     const checkboxes = displayTable.querySelectorAll("input[type='checkbox']");

@@ -19,11 +19,24 @@
       <div id="dropdowns-container"></div>
       <p id="selectedLocation"></p>
       <p id="selectedDepartment"></p>
-      <button id="select-all-button">Select All</button>
+      <button id="reset" class="button-spacing">Reset</button>
+      <button id="select-all-button" class="button-spacing">Select All</button>
       <button id="deselect-all-button" class="button-spacing">Deselect All</button>
   </div>
 
     <table id="interns-display"></table>
+    <table id="pairing-intern-display" class="pairing-table" style="display: none;">
+      <thead>
+        <tr>
+            <th>Interns</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Pairs will be inserted here -->
+    </tbody>
+    </table>
+
+
     <div>
       <h2>Select Locations:</h2>
       <button class="location-button" value="Watsonville">Watsonville</button>
