@@ -17,30 +17,29 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
-/* style.css */
-.location-button.active {
-  background-color: blue;
-  color: white; /* This will ensure the text color is visible */
-}
-
-.department-button.active {
-  background-color: greenyellow;
-  color: black; /* This will ensure the text color is visible */
-}
-
-body {
-  background-color: beige;
-}
-#interns-display {
-  background-color: white;
-  text-align: center;
-}
-
-
-.main-con{
+#filter-options {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+}
+
+#filter-options label {
+  margin-right: 10px;
+}
+
+#filter-options select {
+  margin-right: 20px;
+}
+.button-spacing {
+  margin-left: 10px; 
+}
+.pairing-table {
+  width: 100%;
+  border-collapse: collapse; 
+}
+.pairing-table td, 
+.pairing-table th {
+  /* cell borders */
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
 }
