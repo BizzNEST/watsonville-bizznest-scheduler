@@ -8,6 +8,10 @@
   transition: background-color 0.3s;
 }
 
+.location-button.active {
+  background-color: blue; /* Color when active */
+}
+
 .department-button {
   background-color: grey;
   color: white;
@@ -17,6 +21,12 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
+.department-button.active {
+  background-color: greenyellow; /* Color when active */
+  color: black;
+}
+
 #filter-options {
   display: flex;
   align-items: center;
@@ -30,13 +40,13 @@
   margin-right: 20px;
 }
 .button-spacing {
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 .pairing-table {
   width: 100%;
-  border-collapse: collapse; 
+  border-collapse: collapse;
 }
-.pairing-table td, 
+.pairing-table td,
 .pairing-table th {
   /* cell borders */
   border: 1px solid #ccc;
@@ -44,7 +54,7 @@
   text-align: left;
 }
 
-.main-con{
+.main-con {
   display: flex;
   flex-direction: column;
   /*background-color: red;*/
@@ -53,12 +63,12 @@
   height: 100vh;
 }
 
-.welcome{
+.welcome {
   position: relative;
   bottom: 100px;
 }
 
-.btn{
+.btn {
   margin-bottom: 150px;
   padding: 15px;
   padding-left: 40px;
@@ -70,11 +80,11 @@
   font-size: 22px;
   letter-spacing: 1px;
 
-  background-color: #72C5A3;
+  background-color: #72c5a3;
   border-color: transparent;
 }
 
-.btn:hover{
+.btn:hover {
   background-color: #56937a;
   border-color: transparent;
 }
@@ -84,7 +94,7 @@
   border-color: transparent !important;
 }
 
-.banner{
+.banner {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,11 +103,11 @@
 
   position: absolute;
   bottom: 0px;
-  
+
   overflow: hidden;
 }
 
-.home-cover{
+.home-cover {
   position: relative;
   top: 500px;
 
@@ -105,5 +115,10 @@
 }
 
 @keyframes rotate-globe {
-  from {transform: rotate(0deg);} to{transform: rotate(360deg);}
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

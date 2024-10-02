@@ -100,12 +100,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const selectedInterns = [];
+
   function displayInternRows(intern, tbody) {
     const row = document.createElement("tr");
 
     const checkboxCell = document.createElement("td");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.classList.add("intern-checkbox");
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        selectedInterns.push(intern.name); // Add intern name to the selected list
+      } else {
+        selectedInterns = selectedInterns.filter(
+          (name) => name !== intern.name,
+        ); // Remove from the list
+      }
+    });
     checkboxCell.appendChild(checkbox);
     row.appendChild(checkboxCell);
 
@@ -123,6 +135,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tbody.appendChild(row); // Append the row to the tbody
   }
+
+  function excludeSelectedInterns() {
+    const filteredInterns = Array.from(internsMap.entries()).filter(
+      ([name]) => !selectedInterns.includes(name),
+    );
+
+    const tbody = document.querySelector("#interns-display tbody");
+    tbody.innerHTML = "";
+
+    filteredInterns.forEach(([, intern]) => {
+      displayInternRows(intern, tbody);
+    });
+  }
+
+  // Add this button to the DOM
+  const excludeButton = document.createElement("button");
+  excludeButton.textContent = "Remove selected intern";
+  excludeButton.addEventListener("click", excludeSelectedInterns);
+  document.getElementById("filter-options").appendChild(excludeButton);
 
   function displayFilters() {
     // Create Location Dropdown
@@ -182,22 +213,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownsContainer.appendChild(departmentSelect);
   }
 
-  // TESTER Functions to display selected values
-  function displayLocation() {
-    const select = document.getElementById("locations");
-    const selectedValue = select.options[select.selectedIndex].value;
-    document.getElementById("selectedLocation").innerText = selectedValue
-      ? `You selected: ${selectedValue}`
-      : "";
-  }
-
-  function displayDepartment() {
-    const select = document.getElementById("department");
-    const selectedValue = select.options[select.selectedIndex].value;
-    document.getElementById("selectedDepartment").innerText = selectedValue
-      ? `You selected: ${selectedValue}`
-      : "";
-  }
   // SELECT ALL CHECKBOXES
   function selectAllCheckboxes() {
     // Get all checkboxes in the table
@@ -287,6 +302,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return [];
     }
 
+    if (selectedInterns.length > 0) {
+      selectedInterns.forEach((intern) => {
+        if (internsMap.has(intern)) {
+          internsMap.delete(intern);
+        }
+      });
+    }
+
+    if (!internsMap || internsMap.size === 0) {
+      // ensures interns are loaded
+      console.error("Interns map is empty or not loaded.");
+      return [];
+    }
+
     // Get the checkbox element
     const uniqueCheckboxValue = uniqueCheckbox.checked; // Access the checked property
     const uniqueDepartmentValue = uniqueDepartment.checked; // Access the checked property
@@ -368,11 +397,19 @@ document.addEventListener("DOMContentLoaded", () => {
         this.querySelector('input[type="text"]').value.toLowerCase();
       filterTableBySearch(searchValue);
     });
-  // document.getElementById("reset").addEventListener("click", function () {
-  //   // original table
-  //   document.getElementById("interns-display").style.display = "table";
-  //   document.getElementById("pairing-intern-display").style.display = "none";
-  // });
+
+  document.getElementById("select-all").addEventListener("click", () => {
+    document.querySelectorAll("input.intern-checkbox").forEach((checkbox) => {
+      checkbox.checked = true;
+      const internName = checkbox
+        .closest("tr")
+        .querySelector("td:nth-child(2)").textContent;
+      if (!selectedInterns.includes(internName)) {
+        selectedInterns.push(internName);
+      }
+    });
+    console.log("Excluded Interns after Select All:", selectedInterns);
+  });
 
   uniqueCheckbox.addEventListener("click", () => {
     console.log("Unique Checkbox Status:", uniqueCheckbox.checked);
