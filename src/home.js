@@ -1,5 +1,5 @@
-const myModal = document.getElementById('myModal')
-const myInput = document.getElementById('myInput')
+const myModal = document.getElementById("myModal");
+const myInput = document.getElementById("myInput");
 
 myModal.addEventListener('shown.bs.modal', () => {
   myInput.focus()
@@ -31,4 +31,3 @@ function createStar() {
 for (let i = 0; i < 100; i++) {
     createStar();
 }
-

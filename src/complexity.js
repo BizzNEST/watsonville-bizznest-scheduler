@@ -15,7 +15,7 @@ export function unique_location(cityTokens, internsMap) {
 
   if (cityTokens.length < 2) {
     console.log("Please select at least two cities");
-    return;
+    return [];
   }
 
   const filteredInterns = interns.filter((intern) =>
@@ -81,7 +81,7 @@ export function unique_department(departmentTokens, internsMap) {
 
   if (departmentTokens.length < 2) {
     console.log("Please select at least two cities");
-    return;
+    return [];
   }
 
   const filteredInterns = interns.filter((intern) =>
