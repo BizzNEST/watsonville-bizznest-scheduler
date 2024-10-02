@@ -70,34 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create the header row
     const rowTop = document.createElement("tr");
-    /*
-    const topWords0 = document.createElement("th");
-    topWords0.textContent = `Select to Exclude`;
-    rowTop.appendChild(topWords0);
-
-    const topWords1 = document.createElement("th");
-    topWords1.textContent = `Name`;
-    rowTop.appendChild(topWords1);
-
-    const topWords2 = document.createElement("th");
-    topWords2.textContent = `Location`;
-    rowTop.appendChild(topWords2);
-
-    const topWords3 = document.createElement("th");
-    topWords3.textContent = `Department`;
-    rowTop.appendChild(topWords3);
-    */
-
-    /** ALTERNATE APPROACH - Create the header row **/
-
-    //Create array for the filters.
-    //Then, make an array of topWords, setting the textContent for each.
-    //Finally, append topWords to rowTop.
-    const filters = ['Select to Exclude', 'Name', 'Location', 'Department'];
-    const topWords = elementArrCreator(filters, "th");
-    appendChildren(rowTop, topWords);
+    
+    /** ALTERNATE APPROACH**/
+    const filters = ['Select to Exclude', 'Name', 'Location', 'Department']; //Create array for the filters.
+    const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
+    appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
     //** **/
-
 
     // Append header row to thead
     thead.appendChild(rowTop);
@@ -153,21 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
     checkboxCell.appendChild(checkbox);
     row.appendChild(checkboxCell);
 
-    /*
-    const nameIntern = document.createElement("td");
-    nameIntern.textContent = `${intern.name}`;
-    row.appendChild(nameIntern);
-
-    const locationIntern = document.createElement("td");
-    locationIntern.textContent = `${intern.location}`;
-    row.appendChild(locationIntern);
-
-    const departmentIntern = document.createElement("td");
-    departmentIntern.textContent = `${intern.department}`;
-    row.appendChild(departmentIntern);
-    */
-
-    //** ALT APPROACH **/
+    /** ALT APPROACH **/
     const internFilters = [`${intern.name}`, `${intern.location}`, `${intern.department}`];
     const internsArray = elementArrCreator(internFilters, "td");
     appendChildren(row, internsArray);
