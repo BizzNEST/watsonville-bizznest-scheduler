@@ -100,10 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  let selectedInterns = [];
-
-  let excludedInterns = []; // Array to hold names of excluded interns
-
+  const selectedInterns = [];
 
   function displayInternRows(intern, tbody) {
     const row = document.createElement("tr");
@@ -111,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkboxCell = document.createElement("td");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.classList.add("intern-checkbox");
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
         selectedInterns.push(intern.name); // Add intern name to the selected list
@@ -153,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Add this button to the DOM
   const excludeButton = document.createElement("button");
-  excludeButton.textContent = "Exclude Selected Interns";
+  excludeButton.textContent = "Remove selected intern";
   excludeButton.addEventListener("click", excludeSelectedInterns);
   document.getElementById("filter-options").appendChild(excludeButton);
 
@@ -299,29 +297,74 @@ document.addEventListener("DOMContentLoaded", () => {
   function pairInterns() {
     console.log("pairInterns function called");
     if (!internsMap || internsMap.size === 0) {
+      // ensures interns are loaded
       console.error("Interns map is empty or not loaded.");
       return [];
     }
 
-    // Filter out excluded interns
-    let internsArray = Array.from(internsMap.values()).filter(
-      (intern) => !selectedInterns.includes(intern.name),
-    );
+    if (selectedInterns.length > 0) {
+      selectedInterns.forEach((intern) => {
+        if (internsMap.has(intern)) {
+          internsMap.delete(intern);
+        }
+      });
+    }
 
-    // Additional filtering based on selected locations and departments
-    internsArray = internsArray.filter((intern) => {
-      const cityMatch =
-        cityTokens.length === 0 || cityTokens.includes(intern.location);
-      const departmentMatch =
-        departmentTokens.length === 0 ||
-        departmentTokens.includes(intern.department);
-      return cityMatch && departmentMatch;
-    });
+    if (!internsMap || internsMap.size === 0) {
+      // ensures interns are loaded
+      console.error("Interns map is empty or not loaded.");
+      return [];
+    }
 
-    // Shuffle and create pairs as before
+    // Get the checkbox element
+    const uniqueCheckboxValue = uniqueCheckbox.checked; // Access the checked property
+    const uniqueDepartmentValue = uniqueDepartment.checked; // Access the checked property
+
+    console.log("uniqueCheckbox value:", uniqueCheckboxValue); // Check the boolean value
+    console.log("uniqueDepartment value:", uniqueDepartmentValue);
+
+    if (uniqueCheckboxValue == true && uniqueDepartmentValue == true) {
+      // if unique is checked, calls complex algoritihm
+      console.log("Calling uniqueInterns...");
+      return findUniquePairs(cityTokens, departmentTokens, internsMap);
+    }
+
+    if (uniqueCheckboxValue == true && uniqueDepartmentValue == false) {
+      // if unique is checked, calls complex algoritihm
+      console.log("Calling uniqueInterns...");
+      return unique_location(cityTokens, internsMap);
+    }
+
+    if (uniqueCheckboxValue == false && uniqueDepartmentValue == true) {
+      // if unique is checked, calls complex algoritihm
+      console.log("Calling uniqueInterns...");
+      return unique_department(departmentTokens, internsMap);
+    }
+
+    let internsArray;
+
+    if (cityTokens.length != 0 || departmentTokens.length != 0) {
+      //checks if there are tokens
+      // filter interns whose city is within the cityTokens array or department is within the departmentTokens array
+      internsArray = Array.from(internsMap.values()).filter((intern) => {
+        const cityMatch =
+          cityTokens.length === 0 || cityTokens.includes(intern.location); //checks if tokens are empty or if the intern's location is included in tokens
+        const departmentMatch =
+          departmentTokens.length === 0 ||
+          departmentTokens.includes(intern.department); //same logic as below, they are just booleans that allow interns to filter
+        return cityMatch && departmentMatch;
+      });
+    } else {
+      // If no cityTokens or departmentTokens are provided, just create the array from internsMap values
+      internsArray = Array.from(internsMap.values());
+    }
+    // store the selected interns within array
+
+    // shuffle the array around to ensure randomization pairs
     shuffleArray(internsArray);
-    const pairs = [];
-    let i = 0;
+
+    const pairs = []; //results
+    let i = 0; //index
 
     while (i < internsArray.length) {
       if (i + 1 < internsArray.length) {
@@ -330,13 +373,13 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         break;
       }
-    }
+    } //creates pairs until it runs out of pairs of two
 
     if (i < internsArray.length) {
       const lastGroup = pairs.pop();
       lastGroup.push(internsArray[i]);
       pairs.push(lastGroup);
-    }
+    } //adds pair to last group if there are any leftovers
 
     return pairs;
   }
@@ -354,11 +397,19 @@ document.addEventListener("DOMContentLoaded", () => {
         this.querySelector('input[type="text"]').value.toLowerCase();
       filterTableBySearch(searchValue);
     });
-  // document.getElementById("reset").addEventListener("click", function () {
-  //   // original table
-  //   document.getElementById("interns-display").style.display = "table";
-  //   document.getElementById("pairing-intern-display").style.display = "none";
-  // });
+
+  document.getElementById("select-all").addEventListener("click", () => {
+    document.querySelectorAll("input.intern-checkbox").forEach((checkbox) => {
+      checkbox.checked = true;
+      const internName = checkbox
+        .closest("tr")
+        .querySelector("td:nth-child(2)").textContent;
+      if (!selectedInterns.includes(internName)) {
+        selectedInterns.push(internName);
+      }
+    });
+    console.log("Excluded Interns after Select All:", selectedInterns);
+  });
 
   uniqueCheckbox.addEventListener("click", () => {
     console.log("Unique Checkbox Status:", uniqueCheckbox.checked);
