@@ -1,3 +1,7 @@
+.background{
+  background: black;
+}
+
 .location-button {
   background-color: grey;
   color: white;
@@ -54,7 +58,26 @@
   text-align: left;
 }
 
-.main-con {
+.stars{
+  position: absolute;
+  top: 0px;
+  opacity: 0%;
+
+  animation: show-stars 0.7s ease-in-out 0.8s forwards;
+}
+
+@keyframes show-stars {
+  from{
+    opacity: 0%;
+    top: -300px
+  }
+  to{
+    opacity: 100%;
+    top: 0px;
+  }
+}
+
+.main-con{
   display: flex;
   flex-direction: column;
   /*background-color: red;*/
@@ -65,7 +88,26 @@
 
 .welcome {
   position: relative;
+  bottom: 150px;
+  color: white;
+  font-size: 350%;
+  font-style: unset;
+  text-shadow: 2px 2px 2px #72C5A3;
   bottom: 100px;
+  opacity: 0%;
+
+  animation: fade-welcome 0.6s ease-out forwards;
+}
+
+@keyframes fade-welcome {
+  from {
+    opacity: 0%;
+    bottom: 50px;
+  }
+  to {
+    opacity: 100%;
+    bottom: 100px;
+  }
 }
 
 .btn {
@@ -82,11 +124,22 @@
 
   background-color: #72c5a3;
   border-color: transparent;
+
+  opacity: 0%;
+  animation: fade-button 0.6s ease-out forwards;
+  animation-delay: 0.7s;
 }
 
-.btn:hover {
-  background-color: #56937a;
+@keyframes fade-button {
+  from {opacity: 0%;} to {opacity: 100%;}
+}
+
+.btn:hover{
+  background-color:white;
   border-color: transparent;
+  color:#72C5A3;
+  
+  scale: 103%;
 }
 
 .btn:active {
@@ -96,29 +149,29 @@
 
 .banner {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   height: 45vh;
-
   position: absolute;
-  bottom: 0px;
+  bottom: -45vh;
 
   overflow: hidden;
+  animation: move-banner 0.8s ease-in-out 0.3s forwards;
+}
+
+@keyframes move-banner {
+  from {bottom: -45vh;} to {bottom: 0vh;}
 }
 
 .home-cover {
   position: relative;
-  top: 500px;
+  top: 63vh;
 
   animation: rotate-globe 240s linear infinite;
 }
 
 @keyframes rotate-globe {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from {transform: rotate(0deg);} to {transform: rotate(360deg);}
 }
