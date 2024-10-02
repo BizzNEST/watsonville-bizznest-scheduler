@@ -53,10 +53,10 @@
   top: 0px;
   opacity: 0%;
 
-  animation: showStars 0.7s ease-in-out 0.8s forwards;
+  animation: show-stars 0.7s ease-in-out 0.8s forwards;
 }
 
-@keyframes showStars {
+@keyframes show-stars {
   from{
     opacity: 0%;
     top: -300px
@@ -86,10 +86,10 @@
   bottom: 100px;
   opacity: 0%;
 
-  animation: fadeWelcome 0.6s ease-out forwards;
+  animation: fade-welcome 0.6s ease-out forwards;
 }
 
-@keyframes fadeWelcome {
+@keyframes fade-welcome {
   from {
     opacity: 0%;
     bottom: 50px;
@@ -116,11 +116,11 @@
   border-color: transparent;
 
   opacity: 0%;
-  animation: fadeButton 0.6s ease-out forwards;
+  animation: fade-button 0.6s ease-out forwards;
   animation-delay: 0.7s;
 }
 
-@keyframes fadeButton {
+@keyframes fade-button {
   from {opacity: 0%;} to {opacity: 100%;}
 }
 
@@ -148,10 +148,10 @@
   bottom: -45vh;
 
   overflow: hidden;
-  animation: moveBanner 0.8s ease-in-out 0.3s forwards;
+  animation: move-banner 0.8s ease-in-out 0.3s forwards;
 }
 
-@keyframes moveBanner {
+@keyframes move-banner {
   from {bottom: -45vh;} to {bottom: 0vh;}
 }
 
