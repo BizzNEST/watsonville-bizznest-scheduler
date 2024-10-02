@@ -70,21 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create the header row
     const rowTop = document.createElement("tr");
-    const topWords0 = document.createElement("th");
-    topWords0.textContent = `Select to Exclude`;
-    rowTop.appendChild(topWords0);
-
-    const topWords1 = document.createElement("th");
-    topWords1.textContent = `Name`;
-    rowTop.appendChild(topWords1);
-
-    const topWords2 = document.createElement("th");
-    topWords2.textContent = `Location`;
-    rowTop.appendChild(topWords2);
-
-    const topWords3 = document.createElement("th");
-    topWords3.textContent = `Department`;
-    rowTop.appendChild(topWords3);
+    
+    /** ALTERNATE APPROACH**/
+    const filters = ['Select to Exclude', 'Name', 'Location', 'Department']; //Create array for the filters.
+    const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
+    appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
+    //** **/
 
     // Append header row to thead
     thead.appendChild(rowTop);
@@ -99,6 +90,25 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  /** ALT APPROACH - HELPER FUNCTIONS **/
+  //Element Array Helper Fuction. 
+  function elementArrCreator(filters, st){
+    let elementArray = [];
+    for(let i = 0; i < filters.length; i++) { //Loop through all filters.
+      elementArray.push(document.createElement(st)); //Make entry with chosen createElement.
+      elementArray[i].textContent = filters[i]; //Set entry textContent to current filter.
+    }
+    return elementArray;
+  }
+
+  //appendChildren Helper Fuction.
+  function appendChildren(row, children){
+    for(let entry of children){ //For every child...
+      row.appendChild(entry); //Append it to the row.
+    }
+  }
+  /** ALT APPROACH - HELPER FUNCTIONS END **/
 
   const selectedInterns = [];
 
@@ -121,17 +131,11 @@ document.addEventListener("DOMContentLoaded", () => {
     checkboxCell.appendChild(checkbox);
     row.appendChild(checkboxCell);
 
-    const nameIntern = document.createElement("td");
-    nameIntern.textContent = `${intern.name}`;
-    row.appendChild(nameIntern);
-
-    const locationIntern = document.createElement("td");
-    locationIntern.textContent = `${intern.location}`;
-    row.appendChild(locationIntern);
-
-    const departmentIntern = document.createElement("td");
-    departmentIntern.textContent = `${intern.department}`;
-    row.appendChild(departmentIntern);
+    /** ALT APPROACH **/
+    const internFilters = [`${intern.name}`, `${intern.location}`, `${intern.department}`];
+    const internsArray = elementArrCreator(internFilters, "td");
+    appendChildren(row, internsArray);
+    /** **/
 
     tbody.appendChild(row); // Append the row to the tbody
   }
@@ -190,6 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
       { value: "IT", text: "IT" },
       { value: "Marketing", text: "Marketing" },
     ];
+
     const departmentSelect = document.createElement("select");
     departmentSelect.id = "department";
     departmentSelect.addEventListener("change", filterTable);
