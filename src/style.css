@@ -135,7 +135,7 @@
 }
 
 .btn:hover{
-  background-color:white;
+  background-color: rgb(226, 226, 226);
   border-color: transparent;
   color:#72C5A3;
   
@@ -168,7 +168,6 @@
 .home-cover {
   position: relative;
   top: 63vh;
-
   animation: rotate-globe 240s linear infinite;
 }
 
