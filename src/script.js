@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rowTop = document.createElement("tr");
     
     /** ALTERNATE APPROACH**/
-    const filters = ['Select to Exclude', 'Name', 'Location', 'Department']; //Create array for the filters.
+    const filters = ['', 'Name', 'Location', 'Department']; //Create array for the filters.
     const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
     appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
     //** **/

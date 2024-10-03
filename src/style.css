@@ -1,34 +1,84 @@
+@font-face {
+  font-family: futura-bold;
+  src: url(fonts/Futura\ Bold\ Oblique.otf);
+}
+
 .background{
   background: black;
 }
 
 .location-button {
-  background-color: grey;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 8px 20px;
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.location-button.active {
-  background-color: blue; /* Color when active */
+.watsonville{
+  color: #bb2828;
+  border-color: #bb2828;
+}
+.watsonville.active {
+  color: white;
+  background-color: #bb2828;
+}
+
+.salinas{
+  color: darkseagreen;
+  border-color:darkseagreen;
+}
+.salinas.active{
+  color: white;
+  background-color:darkseagreen;
+}
+
+.gilroy{
+  color:burlywood;
+  border-color: burlywood;
+}
+.gilroy.active{
+  color: white;
+  background-color: burlywood;
+}
+
+.modesto{
+  color: slategray;
+  border-color: slategray;
+}
+.modesto.active{
+  color: white;
+  background-color: slategray;
+}
+
+.stockton{
+  color:purple;
+  border-color: purple;
+}
+.stockton.active{
+  color: white;
+  background-color: purple;
 }
 
 .department-button {
-  background-color: grey;
-  color: white;
+  background-color: transparent;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 20px;
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
+.department-button{
+  border: 1px solid #72C5A3;
+  color: #72C5A3;
+  border-radius: 5px;
+}
 .department-button.active {
-  background-color: greenyellow; /* Color when active */
-  color: black;
+  background-color: #72C5A3; /* Color when active */
+  color: white;
 }
 
 #filter-options {
@@ -110,7 +160,7 @@
   }
 }
 
-.btn {
+.home-btn {
   margin-bottom: 150px;
   padding: 15px;
   padding-left: 40px;
@@ -134,7 +184,7 @@
   from {opacity: 0%;} to {opacity: 100%;}
 }
 
-.btn:hover{
+.home-btn:hover{
   background-color: rgb(226, 226, 226);
   border-color: transparent;
   color:#72C5A3;
@@ -142,7 +192,7 @@
   scale: 103%;
 }
 
-.btn:active {
+.home-btn:active {
   background-color: orange !important;
   border-color: transparent !important;
 }
@@ -173,4 +223,58 @@
 
 @keyframes rotate-globe {
   from {transform: rotate(0deg);} to {transform: rotate(360deg);}
+}
+
+.modal-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-toolbar{
+  border-right: 1px solid #72C5A3;
+  padding-right: 10px;
+  margin-right: 25px;
+  width: 32vw;
+}
+
+.modal-header{
+  background-color: #72C5A3;
+}
+
+.modal-content{
+  height: 90vh;
+}
+
+
+input[type="checkbox"]{
+  scale: 120%;
+  accent-color: #72C5A3;
+}
+
+.locations-div{
+  margin-bottom: 20px;
+}
+.locations-div > h2 {
+  font-family: futura-bold;
+  margin-bottom: 15px;
+}
+
+.department-col{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.department-col > h2 {
+  margin-bottom: 15px;
+}
+.unique-div{
+  margin-bottom: 50px;
+}
+.unique-div > h2{
+  margin-bottom: 15px;
+}
+.unique-boxes{
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px
 }
