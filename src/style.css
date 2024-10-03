@@ -1,4 +1,4 @@
-.background{
+.background {
   background: black;
 }
 
@@ -58,7 +58,7 @@
   text-align: left;
 }
 
-.stars{
+.stars {
   position: absolute;
   top: 0px;
   opacity: 0%;
@@ -67,17 +67,17 @@
 }
 
 @keyframes show-stars {
-  from{
+  from {
     opacity: 0%;
-    top: -300px
+    top: -300px;
   }
-  to{
+  to {
     opacity: 100%;
     top: 0px;
   }
 }
 
-.main-con{
+.main-con {
   display: flex;
   flex-direction: column;
   /*background-color: red;*/
@@ -92,7 +92,7 @@
   color: white;
   font-size: 350%;
   font-style: unset;
-  text-shadow: 2px 2px 2px #72C5A3;
+  text-shadow: 2px 2px 2px #72c5a3;
   bottom: 100px;
   opacity: 0%;
 
@@ -131,14 +131,19 @@
 }
 
 @keyframes fade-button {
-  from {opacity: 0%;} to {opacity: 100%;}
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
 }
 
-.btn:hover{
+.btn:hover {
   background-color: rgb(226, 226, 226);
   border-color: transparent;
-  color:#72C5A3;
-  
+  color: #72c5a3;
+
   scale: 103%;
 }
 
@@ -162,7 +167,12 @@
 }
 
 @keyframes move-banner {
-  from {bottom: -45vh;} to {bottom: 0vh;}
+  from {
+    bottom: -45vh;
+  }
+  to {
+    bottom: 0vh;
+  }
 }
 
 .home-cover {
@@ -172,5 +182,10 @@
 }
 
 @keyframes rotate-globe {
-  from {transform: rotate(0deg);} to {transform: rotate(360deg);}
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

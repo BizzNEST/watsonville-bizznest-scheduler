@@ -70,9 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Create the header row
     const rowTop = document.createElement("tr");
-    
+
     /** ALTERNATE APPROACH**/
-    const filters = ['Select to Exclude', 'Name', 'Location', 'Department']; //Create array for the filters.
+    const filters = ["Select to Exclude", "Name", "Location", "Department"]; //Create array for the filters.
     const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
     appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
     //** **/
@@ -92,10 +92,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /** ALT APPROACH - HELPER FUNCTIONS **/
-  //Element Array Helper Fuction. 
-  function elementArrCreator(filters, st){
+  //Element Array Helper Fuction.
+  function elementArrCreator(filters, st) {
     let elementArray = [];
-    for(let i = 0; i < filters.length; i++) { //Loop through all filters.
+    for (let i = 0; i < filters.length; i++) {
+      //Loop through all filters.
       elementArray.push(document.createElement(st)); //Make entry with chosen createElement.
       elementArray[i].textContent = filters[i]; //Set entry textContent to current filter.
     }
@@ -103,8 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //appendChildren Helper Fuction.
-  function appendChildren(row, children){
-    for(let entry of children){ //For every child...
+  function appendChildren(row, children) {
+    for (let entry of children) {
+      //For every child...
       row.appendChild(entry); //Append it to the row.
     }
   }
@@ -132,7 +134,11 @@ document.addEventListener("DOMContentLoaded", () => {
     row.appendChild(checkboxCell);
 
     /** ALT APPROACH **/
-    const internFilters = [`${intern.name}`, `${intern.location}`, `${intern.department}`];
+    const internFilters = [
+      `${intern.name}`,
+      `${intern.location}`,
+      `${intern.department}`,
+    ];
     const internsArray = elementArrCreator(internFilters, "td");
     appendChildren(row, internsArray);
     /** **/
