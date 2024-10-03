@@ -1,152 +1,197 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
     <script src="home.js"></script>
     <script type="module" src="./script.js" defer></script>
     <title>Modal Button</title>
-</head>
-<body>
-    
-<!-- background -->
-<div class="background">
-<!-- Button to launch modal --> 
-    <div class="container main-con">
-        <img src="images/stars.png" alt="" class="stars">
+  </head>
+  <body>
+    <!-- background -->
+    <div class="background">
+      <!-- Button to launch modal -->
+      <div class="container main-con">
+        <img src="images/stars.png" alt="" class="stars" />
         <!--Welcome Text-->
         <h1 class="welcome">Welcome to bizzNEST</h1>
         <!--Home Button-->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Nest Me Up!
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Nest Me Up!
         </button>
-    </div>
-<!-- Modal --> 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-sm-down ">
-        </div>
-            <div class="modal-content">
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-fullscreen-sm-down"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Ready to be Nested?
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
 
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ready to be Nested?</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body">
+            <!--Modal Table (Columns)-->
+            <div class="d-flex flex-column mb-3">
+              <div>
+                <h1>Watsonville BizzNEST Scheduler</h1>
+                <form id="search-form">
+                  <input type="text" placeholder="search" />
+                  <button type="submit">Submit</button>
+                </form>
+                <div id="filter-options">
+                  <p>Filter:</p>
+                  <div id="dropdowns-container"></div>
+                  <p id="selectedLocation"></p>
+                  <p id="selectedDepartment"></p>
+                  <button id="select-all">Select All</button>
+                  <button id="deselect-all-button" class="button-spacing">
+                    Deselect All
+                  </button>
                 </div>
 
-                <div class="modal-body" >
-                    <!--Modal Table (Columns)-->
-                    <div class="d-flex flex-column mb-3">
-                        <div>
-                            <h1>Watsonville BizzNEST Scheduler</h1>
-                            <form id="search-form">
-                              <input type="text" placeholder="search" />
-                              <button type="submit">Submit</button>
-                            </form>
-                            <div id="filter-options">
-                              <p>Filter:</p>
-                              <div id="dropdowns-container"></div>
-                              <p id="selectedLocation"></p>
-                              <p id="selectedDepartment"></p>
-                              <button id="select-all">Select All</button>
-                              <button id="deselect-all-button" class="button-spacing">
-                                Deselect All
-                              </button>
-                            </div>
-                        
-                            <table id="interns-display"></table>
-                            <table
-                              id="pairing-intern-display"
-                              class="pairing-table"
-                              style="display: none"
-                            >
-                              <thead>
-                                <tr>
-                                  <th>Interns</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <!-- Pairs will be inserted here -->
-                              </tbody>
-                            </table>
-                        
-                            <div>
-                              <div>
-                                <h2>Select Locations:</h2>
-                                <button class="location-button" value="Watsonville">Watsonville</button>
-                                <button class="location-button" value="Salinas">Salinas</button>
-                                <button class="location-button" value="Gilroy">Gilroy</button>
-                                <button class="location-button" value="Modesto">Modesto</button>
-                                <button class="location-button" value="Stockton">Stockton</button>
-                              </div>
-                              <div>
-                                <h2>Select Department:</h2>
-                                <button class="department-button" value="Development">
-                                  Development
-                                </button>
-                                <button class="department-button" value="Design">Design</button>
-                                <button class="department-button" value="Video">Video</button>
-                              </div>
-                              <div>
-                                <p>Select uniqueness</p>
-                                <input type="checkbox" id="unique" name="unique" value="True" />
-                                <label for="unique"> unique city</label><br />
-                              </div>
-                              <div>
-                                <p>Different department</p>
-                                <input
-                                  type="checkbox"
-                                  id="unique-department"
-                                  name="unique-department"
-                                  value="True"
-                                />
-                                <label for="unique-department"> unique department</label><br />
-                              </div>
-                              <div id="pairs-display"></div>
-                        
-                              <script
-                                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-                                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-                                crossorigin="anonymous"
-                              ></script>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="export-pdf">Export as PDF</button>
-                        <button type="button" class="btn btn-primary" id="generate-pairs">Generate Random Pairs</button>
-                    </div>
-                    <!--Modal Table END-->
+                <table id="interns-display"></table>
+                <table
+                  id="pairing-intern-display"
+                  class="pairing-table"
+                  style="display: none"
+                >
+                  <thead>
+                    <tr>
+                      <th>Interns</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Pairs will be inserted here -->
+                  </tbody>
+                </table>
+
+                <div>
+                  <div>
+                    <h2>Select Locations:</h2>
+                    <button class="location-button" value="Watsonville">
+                      Watsonville
+                    </button>
+                    <button class="location-button" value="Salinas">
+                      Salinas
+                    </button>
+                    <button class="location-button" value="Gilroy">
+                      Gilroy
+                    </button>
+                    <button class="location-button" value="Modesto">
+                      Modesto
+                    </button>
+                    <button class="location-button" value="Stockton">
+                      Stockton
+                    </button>
+                  </div>
+                  <div>
+                    <h2>Select Department:</h2>
+                    <button class="department-button" value="Development">
+                      Development
+                    </button>
+                    <button class="department-button" value="Design">
+                      Design
+                    </button>
+                    <button class="department-button" value="Video">
+                      Video
+                    </button>
+                  </div>
+                  <div>
+                    <p>Select uniqueness</p>
+                    <input
+                      type="checkbox"
+                      id="unique"
+                      name="unique"
+                      value="True"
+                    />
+                    <label for="unique"> unique city</label><br />
+                  </div>
+                  <div>
+                    <p>Different department</p>
+                    <input
+                      type="checkbox"
+                      id="unique-department"
+                      name="unique-department"
+                      value="True"
+                    />
+                    <label for="unique-department"> unique department</label
+                    ><br />
+                  </div>
+                  <div id="pairs-display"></div>
+
+                  <script
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                    crossorigin="anonymous"
+                  ></script>
                 </div>
+              </div>
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="export-pdf">
+                Export as PDF
+              </button>
+              <button type="button" class="btn btn-primary" id="generate-pairs">
+                Generate Random Pairs
+              </button>
+            </div>
+            <!--Modal Table END-->
+          </div>
+        </div>
+      </div>
+      <!--Website Banner-->
+      <div class="banner">
+        <img src="images/globe.png" alt="" class="home-cover" />
+      </div>
+      <!--Website Banner-->
+      <div class="banner">
+        <img src="images/globe.png" alt="" class="home-cover" />
+      </div>
     </div>
-    <!--Website Banner-->
-    <div class="banner">
-      <img src="images/globe.png" alt="" class="home-cover" />
-    </div>
-    <!--Website Banner-->
-    <div class="banner">
-        <img src="images/globe.png" alt="" class="home-cover">
-    </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script>
-    document.getElementById('export-pdf').addEventListener('click', function() {
-        const { jsPDF } = window.jspdf;
+    <!-- Bootstrap JS -->
+    <script>
+      document
+        .getElementById("export-pdf")
+        .addEventListener("click", function () {
+          const { jsPDF } = window.jspdf;
 
-        const doc = new jsPDF();
+          const doc = new jsPDF();
 
-        // Add content to PDF
-        doc.text("Your PDF File", 10, 10);
-        doc.text("This is an exported PDF.", 10, 20);
+          // Add content to PDF
+          doc.text("Your PDF File", 10, 10);
+          doc.text("This is an exported PDF.", 10, 20);
 
-        // Save the PDF
-        doc.save('Randomized-Intern-Pairs.pdf');
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+          // Save the PDF
+          doc.save("Randomized-Intern-Pairs.pdf");
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
