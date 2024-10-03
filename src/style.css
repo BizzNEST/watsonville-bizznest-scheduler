@@ -3,11 +3,21 @@
   src: url(fonts/Futura\ Bold\ Oblique.otf);
 }
 
+@font-face {
+  font-family: lato-reg;
+  src: url(fonts/Lato-Regular.ttf);
+}
+@font-face {
+  font-family: lato-bold;
+  src: url(fonts/LatoWeb-Bold.ttf);
+}
+
 .background{
   background: black;
 }
 
 .location-button {
+  font-family: lato-reg;
   background-color: transparent;
   border: 1px solid;
   border-radius: 8px;
@@ -63,18 +73,16 @@
 }
 
 .department-button {
+  font-family: lato-reg;
   background-color: transparent;
   border: none;
   padding: 5px 20px;
   margin: 5px;
   cursor: pointer;
+  border-radius: 5px;
   transition: background-color 0.3s;
-}
-
-.department-button{
   border: 1px solid #72C5A3;
   color: #72C5A3;
-  border-radius: 5px;
 }
 .department-button.active {
   background-color: #72C5A3; /* Color when active */
@@ -97,12 +105,14 @@
   margin-left: 10px;
 }
 .pairing-table {
+  font-family: lato-reg;
   width: 100%;
   border-collapse: collapse;
 }
 .pairing-table td,
 .pairing-table th {
   /* cell borders */
+  font-family: lato-reg;
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
@@ -137,6 +147,7 @@
 }
 
 .welcome {
+  font-family: futura-bold;
   position: relative;
   bottom: 150px;
   color: white;
@@ -161,14 +172,13 @@
 }
 
 .home-btn {
+  font-family: lato-reg;
   margin-bottom: 150px;
   padding: 15px;
   padding-left: 40px;
   padding-right: 40px;
   border-radius: 40px;
 
-  font-family: sans-serif;
-  font-style: italic;
   font-size: 22px;
   letter-spacing: 1px;
 
@@ -249,7 +259,7 @@
   border-right: 1px solid #72C5A3;
   padding-right: 10px;
   margin-right: 25px;
-  width: 32vw;
+  width: 40vw;
 }
 
 .modal-header{
@@ -270,7 +280,7 @@ input[type="checkbox"]{
   margin-bottom: 20px;
 }
 .locations-div > h2 {
-  font-family: futura-bold;
+  font-family: lato-bold;
   margin-bottom: 15px;
 }
 
@@ -280,16 +290,27 @@ input[type="checkbox"]{
   margin-bottom: 20px;
 }
 .department-col > h2 {
+  font-family: lato-bold;
   margin-bottom: 15px;
 }
 .unique-div{
   margin-bottom: 50px;
 }
 .unique-div > h2{
+  font-family: lato-bold;
   margin-bottom: 15px;
 }
 .unique-boxes{
+  font-family: lato-reg;
   display: flex;
   flex-direction: column;
   padding-left: 10px
+}
+.table{
+  font-family: lato-reg;
+}
+.table-functions{
+  display: flex;
+  border: 1px solid red;
+  margin-left: -5px;
 }
