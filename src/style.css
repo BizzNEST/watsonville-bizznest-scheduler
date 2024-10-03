@@ -1,34 +1,92 @@
-.background {
+@font-face {
+  font-family: futura-bold;
+  src: url(fonts/Futura\ Bold\ Oblique.otf);
+}
+
+@font-face {
+  font-family: lato-reg;
+  src: url(fonts/Lato-Regular.ttf);
+}
+@font-face {
+  font-family: lato-bold;
+  src: url(fonts/LatoWeb-Bold.ttf);
+}
+
+.background{
   background: black;
 }
 
 .location-button {
-  background-color: grey;
-  color: white;
-  border: none;
-  padding: 10px 20px;
+  font-family: lato-reg;
+  background-color: transparent;
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 8px 20px;
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.location-button.active {
-  background-color: blue; /* Color when active */
+.watsonville{
+  color: #bb2828;
+  border-color: #bb2828;
+}
+.watsonville.active {
+  color: white;
+  background-color: #bb2828;
+}
+
+.salinas{
+  color: darkseagreen;
+  border-color:darkseagreen;
+}
+.salinas.active{
+  color: white;
+  background-color:darkseagreen;
+}
+
+.gilroy{
+  color:burlywood;
+  border-color: burlywood;
+}
+.gilroy.active{
+  color: white;
+  background-color: burlywood;
+}
+
+.modesto{
+  color: slategray;
+  border-color: slategray;
+}
+.modesto.active{
+  color: white;
+  background-color: slategray;
+}
+
+.stockton{
+  color:purple;
+  border-color: purple;
+}
+.stockton.active{
+  color: white;
+  background-color: purple;
 }
 
 .department-button {
-  background-color: grey;
-  color: white;
+  font-family: lato-reg;
+  background-color: transparent;
   border: none;
-  padding: 10px 20px;
+  padding: 5px 20px;
   margin: 5px;
   cursor: pointer;
+  border-radius: 5px;
   transition: background-color 0.3s;
+  border: 1px solid #72C5A3;
+  color: #72C5A3;
 }
-
 .department-button.active {
-  background-color: greenyellow; /* Color when active */
-  color: black;
+  background-color: #72C5A3; /* Color when active */
+  color: white;
 }
 
 #filter-options {
@@ -47,12 +105,14 @@
   margin-left: 10px;
 }
 .pairing-table {
+  font-family: lato-reg;
   width: 100%;
   border-collapse: collapse;
 }
 .pairing-table td,
 .pairing-table th {
   /* cell borders */
+  font-family: lato-reg;
   border: 1px solid #ccc;
   padding: 10px;
   text-align: left;
@@ -87,6 +147,7 @@
 }
 
 .welcome {
+  font-family: futura-bold;
   position: relative;
   bottom: 150px;
   color: white;
@@ -110,15 +171,14 @@
   }
 }
 
-.btn {
+.home-btn {
+  font-family: lato-reg;
   margin-bottom: 150px;
   padding: 15px;
   padding-left: 40px;
   padding-right: 40px;
   border-radius: 40px;
 
-  font-family: sans-serif;
-  font-style: italic;
   font-size: 22px;
   letter-spacing: 1px;
 
@@ -139,7 +199,7 @@
   }
 }
 
-.btn:hover {
+.home-btn:hover{
   background-color: rgb(226, 226, 226);
   border-color: transparent;
   color: #72c5a3;
@@ -147,7 +207,7 @@
   scale: 103%;
 }
 
-.btn:active {
+.home-btn:active {
   background-color: orange !important;
   border-color: transparent !important;
 }
@@ -188,4 +248,69 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.modal-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-toolbar{
+  border-right: 1px solid #72C5A3;
+  padding-right: 10px;
+  margin-right: 25px;
+  width: 40vw;
+}
+
+.modal-header{
+  background-color: #72C5A3;
+}
+
+.modal-content{
+  height: 90vh;
+}
+
+
+input[type="checkbox"]{
+  scale: 120%;
+  accent-color: #72C5A3;
+}
+
+.locations-div{
+  margin-bottom: 20px;
+}
+.locations-div > h2 {
+  font-family: lato-bold;
+  margin-bottom: 15px;
+}
+
+.department-col{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.department-col > h2 {
+  font-family: lato-bold;
+  margin-bottom: 15px;
+}
+.unique-div{
+  margin-bottom: 50px;
+}
+.unique-div > h2{
+  font-family: lato-bold;
+  margin-bottom: 15px;
+}
+.unique-boxes{
+  font-family: lato-reg;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px
+}
+.table{
+  font-family: lato-reg;
+}
+.table-functions{
+  display: flex;
+  border: 1px solid red;
+  margin-left: -5px;
 }
