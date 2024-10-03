@@ -5,6 +5,13 @@ import {
   findUniquePairs,
 } from "./complexity.js";
 
+import {
+  filterTable,
+  filterTableBySearch,
+  elementArrCreator,
+  appendChildren,
+} from "./filter.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   // initialize global hashmap and tokens
 
@@ -18,48 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pairingTable = document.getElementById("pairing-intern-display");
   pairingTable.className = "table table-hover";
 
-  function filterTableBySearch(searchValue) {
-    const displayTable = document.getElementById("interns-display");
-    const rows = displayTable.getElementsByTagName("tr");
-
-    for (let i = 1; i < rows.length; i++) {
-      const cells = rows[i].getElementsByTagName("td");
-      const nameCell = cells[1].textContent.toLowerCase();
-      const locationCell = cells[2].textContent.toLowerCase();
-      const departmentCell = cells[3].textContent.toLowerCase();
-
-      rows[i].style.display =
-        nameCell.includes(searchValue) ||
-        locationCell.includes(searchValue) ||
-        departmentCell.includes(searchValue)
-          ? ""
-          : "none";
-    }
-  }
-
-  function filterTable() {
-    const locationDropdown = document.getElementById("locations");
-    const selectedLocation = locationDropdown.value.trim();
-
-    const departmentDropdown = document.getElementById("department");
-    const selectedDepartment = departmentDropdown.value.trim();
-
-    const displayTable = document.getElementById("interns-display");
-    const rows = displayTable.getElementsByTagName("tr");
-
-    for (let i = 1; i < rows.length; i++) {
-      const cells = rows[i].getElementsByTagName("td");
-      const locationCell = cells[2].textContent.trim();
-      const departmentCell = cells[3].textContent.trim();
-
-      // Show the row if it matches both filters or if no filters are selected
-      rows[i].style.display =
-        (locationCell === selectedLocation || selectedLocation === "") &&
-        (departmentCell === selectedDepartment || selectedDepartment === "")
-          ? ""
-          : "none";
-    }
-  }
   function displayInterns() {
     // Ensure the table has the Bootstrap classes applied
     displayTable.className = "table table-hover";
@@ -91,28 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /** ALT APPROACH - HELPER FUNCTIONS **/
-  //Element Array Helper Fuction.
-  function elementArrCreator(filters, st) {
-    let elementArray = [];
-    for (let i = 0; i < filters.length; i++) {
-      //Loop through all filters.
-      elementArray.push(document.createElement(st)); //Make entry with chosen createElement.
-      elementArray[i].textContent = filters[i]; //Set entry textContent to current filter.
-    }
-    return elementArray;
-  }
-
-  //appendChildren Helper Fuction.
-  function appendChildren(row, children) {
-    for (let entry of children) {
-      //For every child...
-      row.appendChild(entry); //Append it to the row.
-    }
-  }
-  /** ALT APPROACH - HELPER FUNCTIONS END **/
-
-  const selectedInterns = [];
+  let selectedInterns = [];
+  let checkedInterns = [];
 
   function displayInternRows(intern, tbody) {
     const row = document.createElement("tr");
@@ -121,19 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("intern-checkbox");
+
+    // Update the temporary checkedInterns array when checkbox is clicked
     checkbox.addEventListener("change", () => {
       if (checkbox.checked) {
-        selectedInterns.push(intern.name); // Add intern name to the selected list
+        checkedInterns.push(intern.name);
       } else {
-        selectedInterns = selectedInterns.filter(
-          (name) => name !== intern.name,
-        ); // Remove from the list
+        checkedInterns = checkedInterns.filter((name) => name !== intern.name);
       }
     });
     checkboxCell.appendChild(checkbox);
     row.appendChild(checkboxCell);
 
-    /** ALT APPROACH **/
     const internFilters = [
       `${intern.name}`,
       `${intern.location}`,
@@ -141,12 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const internsArray = elementArrCreator(internFilters, "td");
     appendChildren(row, internsArray);
-    /** **/
 
-    tbody.appendChild(row); // Append the row to the tbody
+    tbody.appendChild(row);
   }
 
   function excludeSelectedInterns() {
+    // Add checked interns to selectedInterns
+    selectedInterns.push(...checkedInterns);
+
+    // Clear checkedInterns array after adding to selectedInterns
+    checkedInterns = [];
+
+    // Now filter the interns table based on selectedInterns
     const filteredInterns = Array.from(internsMap.entries()).filter(
       ([name]) => !selectedInterns.includes(name),
     );
@@ -159,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Add this button to the DOM
   const excludeButton = document.createElement("button");
   excludeButton.textContent = "Remove selected intern";
   excludeButton.addEventListener("click", excludeSelectedInterns);
