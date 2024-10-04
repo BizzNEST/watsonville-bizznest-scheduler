@@ -224,6 +224,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+document.getElementById('reset-button').addEventListener('click', function() {
+  // original table
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
+  // loadInterns().then(() => {
+  //   displayInterns();
+  //   // console.log("displ: ",displayInterns());
+  // });
+  
+});
+
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
     document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
