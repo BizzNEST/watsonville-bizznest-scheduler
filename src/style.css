@@ -92,6 +92,12 @@
 #filter-options {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#filter-options button {
+  margin-left: 10px;
 }
 
 #filter-options label {
@@ -101,9 +107,7 @@
 #filter-options select {
   margin-right: 20px;
 }
-.button-spacing {
-  margin-left: 10px;
-}
+
 .pairing-table {
   font-family: lato-reg;
   width: 100%;
