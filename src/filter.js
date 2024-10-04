@@ -1,3 +1,92 @@
+export function displayFilters() {
+  // Create Location Dropdown
+  const locations = [
+    { value: "", text: "Select..." },
+    { value: "Salinas", text: "Salinas" },
+    { value: "Watsonville", text: "Watsonville" },
+    { value: "Gilroy", text: "Gilroy" },
+    { value: "Stockton", text: "Stockton" },
+    { value: "Modesto", text: "Modesto" },
+  ];
+
+  const locationSelect = document.createElement("select");
+  locationSelect.id = "locations";
+  locationSelect.addEventListener("change", filterTable);
+
+  locations.forEach((location) => {
+    const option = document.createElement("option");
+    option.value = location.value;
+    option.textContent = location.text;
+    locationSelect.appendChild(option);
+  });
+
+  const locationLabel = document.createElement("label");
+  locationLabel.htmlFor = "locations";
+  locationLabel.textContent = "Choose a location:";
+
+  // Create Department Dropdown
+  const departments = [
+    { value: "", text: "Select..." },
+    { value: "Development", text: "Development" },
+    { value: "Video", text: "Video" },
+    { value: "Design", text: "Design" },
+    { value: "IT", text: "IT" },
+    { value: "Marketing", text: "Marketing" },
+  ];
+
+  const departmentSelect = document.createElement("select");
+  departmentSelect.id = "department";
+  departmentSelect.addEventListener("change", filterTable);
+
+  departments.forEach((department) => {
+    const option = document.createElement("option");
+    option.value = department.value;
+    option.textContent = department.text;
+    departmentSelect.appendChild(option);
+  });
+
+  const departmentLabel = document.createElement("label");
+  departmentLabel.htmlFor = "department";
+  departmentLabel.textContent = "Choose a department:";
+
+  // Append everything to the dropdowns container
+  const dropdownsContainer = document.getElementById("dropdowns-container");
+  dropdownsContainer.appendChild(locationLabel);
+  dropdownsContainer.appendChild(locationSelect);
+  dropdownsContainer.appendChild(departmentLabel);
+  dropdownsContainer.appendChild(departmentSelect);
+}
+
+export function displayInternRows(intern, tbody, checkedInterns) {
+  const row = document.createElement("tr");
+
+  const checkboxCell = document.createElement("td");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.classList.add("intern-checkbox");
+
+  // Update the temporary checkedInterns array when checkbox is clicked
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+      checkedInterns.push(intern.name);
+    } else {
+      checkedInterns = checkedInterns.filter((name) => name !== intern.name);
+    }
+  });
+  checkboxCell.appendChild(checkbox);
+  row.appendChild(checkboxCell);
+
+  const internFilters = [
+    `${intern.name}`,
+    `${intern.location}`,
+    `${intern.department}`,
+  ];
+  const internsArray = elementArrCreator(internFilters, "td");
+  appendChildren(row, internsArray);
+
+  tbody.appendChild(row);
+}
+
 export function filterTableBySearch(searchValue) {
   const displayTable = document.getElementById("interns-display");
   const rows = displayTable.getElementsByTagName("tr");

@@ -12,7 +12,7 @@
   src: url(fonts/LatoWeb-Bold.ttf);
 }
 
-.background{
+.background {
   background: black;
 }
 
@@ -27,7 +27,7 @@
   transition: background-color 0.3s;
 }
 
-.watsonville{
+.watsonville {
   color: #bb2828;
   border-color: #bb2828;
 }
@@ -36,38 +36,38 @@
   background-color: #bb2828;
 }
 
-.salinas{
+.salinas {
   color: darkseagreen;
-  border-color:darkseagreen;
+  border-color: darkseagreen;
 }
-.salinas.active{
+.salinas.active {
   color: white;
-  background-color:darkseagreen;
+  background-color: darkseagreen;
 }
 
-.gilroy{
-  color:burlywood;
+.gilroy {
+  color: burlywood;
   border-color: burlywood;
 }
-.gilroy.active{
+.gilroy.active {
   color: white;
   background-color: burlywood;
 }
 
-.modesto{
+.modesto {
   color: slategray;
   border-color: slategray;
 }
-.modesto.active{
+.modesto.active {
   color: white;
   background-color: slategray;
 }
 
-.stockton{
-  color:purple;
+.stockton {
+  color: purple;
   border-color: purple;
 }
-.stockton.active{
+.stockton.active {
   color: white;
   background-color: purple;
 }
@@ -81,11 +81,11 @@
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
-  border: 1px solid #72C5A3;
-  color: #72C5A3;
+  border: 1px solid #72c5a3;
+  color: #72c5a3;
 }
 .department-button.active {
-  background-color: #72C5A3; /* Color when active */
+  background-color: #72c5a3; /* Color when active */
   color: white;
 }
 
@@ -203,7 +203,7 @@
   }
 }
 
-.home-btn:hover{
+.home-btn:hover {
   background-color: rgb(226, 226, 226);
   border-color: transparent;
   color: #72c5a3;
@@ -254,33 +254,32 @@
   }
 }
 
-.modal-row{
+.modal-row {
   display: flex;
   flex-direction: row;
 }
 
-.modal-toolbar{
-  border-right: 1px solid #72C5A3;
+.modal-toolbar {
+  border-right: 1px solid #72c5a3;
   padding-right: 10px;
   margin-right: 25px;
   width: 40vw;
 }
 
-.modal-header{
-  background-color: #72C5A3;
+.modal-header {
+  background-color: #72c5a3;
 }
 
-.modal-content{
+.modal-content {
   height: 90vh;
 }
 
-
-input[type="checkbox"]{
+input[type="checkbox"] {
   scale: 120%;
-  accent-color: #72C5A3;
+  accent-color: #72c5a3;
 }
 
-.locations-div{
+.locations-div {
   margin-bottom: 20px;
 }
 .locations-div > h2 {
@@ -288,7 +287,7 @@ input[type="checkbox"]{
   margin-bottom: 15px;
 }
 
-.department-col{
+.department-col {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -297,23 +296,23 @@ input[type="checkbox"]{
   font-family: lato-bold;
   margin-bottom: 15px;
 }
-.unique-div{
+.unique-div {
   margin-bottom: 50px;
 }
-.unique-div > h2{
+.unique-div > h2 {
   font-family: lato-bold;
   margin-bottom: 15px;
 }
-.unique-boxes{
+.unique-boxes {
   font-family: lato-reg;
   display: flex;
   flex-direction: column;
-  padding-left: 10px
+  padding-left: 10px;
 }
-.table{
+.table {
   font-family: lato-reg;
 }
-.table-functions{
+.table-functions {
   display: flex;
   border: 1px solid red;
   margin-left: -5px;

@@ -21,121 +21,162 @@
         <!--Welcome Text-->
         <h1 class="welcome">Welcome to bizzNEST</h1>
         <!--Home Button-->
-        <button type="button" class="btn btn-primary home-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Nest Me Up!
+        <button
+          type="button"
+          class="btn btn-primary home-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Nest Me Up!
         </button>
-    </div>
-<!-- Modal --> 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-sm-down">
-        </div>
-            <div class="modal-content">
+      </div>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-fullscreen-sm-down"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
 
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-body">
+            <!--MODAL CONTENT-->
+            <div class="modal-row">
+              <!--TOOLBAR START-->
+              <div class="modal-toolbar">
+                <div class="locations-div">
+                  <h2>Select Locations:</h2>
+                  <button
+                    class="location-button watsonville"
+                    value="Watsonville"
+                  >
+                    Watsonville 🍓
+                  </button>
+                  <button class="location-button salinas" value="Salinas">
+                    Salinas 🥬
+                  </button>
+                  <button class="location-button gilroy" value="Gilroy">
+                    Gilroy 🧄
+                  </button>
+                  <button class="location-button modesto" value="Modesto">
+                    Modesto 🐄
+                  </button>
+                  <button class="location-button stockton" value="Stockton">
+                    Stockton 🍇
+                  </button>
+                </div>
+                <div class="department-col">
+                  <h2>Select Department:</h2>
+                  <button class="department-button" value="Development">
+                    Development
+                  </button>
+                  <button class="department-button" value="Design">
+                    Design
+                  </button>
+                  <button class="department-button" value="Video">Video</button>
+                </div>
+                <div class="unique-div">
+                  <h2>Select Stage:</h2>
+                  <div class="unique-boxes">
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="unique"
+                        name="unique"
+                        value="True"
+                      />
+                      <label for="unique">City</label><br />
+                    </div>
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="unique-department"
+                        name="unique-department"
+                        value="True"
+                      />
+                      <label for="unique-department">Department</label><br />
+                    </div>
+                  </div>
+                </div>
+                <div id="pairs-display"></div>
+              </div>
+              <!--TOOLBAR END-->
+
+              <!--TABLE START-->
+              <div class="table">
+                <div class="table-functions">
+                  <form id="search-form">
+                    <input type="text" placeholder="Search" />
+                    <button type="submit">Submit</button>
+                  </form>
+                  <div id="filter-options">
+                    <p>Filter:</p>
+                    <div id="dropdowns-container"></div>
+                    <p id="selectedLocation"></p>
+                    <p id="selectedDepartment"></p>
+                    <button id="select-all">Select All</button>
+                    <button id="deselect-all-button" class="button-spacing">
+                      Deselect All
+                    </button>
+                  </div>
                 </div>
 
-                <div class="modal-body" >
-                  <!--MODAL CONTENT-->
-                    <div class="modal-row">
-                      <!--TOOLBAR START-->
-                      <div class="modal-toolbar">
-                        <div class="locations-div">
-                          <h2>Select Locations:</h2>
-                          <button class="location-button watsonville" value="Watsonville">Watsonville 🍓</button>
-                          <button class="location-button salinas" value="Salinas">Salinas 🥬</button>
-                          <button class="location-button gilroy" value="Gilroy">Gilroy 🧄</button>
-                          <button class="location-button modesto" value="Modesto">Modesto 🐄</button>
-                          <button class="location-button stockton" value="Stockton">Stockton 🍇</button>
-                        </div>
-                        <div class="department-col">
-                          <h2>Select Department:</h2>
-                          <button class="department-button" value="Development">Development</button>
-                          <button class="department-button" value="Design">Design</button>
-                          <button class="department-button" value="Video">Video</button>
-                        </div>
-                        <div class="unique-div">
-                          <h2>Select Stage: </h2>
-                          <div class="unique-boxes">
-                            <div>
-                              <input type="checkbox" id="unique" name="unique" value="True" />
-                              <label for="unique">City</label><br />
-                            </div>
-                            <div>
-                              <input
-                              type="checkbox"
-                              id="unique-department"
-                              name="unique-department"
-                              value="True"
-                              />
-                              <label for="unique-department">Department</label><br />
-                            </div>
-                          </div>
-                        </div>
-                        <div id="pairs-display"></div>
-                      </div>
-                      <!--TOOLBAR END-->
-
-                      <!--TABLE START-->
-                      <div class="table">
-                        <div class="table-functions">
-                          <form id="search-form">
-                            <input type="text" placeholder="Search" />
-                            <button type="submit">Submit</button>
-                          </form>
-                          <div id="filter-options">
-                            <p>Filter:</p>
-                            <div id="dropdowns-container"></div>
-                            <p id="selectedLocation"></p>
-                            <p id="selectedDepartment"></p>
-                            <button id="select-all">Select All</button>
-                            <button id="deselect-all-button" class="button-spacing">
-                              Deselect All
-                            </button>
-                          </div>
-                        </div>
-                    
-                        <div>
-                          <table id="interns-display"></table>
-                            <table
-                              id="pairing-intern-display"
-                              class="pairing-table"
-                              style="display: none; overflow: scroll;"
-                            >
-                            <thead>
-                              <tr>
-                                <th>Interns</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <!-- Pairs will be inserted here -->
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
-                    <!--TABLE END-->
-                    </div>
-                    <!--------------------------------------->
-                    <div class="d-flex flex-column mb-3">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="export-pdf">Export as PDF</button>
-                        <button type="button" class="btn btn-primary" id="generate-pairs">Generate Random Pairs</button>
-                    </div>
-                    <!--Modal Table END-->
+                <div>
+                  <table id="interns-display"></table>
+                  <table
+                    id="pairing-intern-display"
+                    class="pairing-table"
+                    style="display: none; overflow: scroll"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Interns</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Pairs will be inserted here -->
+                    </tbody>
+                  </table>
                 </div>
+              </div>
+              <!--TABLE END-->
             </div>
+            <!--------------------------------------->
+            <div class="d-flex flex-column mb-3"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="export-pdf">
+                Export as PDF
+              </button>
+              <button type="button" class="btn btn-primary" id="generate-pairs">
+                Generate Random Pairs
+              </button>
+            </div>
+            <!--Modal Table END-->
+          </div>
+        </div>
+      </div>
+      <!--Website Banner-->
+      <div class="banner">
+        <img src="images/globe.png" alt="" class="home-cover" />
+      </div>
+      <!--Website Banner-->
+      <div class="banner">
+        <img src="images/globe.png" alt="" class="home-cover" />
+      </div>
     </div>
-    <!--Website Banner-->
-    <div class="banner">
-      <img src="images/globe.png" alt="" class="home-cover" />
-    </div>
-    <!--Website Banner-->
-    <div class="banner">
-        <img src="images/globe.png" alt="" class="home-cover">
-    </div>
-</div>
 
     <!-- Bootstrap JS -->
     <script>
