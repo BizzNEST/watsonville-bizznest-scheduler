@@ -1,28 +1,27 @@
-import {
-  unique_location,
-  shuffleArray,
-  unique_department,
-  findUniquePairs,
-} from "./complexity.js";
+import { pairInterns } from "./complexity.js";
 
 import {
-  filterTable,
-  filterTableBySearch,
+  displayInternRows,
   elementArrCreator,
   appendChildren,
+  displayFilters,
+  filterTableBySearch,
 } from "./filter.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // initialize global hashmap and tokens
-
-  const displayTable = document.getElementById("interns-display");
   let internsMap;
   let cityTokens = [];
   let departmentTokens = [];
+  let selectedInterns = [];
+  let checkedInterns = [];
+
   const uniqueCheckbox = document.getElementById("unique"); // checks if uniquness triggered
   const uniqueDepartment = document.getElementById("unique-department"); // checks if uniquness triggered
-  displayTable.className = "table table-hover";
   const pairingTable = document.getElementById("pairing-intern-display");
+  const displayTable = document.getElementById("interns-display");
+
+  displayTable.className = "table table-hover";
   pairingTable.className = "table table-hover";
 
   function displayInterns() {
@@ -37,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rowTop = document.createElement("tr");
 
     /** ALTERNATE APPROACH**/
-    const filters = ['', 'Name', 'Location', 'Department']; //Create array for the filters.
+    const filters = ["", "Name", "Location", "Department"]; //Create array for the filters.
     const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
     appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
     //** **/
@@ -51,42 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
       internsMap = map;
       internsMap.forEach((intern, name) => {
         console.log(`Name: ${name}, Details:`, intern);
-        displayInternRows(intern, tbody); // Pass tbody to the function
+        displayInternRows(intern, tbody, checkedInterns); // Pass tbody to the function
       });
     });
-  }
-
-  let selectedInterns = [];
-  let checkedInterns = [];
-
-  function displayInternRows(intern, tbody) {
-    const row = document.createElement("tr");
-
-    const checkboxCell = document.createElement("td");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("intern-checkbox");
-
-    // Update the temporary checkedInterns array when checkbox is clicked
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        checkedInterns.push(intern.name);
-      } else {
-        checkedInterns = checkedInterns.filter((name) => name !== intern.name);
-      }
-    });
-    checkboxCell.appendChild(checkbox);
-    row.appendChild(checkboxCell);
-
-    const internFilters = [
-      `${intern.name}`,
-      `${intern.location}`,
-      `${intern.department}`,
-    ];
-    const internsArray = elementArrCreator(internFilters, "td");
-    appendChildren(row, internsArray);
-
-    tbody.appendChild(row);
   }
 
   function excludeSelectedInterns() {
@@ -107,70 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredInterns.forEach(([, intern]) => {
       displayInternRows(intern, tbody);
     });
-  }
-
-  const excludeButton = document.createElement("button");
-  excludeButton.textContent = "Remove selected intern";
-  excludeButton.addEventListener("click", excludeSelectedInterns);
-  document.getElementById("filter-options").appendChild(excludeButton);
-
-  function displayFilters() {
-    // Create Location Dropdown
-    const locations = [
-      { value: "", text: "Select..." },
-      { value: "Salinas", text: "Salinas" },
-      { value: "Watsonville", text: "Watsonville" },
-      { value: "Gilroy", text: "Gilroy" },
-      { value: "Stockton", text: "Stockton" },
-      { value: "Modesto", text: "Modesto" },
-    ];
-
-    const locationSelect = document.createElement("select");
-    locationSelect.id = "locations";
-    locationSelect.addEventListener("change", filterTable);
-
-    locations.forEach((location) => {
-      const option = document.createElement("option");
-      option.value = location.value;
-      option.textContent = location.text;
-      locationSelect.appendChild(option);
-    });
-
-    const locationLabel = document.createElement("label");
-    locationLabel.htmlFor = "locations";
-    locationLabel.textContent = "Choose a location:";
-
-    // Create Department Dropdown
-    const departments = [
-      { value: "", text: "Select..." },
-      { value: "Development", text: "Development" },
-      { value: "Video", text: "Video" },
-      { value: "Design", text: "Design" },
-      { value: "IT", text: "IT" },
-      { value: "Marketing", text: "Marketing" },
-    ];
-
-    const departmentSelect = document.createElement("select");
-    departmentSelect.id = "department";
-    departmentSelect.addEventListener("change", filterTable);
-
-    departments.forEach((department) => {
-      const option = document.createElement("option");
-      option.value = department.value;
-      option.textContent = department.text;
-      departmentSelect.appendChild(option);
-    });
-
-    const departmentLabel = document.createElement("label");
-    departmentLabel.htmlFor = "department";
-    departmentLabel.textContent = "Choose a department:";
-
-    // Append everything to the dropdowns container
-    const dropdownsContainer = document.getElementById("dropdowns-container");
-    dropdownsContainer.appendChild(locationLabel);
-    dropdownsContainer.appendChild(locationSelect);
-    dropdownsContainer.appendChild(departmentLabel);
-    dropdownsContainer.appendChild(departmentSelect);
   }
 
   // SELECT ALL CHECKBOXES
@@ -254,100 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Randomizing Algorithim
 
-  function pairInterns() {
-    console.log("pairInterns function called");
-    if (!internsMap || internsMap.size === 0) {
-      // ensures interns are loaded
-      console.error("Interns map is empty or not loaded.");
-      return [];
-    }
-
-    if (selectedInterns.length > 0) {
-      selectedInterns.forEach((intern) => {
-        if (internsMap.has(intern)) {
-          internsMap.delete(intern);
-        }
-      });
-    }
-
-    if (!internsMap || internsMap.size === 0) {
-      // ensures interns are loaded
-      console.error("Interns map is empty or not loaded.");
-      return [];
-    }
-
-    // Get the checkbox element
-    const uniqueCheckboxValue = uniqueCheckbox.checked; // Access the checked property
-    const uniqueDepartmentValue = uniqueDepartment.checked; // Access the checked property
-
-    console.log("uniqueCheckbox value:", uniqueCheckboxValue); // Check the boolean value
-    console.log("uniqueDepartment value:", uniqueDepartmentValue);
-
-    if (uniqueCheckboxValue == true && uniqueDepartmentValue == true) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return findUniquePairs(cityTokens, departmentTokens, internsMap);
-    }
-
-    if (uniqueCheckboxValue == true && uniqueDepartmentValue == false) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return unique_location(cityTokens, internsMap);
-    }
-
-    if (uniqueCheckboxValue == false && uniqueDepartmentValue == true) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return unique_department(departmentTokens, internsMap);
-    }
-
-    let internsArray;
-
-    if (cityTokens.length != 0 || departmentTokens.length != 0) {
-      //checks if there are tokens
-      // filter interns whose city is within the cityTokens array or department is within the departmentTokens array
-      internsArray = Array.from(internsMap.values()).filter((intern) => {
-        const cityMatch =
-          cityTokens.length === 0 || cityTokens.includes(intern.location); //checks if tokens are empty or if the intern's location is included in tokens
-        const departmentMatch =
-          departmentTokens.length === 0 ||
-          departmentTokens.includes(intern.department); //same logic as below, they are just booleans that allow interns to filter
-        return cityMatch && departmentMatch;
-      });
-    } else {
-      // If no cityTokens or departmentTokens are provided, just create the array from internsMap values
-      internsArray = Array.from(internsMap.values());
-    }
-    // store the selected interns within array
-
-    // shuffle the array around to ensure randomization pairs
-    shuffleArray(internsArray);
-
-    const pairs = []; //results
-    let i = 0; //index
-
-    while (i < internsArray.length) {
-      if (i + 1 < internsArray.length) {
-        pairs.push([internsArray[i], internsArray[i + 1]]);
-        i += 2;
-      } else {
-        break;
-      }
-    } //creates pairs until it runs out of pairs of two
-
-    if (i < internsArray.length) {
-      const lastGroup = pairs.pop();
-      lastGroup.push(internsArray[i]);
-      pairs.push(lastGroup);
-    } //adds pair to last group if there are any leftovers
-
-    return pairs;
-  }
-
   /////////////////////////interacting with HTML page and displaying the randomization + results of pairs
 
   displayInterns();
   displayFilters();
+
+  const excludeButton = document.createElement("button");
+  excludeButton.textContent = "Remove selected intern";
+  excludeButton.addEventListener("click", excludeSelectedInterns);
+  document.getElementById("filter-options").appendChild(excludeButton);
 
   document
     .getElementById("search-form")
@@ -398,7 +215,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
     updateCityTokens(); // Update active cities before pairing
     loadInterns().then(() => {
-      const pairs = pairInterns();
+      const pairs = pairInterns(
+        uniqueCheckbox,
+        uniqueDepartment,
+        cityTokens,
+        departmentTokens,
+        selectedInterns,
+        internsMap,
+      );
       console.log("Intern Pairings:", pairs);
       displayPairs(pairs); // Display pairs in the table
     });
