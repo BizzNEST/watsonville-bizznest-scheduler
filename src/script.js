@@ -36,11 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Create the header row
     const rowTop = document.createElement("tr");
 
-    /** ALTERNATE APPROACH**/
-    const filters = ['', 'Name', 'Location', 'Department']; //Create array for the filters.
-    const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
-    appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
-    //** **/
+    const filters = ['', 'Name', 'Location', 'Department']; //Create array for the filters
+    const topWords = elementArrCreator(filters, "th"); //make an array of topWords making a textContent for each
+    appendChildren(rowTop, topWords); // append topWords to rowTop.
 
     // Append header row to thead
     thead.appendChild(rowTop);
@@ -171,16 +169,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dropdownsContainer.appendChild(locationSelect);
     dropdownsContainer.appendChild(departmentLabel);
     dropdownsContainer.appendChild(departmentSelect);
-  }
-
-  // SELECT ALL CHECKBOXES
-  function selectAllCheckboxes() {
-    // Get all checkboxes in the table
-    const checkboxes = displayTable.querySelectorAll('input[type="checkbox"]');
-    // Iterate through each checkbox and set it to checked
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = true;
-    });
   }
 
   function loadInterns() {
@@ -357,19 +345,43 @@ document.addEventListener("DOMContentLoaded", () => {
         this.querySelector('input[type="text"]').value.toLowerCase();
       filterTableBySearch(searchValue);
     });
-
-  document.getElementById("select-all").addEventListener("click", () => {
-    document.querySelectorAll("input.intern-checkbox").forEach((checkbox) => {
-      checkbox.checked = true;
-      const internName = checkbox
-        .closest("tr")
-        .querySelector("td:nth-child(2)").textContent;
-      if (!selectedInterns.includes(internName)) {
-        selectedInterns.push(internName);
-      }
-    });
-    console.log("Excluded Interns after Select All:", selectedInterns);
+    document.getElementById("select-all").addEventListener("click", () => {
+      const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+  
+      checkboxes.forEach((checkbox) => {
+          const internRow = checkbox.closest("tr");
+          const isVisible = internRow.style.display !== "none";
+  
+          if (isVisible) {
+              checkbox.checked = true;
+              const internName = internRow.querySelector("td:nth-child(2)").textContent;
+              if (!selectedInterns.includes(internName)) {
+                  selectedInterns.push(internName);
+              }
+          }
+      });
+  
+      console.log("Selected Interns after Select All:", selectedInterns);
   });
+  
+  document.getElementById("deselect-all-button").addEventListener("click", () => {
+    const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+    checkboxes.forEach((checkbox) => {
+        const internRow = checkbox.closest("tr");
+         // Check if the row is visible
+        const isVisible = internRow.style.display !== "none";
+
+        if (isVisible) {
+            checkbox.checked = false;
+
+            const internName = internRow.querySelector("td:nth-child(2)").textContent;
+            selectedInterns = selectedInterns.filter(name => name !== internName);
+        }
+    });
+
+    console.log("Selected Interns after Deselect All:", selectedInterns);
+});
 
   uniqueCheckbox.addEventListener("click", () => {
     console.log("Unique Checkbox Status:", uniqueCheckbox.checked);
