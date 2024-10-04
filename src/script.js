@@ -110,9 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const excludeButton = document.createElement("button");
-  excludeButton.textContent = "Remove selected intern";
+  excludeButton.textContent = "Remove Selected";
   excludeButton.addEventListener("click", excludeSelectedInterns);
-  document.getElementById("filter-options").appendChild(excludeButton);
+  document.getElementById("table-selection").appendChild(excludeButton);
 
   function displayFilters() {
     // Create Location Dropdown
@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const locationLabel = document.createElement("label");
     locationLabel.htmlFor = "locations";
-    locationLabel.textContent = "Choose a location:";
+    locationLabel.textContent = "Location";
 
     // Create Department Dropdown
     const departments = [
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const departmentLabel = document.createElement("label");
     departmentLabel.htmlFor = "department";
-    departmentLabel.textContent = "Choose a department:";
+    departmentLabel.textContent = "Department";
 
     // Append everything to the dropdowns container
     const dropdownsContainer = document.getElementById("dropdowns-container");

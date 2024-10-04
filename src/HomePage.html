@@ -56,7 +56,7 @@
                           <button class="department-button" value="Video">Video</button>
                         </div>
                         <div class="unique-div">
-                          <h2>Select Stage: </h2>
+                          <h2>Select Unique: </h2>
                           <div class="unique-boxes">
                             <div>
                               <input type="checkbox" id="unique" name="unique" value="True" />
@@ -80,19 +80,19 @@
                       <!--TABLE START-->
                       <div class="table">
                         <div class="table-functions">
-                          <form id="search-form">
+                          <form id="search-form" class="table-search">
                             <input type="text" placeholder="Search" />
-                            <button type="submit">Submit</button>
                           </form>
-                          <div id="filter-options">
-                            <p>Filter:</p>
-                            <div id="dropdowns-container"></div>
-                            <p id="selectedLocation"></p>
-                            <p id="selectedDepartment"></p>
-                            <button id="select-all">Select All</button>
-                            <button id="deselect-all-button" class="button-spacing">
-                              Deselect All
-                            </button>
+                          <div class="table-tools">
+                            <div id="table-selection" class="table-tools-btns">
+                              <button id="select-all" class="select-all">Select All</button>
+                              <button id="deselect-all-button" class="button-spacing">Deselect All</button>
+                            </div>
+                            <div id="filter-options" class="table-filter">
+                              <div id="dropdowns-container"></div>
+                                <p id="selectedLocation"></p>
+                                <p id="selectedDepartment"></p>
+                            </div>
                           </div>
                         </div>
                     
@@ -120,8 +120,7 @@
                     <div class="d-flex flex-column mb-3">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="export-pdf">Export as PDF</button>
-                        <button type="button" class="btn btn-primary" id="generate-pairs">Generate Random Pairs</button>
+                        <button type="button" class="btn btn-primary generate-btn" id="generate-pairs">Generate Random Pairs</button>
                     </div>
                     <!--Modal Table END-->
                 </div>
