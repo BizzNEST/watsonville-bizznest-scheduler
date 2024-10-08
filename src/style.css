@@ -262,19 +262,17 @@
 .modal-toolbar {
   border-right: 1px solid #72c5a3;
   padding-right: 10px;
-  margin-right: 25px;
-  width: 40vw;
+  margin-right: 55px;
+  width: 45vw;
 }
 
 .modal-header {
   background-color: #72c5a3;
 }
 
-.modal-content {
-  height: 90vh;
-}
 
 input[type="checkbox"] {
+
   scale: 120%;
   accent-color: #72c5a3;
 }
@@ -314,7 +312,8 @@ input[type="checkbox"] {
 }
 .table-functions {
   display: flex;
-  border: 1px solid red;
+  flex-direction: column;
+  align-items: flex-start;
   margin-left: -5px;
 }
 
@@ -325,4 +324,56 @@ input[type="checkbox"] {
 
 .table-container table {
   width: 100%; /* Ensure table takes full width */
+}
+
+.table-search{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 5px;
+}
+.table-search > input[type="text"] {
+  border-radius: 10px;
+  margin-right: 5px;
+  width: 100%;
+}
+.table-search > button {
+  background-color: #534269;
+  border-color: transparent;
+  color: white;
+  border-radius: 10px;
+  padding: 5px 30px;
+}
+
+.table-filter{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: -15px;
+}
+
+.table-tools{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.table-tools-btns > button{
+  background-color: #72C5A3;
+  border: 0px;
+  border-radius: 10px;
+  padding: 5px 20px;
+  color: white;
+}
+.table-tools-btns > button:hover {
+  background-color: #57967c;
+}
+
+.generate-btn{
+  background-color: #72C5A3;
+  border: 0px;
+}
+.generate-btn:hover{
+  background-color: #57967c;
 }
