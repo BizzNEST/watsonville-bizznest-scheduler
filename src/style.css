@@ -317,3 +317,12 @@ input[type="checkbox"] {
   border: 1px solid red;
   margin-left: -5px;
 }
+
+.table-container {
+  max-height: 420px; /* Set the max height you want for the table */
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.table-container table {
+  width: 100%; /* Ensure table takes full width */
+}

@@ -129,23 +129,18 @@
                     <div id="dropdowns-container"></div>
                     <p id="selectedLocation"></p>
                     <p id="selectedDepartment"></p>
-
-                    <!-- button only resets the table after generating pairs. -->
-                    <button id="reset-button"> Reset Table </button>
+              
+                    <button id="reset-button">Reset Table</button>
                     <button id="select-all">Select All</button>
                     <button id="deselect-all-button" class="button-spacing">
                       Deselect All
                     </button>
                   </div>
                 </div>
-
-                <div>
+              
+                <div class="table-container"> <!-- New container div -->
                   <table id="interns-display"></table>
-                  <table
-                    id="pairing-intern-display"
-                    class="pairing-table"
-                    style="display: none; overflow: scroll"
-                  >
+                  <table id="pairing-intern-display" class="pairing-table" style="display: none;">
                     <thead>
                       <tr>
                         <th>Interns</th>
@@ -155,7 +150,7 @@
                       <!-- Pairs will be inserted here -->
                     </tbody>
                   </table>
-                </div>
+                </div> <!-- End of container div -->
               </div>
               <!--TABLE END-->
             </div>
