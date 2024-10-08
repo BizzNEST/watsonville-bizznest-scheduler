@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       displayInternRows(intern, tbody);
     });
   }
+
   function loadInterns() {
     // Load interns into the hashmap along with their details
     internsMap = new Map(); // Clear the previous map
