@@ -1,10 +1,10 @@
 import { pairInterns } from "./complexity.js";
-
 import {
   displayInternRows,
   elementArrCreator,
   appendChildren,
   displayFilters,
+  filterTable,
   filterTableBySearch,
 } from "./filter.js";
 
@@ -25,34 +25,33 @@ document.addEventListener("DOMContentLoaded", () => {
   pairingTable.className = "table table-hover";
 
   function displayInterns() {
-    // Ensure the table has the Bootstrap classes applied
     displayTable.className = "table table-hover";
 
-    // Create the thead and tbody elements if they don't exist yet
+    displayTable.innerHTML = "";
+   
     const thead = document.createElement("thead");
     const tbody = document.createElement("tbody");
-
-    // Create the header row
+  
     const rowTop = document.createElement("tr");
 
-    const filters = ["", "Name", "Location", "Department"]; //Create array for the filters
-    const topWords = elementArrCreator(filters, "th"); //make an array of topWords making a textContent for each
-    appendChildren(rowTop, topWords); // append topWords to rowTop.
-
-    // Append header row to thead
+    const filters = ['', 'Name', 'Location', 'Department'];
+    const topWords = elementArrCreator(filters, "th");
+    appendChildren(rowTop, topWords);
+   
     thead.appendChild(rowTop);
-    displayTable.appendChild(thead); // Append thead to the table
-    displayTable.appendChild(tbody); // Append tbody to the table
-
+    displayTable.appendChild(thead);
+    displayTable.appendChild(tbody);
+  
     loadInterns().then((map) => {
       internsMap = map;
       internsMap.forEach((intern, name) => {
-        console.log(`Name: ${name}, Details:`, intern);
-        displayInternRows(intern, tbody, checkedInterns); // Pass tbody to the function
+        displayInternRows(intern, tbody, checkedInterns);
       });
+    }).catch(error => {
+      console.error("Error loading:", error);
     });
   }
-
+  
   function excludeSelectedInterns() {
     // Add checked interns to selectedInterns
     selectedInterns.push(...checkedInterns);
@@ -72,20 +71,34 @@ document.addEventListener("DOMContentLoaded", () => {
       displayInternRows(intern, tbody);
     });
   }
-
   function loadInterns() {
-    //simply loads interns into the hashmap along with their details
+    // Load interns into the hashmap along with their details
+    internsMap = new Map(); // Clear the previous map
     return fetch("interns.json")
-      .then((response) => response.json())
-      .then((data) => {
-        internsMap = new Map();
-        data.intern.forEach((intern) => {
-          internsMap.set(intern.name, intern);
-        });
-        return internsMap; // Return the map
-      })
-      .catch((error) => console.error("Error loading JSON:", error));
-  }
+        .then((response) => response.json())
+        .then((data) => {
+            data.intern.forEach((intern) => {
+                internsMap.set(intern.name, intern);
+            });
+            console.log("Loaded Interns:", internsMap); // Log the map after loading
+            return internsMap; // Return the map
+        })
+        .catch((error) => console.error("Error loading JSON:", error));
+}
+
+  // function loadInterns() {
+  //   //simply loads interns into the hashmap along with their details
+  //   return fetch("interns.json")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       internsMap = new Map();
+  //       data.intern.forEach((intern) => {
+  //         internsMap.set(intern.name, intern);
+  //       });
+  //       return internsMap; // Return the map
+  //     })
+  //     .catch((error) => console.error("Error loading JSON:", error));
+  // }
 
   function displayPairs(pairs) {
     const pairingTableBody = document
@@ -228,17 +241,92 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  document
-    .getElementById("reset-button")
-    .addEventListener("click", function () {
-      // original table
-      document.getElementById("interns-display").style.display = "table";
-      document.getElementById("pairing-intern-display").style.display = "none";
-      // loadInterns().then(() => {
-      //   displayInterns();
-      //   // console.log("displ: ",displayInterns());
-      // });
-    });
+
+document.getElementById('reset-button').addEventListener('click', function() {
+  internsMap.clear();
+  
+  const tbody = document.querySelector("#interns-display tbody");
+  tbody.innerHTML = "";
+  loadInterns().then(() => {
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
+
+    displayInterns();
+  }).catch(error => {
+    console.error("Error reloading interns in reset:", error);
+  });
+  
+});
+
+document.querySelector('.reset-all-buttons').addEventListener('click', function() {
+  
+  let locationButtons = document.querySelectorAll('.location-button');
+  locationButtons.forEach(button => {
+    button.classList.remove('active');
+  });
+
+ 
+  let departmentButtons = document.querySelectorAll('.department-button');
+  departmentButtons.forEach(button => {
+    button.classList.remove('active');
+  });
+
+ 
+  let checkboxes = document.querySelectorAll('.unique-boxes input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.checked = false;
+  });
+
+  
+  const searchBar = document.getElementById("search-bar");
+  if (searchBar) {
+    searchBar.value = ""; 
+  }
+
+  filterTableBySearch(""); 
+
+  const locationDropdown = document.getElementById("locations");
+  const departmentDropdown = document.getElementById("department");
+
+  if (locationDropdown) {
+    locationDropdown.value = ""; 
+  }
+  
+  if (departmentDropdown) {
+    departmentDropdown.value = "";
+  }
+  filterTable(); 
+  const table_checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+  table_checkboxes.forEach((checkbox) => {
+      const internRow = checkbox.closest("tr");
+       // Check if the row is visible
+      const isVisible = internRow.style.display !== "none";
+
+      if (isVisible) {
+          checkbox.checked = false;
+
+          const internName = internRow.querySelector("td:nth-child(2)").textContent;
+          selectedInterns = selectedInterns.filter(name => name !== internName);
+      }
+  });
+  console.log("Selected Interns after Deselect All:", selectedInterns);
+  internsMap.clear();
+  
+  // Clear
+  const tbody = document.querySelector("#interns-display tbody");
+  tbody.innerHTML = "";
+
+  loadInterns().then(() => {
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
+
+    displayInterns();
+  }).catch(error => {
+    console.error("Error reloading interns in reset all:", error);
+  });
+  
+});
 
 
   document.getElementById("generate-pairs").addEventListener("click", () => {

@@ -108,6 +108,8 @@
                         value="True"
                       />
                       <label for="unique-department">Department</label><br />
+                    <!-- reset all buttons including table after generating pairs ***might need to make itds own div** -->
+                    <button class="reset-all-buttons">Reset All Buttons </button>
                     </div>
                   </div>
                 </div>
@@ -119,7 +121,7 @@
               <div class="table">
                 <div class="table-functions">
                   <form id="search-form">
-                    <input type="text" placeholder="Search" />
+                    <input id="search-bar" type="text" placeholder="Search" />
                     <button type="submit">Submit</button>
                   </form>
                   <div id="filter-options">
@@ -127,7 +129,9 @@
                     <div id="dropdowns-container"></div>
                     <p id="selectedLocation"></p>
                     <p id="selectedDepartment"></p>
-                    <button id="reset-button">Reset</button>
+
+                    <!-- button only resets the table after generating pairs. -->
+                    <button id="reset-button"> Reset Table </button>
                     <button id="select-all">Select All</button>
                     <button id="deselect-all-button" class="button-spacing">
                       Deselect All
