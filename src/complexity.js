@@ -1,5 +1,6 @@
 // Function to shuffle an array
-export function shuffleArray(array) {
+
+function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1)); // Random index
     [array[i], array[j]] = [array[j], array[i]]; // Swap elements
@@ -7,16 +8,113 @@ export function shuffleArray(array) {
   return array;
 }
 
+export function pairInterns(
+  uniqueCheckbox,
+  uniqueDepartment,
+  cityTokens,
+  departmentTokens,
+  selectedInterns,
+  internsMap,
+) {
+  console.log("pairInterns function called");
+  if (!internsMap || internsMap.size === 0) {
+    // ensures interns are loaded
+    logToPage("Error: No Interns Found");
+    return null;
+  }
+
+  if (selectedInterns.length > 0) {
+    selectedInterns.forEach((intern) => {
+      if (internsMap.has(intern)) {
+        internsMap.delete(intern);
+      }
+    });
+  }
+
+  if (!internsMap || internsMap.size === 0) {
+    // ensures interns are loaded
+    logToPage("Error: No Interns Found");
+    return null;
+  }
+
+  // Get the checkbox element
+  const uniqueCheckboxValue = uniqueCheckbox.checked; // Access the checked property
+  const uniqueDepartmentValue = uniqueDepartment.checked; // Access the checked property
+
+  console.log("uniqueCheckbox value:", uniqueCheckboxValue); // Check the boolean value
+  console.log("uniqueDepartment value:", uniqueDepartmentValue);
+
+  if (uniqueCheckboxValue == true && uniqueDepartmentValue == true) {
+    // if unique is checked, calls complex algoritihm
+    console.log("Calling uniqueInterns...");
+    return findUniquePairs(cityTokens, departmentTokens, internsMap);
+  }
+
+  if (uniqueCheckboxValue == true && uniqueDepartmentValue == false) {
+    // if unique is checked, calls complex algoritihm
+    console.log("Calling uniqueInterns...");
+    return unique_location(cityTokens, internsMap);
+  }
+
+  if (uniqueCheckboxValue == false && uniqueDepartmentValue == true) {
+    // if unique is checked, calls complex algoritihm
+    console.log("Calling uniqueInterns...");
+    return unique_department(departmentTokens, internsMap);
+  }
+
+  let internsArray;
+
+  if (cityTokens.length != 0 || departmentTokens.length != 0) {
+    //checks if there are tokens
+    // filter interns whose city is within the cityTokens array or department is within the departmentTokens array
+    internsArray = Array.from(internsMap.values()).filter((intern) => {
+      const cityMatch =
+        cityTokens.length === 0 || cityTokens.includes(intern.location); //checks if tokens are empty or if the intern's location is included in tokens
+      const departmentMatch =
+        departmentTokens.length === 0 ||
+        departmentTokens.includes(intern.department); //same logic as below, they are just booleans that allow interns to filter
+      return cityMatch && departmentMatch;
+    });
+  } else {
+    // If no cityTokens or departmentTokens are provided, just create the array from internsMap values
+    internsArray = Array.from(internsMap.values());
+  }
+  // store the selected interns within array
+
+  // shuffle the array around to ensure randomization pairs
+  shuffleArray(internsArray);
+
+  const pairs = []; //results
+  let i = 0; //index
+
+  while (i < internsArray.length) {
+    if (i + 1 < internsArray.length) {
+      pairs.push([internsArray[i], internsArray[i + 1]]);
+      i += 2;
+    } else {
+      break;
+    }
+  } //creates pairs until it runs out of pairs of two
+
+  if (i < internsArray.length) {
+    const lastGroup = pairs.pop();
+    lastGroup.push(internsArray[i]);
+    pairs.push(lastGroup);
+  } //adds pair to last group if there are any leftovers
+
+  return pairs;
+}
+
 //case 1 only unique cities location
 
-export function unique_location(cityTokens, internsMap) {
+function unique_location(cityTokens, internsMap) {
   const pairs = [];
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
 
   if (cityTokens.length === 1) {
-    console.log("Please pick at least two cities");
-    return [];
+    logToPage("Please select at least two cities");
+    return null;
   }
 
   if (cityTokens.length > 1) {
@@ -78,14 +176,14 @@ export function unique_location(cityTokens, internsMap) {
 
 //case two only unique departments
 
-export function unique_department(departmentTokens, internsMap) {
+function unique_department(departmentTokens, internsMap) {
   const pairs = [];
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
 
   if (departmentTokens.length === 1) {
-    console.log("Please pick at least two departments");
-    return [];
+    logToPage("Please pick at least two departments");
+    return null;
   }
 
   if (departmentTokens.length > 1) {
@@ -146,14 +244,14 @@ export function unique_department(departmentTokens, internsMap) {
 }
 
 ////////////////case three both options selected
-export function findUniquePairs(cityTokens, departmentTokens, internsMap) {
+function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   const pairs = [];
   const interns = Array.from(internsMap.values()); // Convert the hashmap to an array of intern objects
   let filteredInterns = interns;
 
   if (departmentTokens.length === 1 || cityTokens.length === 1) {
-    console.log("Please pick at least two cities and two departments");
-    return [];
+    logToPage("Please pick at least two cities and two departments");
+    return null;
   }
 
   // Filter interns based on the provided department and city tokens
@@ -223,4 +321,16 @@ export function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   console.log("Unique Pairs:", pairs);
 
   return pairs;
+}
+
+function logToPage(message) {
+  const logDiv = document.getElementById("logOutput");
+  // Check if the current log message is already displayed
+  if (logDiv.textContent === message) {
+    return; // Don't append the same message again
+  }
+  logDiv.innerHTML = "";
+  const newLog = document.createElement("p");
+  newLog.textContent = message;
+  logDiv.appendChild(newLog);
 }

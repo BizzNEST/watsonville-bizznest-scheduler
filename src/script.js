@@ -1,94 +1,57 @@
+import { pairInterns } from "./complexity.js";
 import {
-  unique_location,
-  shuffleArray,
-  unique_department,
-  findUniquePairs,
-} from "./complexity.js";
-
-import {
-  filterTable,
-  filterTableBySearch,
+  displayInternRows,
   elementArrCreator,
   appendChildren,
+  displayFilters,
+  filterTable,
+  filterTableBySearch,
 } from "./filter.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // initialize global hashmap and tokens
-
-  const displayTable = document.getElementById("interns-display");
   let internsMap;
   let cityTokens = [];
   let departmentTokens = [];
-  const uniqueCheckbox = document.getElementById("unique"); // checks if uniquness triggered
-  const uniqueDepartment = document.getElementById("unique-department"); // checks if uniquness triggered
-  displayTable.className = "table table-hover";
-  const pairingTable = document.getElementById("pairing-intern-display");
-  pairingTable.className = "table table-hover";
-
-  function displayInterns() {
-    // Ensure the table has the Bootstrap classes applied
-    displayTable.className = "table table-hover";
-
-    // Create the thead and tbody elements if they don't exist yet
-    const thead = document.createElement("thead");
-    const tbody = document.createElement("tbody");
-
-    // Create the header row
-    const rowTop = document.createElement("tr");
-
-    /** ALTERNATE APPROACH**/
-    const filters = ['', 'Name', 'Location', 'Department']; //Create array for the filters.
-    const topWords = elementArrCreator(filters, "th"); //Then, make an array of topWords, setting the textContent for each.
-    appendChildren(rowTop, topWords); //Finally, append topWords to rowTop.
-    //** **/
-
-    // Append header row to thead
-    thead.appendChild(rowTop);
-    displayTable.appendChild(thead); // Append thead to the table
-    displayTable.appendChild(tbody); // Append tbody to the table
-
-    loadInterns().then((map) => {
-      internsMap = map;
-      internsMap.forEach((intern, name) => {
-        console.log(`Name: ${name}, Details:`, intern);
-        displayInternRows(intern, tbody); // Pass tbody to the function
-      });
-    });
-  }
-
   let selectedInterns = [];
   let checkedInterns = [];
 
-  function displayInternRows(intern, tbody) {
-    const row = document.createElement("tr");
+  const uniqueCheckbox = document.getElementById("unique"); // checks if uniquness triggered
+  const uniqueDepartment = document.getElementById("unique-department"); // checks if uniquness triggered
+  const pairingTable = document.getElementById("pairing-intern-display");
+  const displayTable = document.getElementById("interns-display");
 
-    const checkboxCell = document.createElement("td");
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("intern-checkbox");
+  displayTable.className = "table table-hover";
+  pairingTable.className = "table table-hover";
 
-    // Update the temporary checkedInterns array when checkbox is clicked
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        checkedInterns.push(intern.name);
-      } else {
-        checkedInterns = checkedInterns.filter((name) => name !== intern.name);
-      }
+  function displayInterns() {
+    displayTable.className = "table table-hover";
+
+    displayTable.innerHTML = "";
+   
+    const thead = document.createElement("thead");
+    const tbody = document.createElement("tbody");
+  
+    const rowTop = document.createElement("tr");
+
+    const filters = ['', 'Name', 'Location', 'Department'];
+    const topWords = elementArrCreator(filters, "th");
+    appendChildren(rowTop, topWords);
+   
+    thead.appendChild(rowTop);
+    displayTable.appendChild(thead);
+    displayTable.appendChild(tbody);
+  
+    loadInterns().then((map) => {
+      internsMap = map;
+      internsMap.forEach((intern, name) => {
+        displayInternRows(intern, tbody, checkedInterns);
+      });
+    }).catch(error => {
+      console.error("Error loading:", error);
     });
-    checkboxCell.appendChild(checkbox);
-    row.appendChild(checkboxCell);
-
-    const internFilters = [
-      `${intern.name}`,
-      `${intern.location}`,
-      `${intern.department}`,
-    ];
-    const internsArray = elementArrCreator(internFilters, "td");
-    appendChildren(row, internsArray);
-
-    tbody.appendChild(row);
   }
-
+  
   function excludeSelectedInterns() {
     // Add checked interns to selectedInterns
     selectedInterns.push(...checkedInterns);
@@ -109,93 +72,34 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const excludeButton = document.createElement("button");
-  excludeButton.textContent = "Remove Selected";
-  excludeButton.addEventListener("click", excludeSelectedInterns);
-  document.getElementById("table-selection").appendChild(excludeButton);
-
-  function displayFilters() {
-    // Create Location Dropdown
-    const locations = [
-      { value: "", text: "Select..." },
-      { value: "Salinas", text: "Salinas" },
-      { value: "Watsonville", text: "Watsonville" },
-      { value: "Gilroy", text: "Gilroy" },
-      { value: "Stockton", text: "Stockton" },
-      { value: "Modesto", text: "Modesto" },
-    ];
-
-    const locationSelect = document.createElement("select");
-    locationSelect.id = "locations";
-    locationSelect.addEventListener("change", filterTable);
-
-    locations.forEach((location) => {
-      const option = document.createElement("option");
-      option.value = location.value;
-      option.textContent = location.text;
-      locationSelect.appendChild(option);
-    });
-
-    const locationLabel = document.createElement("label");
-    locationLabel.htmlFor = "locations";
-    locationLabel.textContent = "Location";
-
-    // Create Department Dropdown
-    const departments = [
-      { value: "", text: "Select..." },
-      { value: "Development", text: "Development" },
-      { value: "Video", text: "Video" },
-      { value: "Design", text: "Design" },
-      { value: "IT", text: "IT" },
-      { value: "Marketing", text: "Marketing" },
-    ];
-
-    const departmentSelect = document.createElement("select");
-    departmentSelect.id = "department";
-    departmentSelect.addEventListener("change", filterTable);
-
-    departments.forEach((department) => {
-      const option = document.createElement("option");
-      option.value = department.value;
-      option.textContent = department.text;
-      departmentSelect.appendChild(option);
-    });
-
-    const departmentLabel = document.createElement("label");
-    departmentLabel.htmlFor = "department";
-    departmentLabel.textContent = "Department";
-
-    // Append everything to the dropdowns container
-    const dropdownsContainer = document.getElementById("dropdowns-container");
-    dropdownsContainer.appendChild(locationLabel);
-    dropdownsContainer.appendChild(locationSelect);
-    dropdownsContainer.appendChild(departmentLabel);
-    dropdownsContainer.appendChild(departmentSelect);
-  }
-
-  // SELECT ALL CHECKBOXES
-  function selectAllCheckboxes() {
-    // Get all checkboxes in the table
-    const checkboxes = displayTable.querySelectorAll('input[type="checkbox"]');
-    // Iterate through each checkbox and set it to checked
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = true;
-    });
-  }
-
   function loadInterns() {
-    //simply loads interns into the hashmap along with their details
+    // Load interns into the hashmap along with their details
+    internsMap = new Map(); // Clear the previous map
     return fetch("interns.json")
-      .then((response) => response.json())
-      .then((data) => {
-        internsMap = new Map();
-        data.intern.forEach((intern) => {
-          internsMap.set(intern.name, intern);
-        });
-        return internsMap; // Return the map
-      })
-      .catch((error) => console.error("Error loading JSON:", error));
-  }
+        .then((response) => response.json())
+        .then((data) => {
+            data.intern.forEach((intern) => {
+                internsMap.set(intern.name, intern);
+            });
+            console.log("Loaded Interns:", internsMap); // Log the map after loading
+            return internsMap; // Return the map
+        })
+        .catch((error) => console.error("Error loading JSON:", error));
+}
+
+  // function loadInterns() {
+  //   //simply loads interns into the hashmap along with their details
+  //   return fetch("interns.json")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       internsMap = new Map();
+  //       data.intern.forEach((intern) => {
+  //         internsMap.set(intern.name, intern);
+  //       });
+  //       return internsMap; // Return the map
+  //     })
+  //     .catch((error) => console.error("Error loading JSON:", error));
+  // }
 
   function displayPairs(pairs) {
     const pairingTableBody = document
@@ -254,100 +158,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Randomizing Algorithim
 
-  function pairInterns() {
-    console.log("pairInterns function called");
-    if (!internsMap || internsMap.size === 0) {
-      // ensures interns are loaded
-      console.error("Interns map is empty or not loaded.");
-      return [];
-    }
-
-    if (selectedInterns.length > 0) {
-      selectedInterns.forEach((intern) => {
-        if (internsMap.has(intern)) {
-          internsMap.delete(intern);
-        }
-      });
-    }
-
-    if (!internsMap || internsMap.size === 0) {
-      // ensures interns are loaded
-      console.error("Interns map is empty or not loaded.");
-      return [];
-    }
-
-    // Get the checkbox element
-    const uniqueCheckboxValue = uniqueCheckbox.checked; // Access the checked property
-    const uniqueDepartmentValue = uniqueDepartment.checked; // Access the checked property
-
-    console.log("uniqueCheckbox value:", uniqueCheckboxValue); // Check the boolean value
-    console.log("uniqueDepartment value:", uniqueDepartmentValue);
-
-    if (uniqueCheckboxValue == true && uniqueDepartmentValue == true) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return findUniquePairs(cityTokens, departmentTokens, internsMap);
-    }
-
-    if (uniqueCheckboxValue == true && uniqueDepartmentValue == false) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return unique_location(cityTokens, internsMap);
-    }
-
-    if (uniqueCheckboxValue == false && uniqueDepartmentValue == true) {
-      // if unique is checked, calls complex algoritihm
-      console.log("Calling uniqueInterns...");
-      return unique_department(departmentTokens, internsMap);
-    }
-
-    let internsArray;
-
-    if (cityTokens.length != 0 || departmentTokens.length != 0) {
-      //checks if there are tokens
-      // filter interns whose city is within the cityTokens array or department is within the departmentTokens array
-      internsArray = Array.from(internsMap.values()).filter((intern) => {
-        const cityMatch =
-          cityTokens.length === 0 || cityTokens.includes(intern.location); //checks if tokens are empty or if the intern's location is included in tokens
-        const departmentMatch =
-          departmentTokens.length === 0 ||
-          departmentTokens.includes(intern.department); //same logic as below, they are just booleans that allow interns to filter
-        return cityMatch && departmentMatch;
-      });
-    } else {
-      // If no cityTokens or departmentTokens are provided, just create the array from internsMap values
-      internsArray = Array.from(internsMap.values());
-    }
-    // store the selected interns within array
-
-    // shuffle the array around to ensure randomization pairs
-    shuffleArray(internsArray);
-
-    const pairs = []; //results
-    let i = 0; //index
-
-    while (i < internsArray.length) {
-      if (i + 1 < internsArray.length) {
-        pairs.push([internsArray[i], internsArray[i + 1]]);
-        i += 2;
-      } else {
-        break;
-      }
-    } //creates pairs until it runs out of pairs of two
-
-    if (i < internsArray.length) {
-      const lastGroup = pairs.pop();
-      lastGroup.push(internsArray[i]);
-      pairs.push(lastGroup);
-    } //adds pair to last group if there are any leftovers
-
-    return pairs;
-  }
-
   /////////////////////////interacting with HTML page and displaying the randomization + results of pairs
 
   displayInterns();
   displayFilters();
+
+  const excludeButton = document.createElement("button");
+  excludeButton.textContent = "Remove selected intern";
+  excludeButton.addEventListener("click", excludeSelectedInterns);
+  document.getElementById("filter-options").appendChild(excludeButton);
 
   document
     .getElementById("search-form")
@@ -357,19 +176,49 @@ document.addEventListener("DOMContentLoaded", () => {
         this.querySelector('input[type="text"]').value.toLowerCase();
       filterTableBySearch(searchValue);
     });
-
   document.getElementById("select-all").addEventListener("click", () => {
-    document.querySelectorAll("input.intern-checkbox").forEach((checkbox) => {
-      checkbox.checked = true;
-      const internName = checkbox
-        .closest("tr")
-        .querySelector("td:nth-child(2)").textContent;
-      if (!selectedInterns.includes(internName)) {
-        selectedInterns.push(internName);
+    const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+    checkboxes.forEach((checkbox) => {
+      const internRow = checkbox.closest("tr");
+      const isVisible = internRow.style.display !== "none";
+
+      if (isVisible) {
+        checkbox.checked = true;
+        const internName =
+          internRow.querySelector("td:nth-child(2)").textContent;
+        if (!selectedInterns.includes(internName)) {
+          selectedInterns.push(internName);
+        }
       }
     });
-    console.log("Excluded Interns after Select All:", selectedInterns);
+
+    console.log("Selected Interns after Select All:", selectedInterns);
   });
+
+  document
+    .getElementById("deselect-all-button")
+    .addEventListener("click", () => {
+      const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+      checkboxes.forEach((checkbox) => {
+        const internRow = checkbox.closest("tr");
+        // Check if the row is visible
+        const isVisible = internRow.style.display !== "none";
+
+        if (isVisible) {
+          checkbox.checked = false;
+
+          const internName =
+            internRow.querySelector("td:nth-child(2)").textContent;
+          selectedInterns = selectedInterns.filter(
+            (name) => name !== internName,
+          );
+        }
+      });
+
+      console.log("Selected Interns after Deselect All:", selectedInterns);
+    });
 
   uniqueCheckbox.addEventListener("click", () => {
     console.log("Unique Checkbox Status:", uniqueCheckbox.checked);
@@ -393,14 +242,115 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+document.getElementById('reset-button').addEventListener('click', function() {
+  internsMap.clear();
+  
+  const tbody = document.querySelector("#interns-display tbody");
+  tbody.innerHTML = "";
+  loadInterns().then(() => {
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
+
+    displayInterns();
+  }).catch(error => {
+    console.error("Error reloading interns in reset:", error);
+  });
+  
+});
+
+document.querySelector('.reset-all-buttons').addEventListener('click', function() {
+  
+  let locationButtons = document.querySelectorAll('.location-button');
+  locationButtons.forEach(button => {
+    button.classList.remove('active');
+  });
+
+ 
+  let departmentButtons = document.querySelectorAll('.department-button');
+  departmentButtons.forEach(button => {
+    button.classList.remove('active');
+  });
+
+ 
+  let checkboxes = document.querySelectorAll('.unique-boxes input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.checked = false;
+  });
+
+  
+  const searchBar = document.getElementById("search-bar");
+  if (searchBar) {
+    searchBar.value = ""; 
+  }
+
+  filterTableBySearch(""); 
+
+  const locationDropdown = document.getElementById("locations");
+  const departmentDropdown = document.getElementById("department");
+
+  if (locationDropdown) {
+    locationDropdown.value = ""; 
+  }
+  
+  if (departmentDropdown) {
+    departmentDropdown.value = "";
+  }
+  filterTable(); 
+  const table_checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+  table_checkboxes.forEach((checkbox) => {
+      const internRow = checkbox.closest("tr");
+       // Check if the row is visible
+      const isVisible = internRow.style.display !== "none";
+
+      if (isVisible) {
+          checkbox.checked = false;
+
+          const internName = internRow.querySelector("td:nth-child(2)").textContent;
+          selectedInterns = selectedInterns.filter(name => name !== internName);
+      }
+  });
+  console.log("Selected Interns after Deselect All:", selectedInterns);
+  internsMap.clear();
+  
+  // Clear
+  const tbody = document.querySelector("#interns-display tbody");
+  tbody.innerHTML = "";
+
+  loadInterns().then(() => {
+  document.getElementById('interns-display').style.display = 'table';
+  document.getElementById('pairing-intern-display').style.display = 'none';
+
+    displayInterns();
+  }).catch(error => {
+    console.error("Error reloading interns in reset all:", error);
+  });
+  
+});
+
+
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
     document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
     updateCityTokens(); // Update active cities before pairing
     loadInterns().then(() => {
-      const pairs = pairInterns();
-      console.log("Intern Pairings:", pairs);
-      displayPairs(pairs); // Display pairs in the table
+      const pairs = pairInterns(
+        uniqueCheckbox,
+        uniqueDepartment,
+        cityTokens,
+        departmentTokens,
+        selectedInterns,
+        internsMap,
+      );
+      if (pairs) {
+        console.log("Intern Pairings:", pairs);
+        const logDiv = document.getElementById("logOutput");
+        logDiv.innerHTML = "";
+        displayPairs(pairs); // Only display pairs if no error occurred
+      } else {
+        console.log("Pairing skipped due to error");
+      }
     });
   });
 });
