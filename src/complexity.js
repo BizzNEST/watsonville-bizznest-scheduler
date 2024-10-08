@@ -19,8 +19,8 @@ export function pairInterns(
   console.log("pairInterns function called");
   if (!internsMap || internsMap.size === 0) {
     // ensures interns are loaded
-    console.error("Interns map is empty or not loaded.");
-    return [];
+    logToPage("Error: No Interns Found");
+    return null;
   }
 
   if (selectedInterns.length > 0) {
@@ -33,8 +33,8 @@ export function pairInterns(
 
   if (!internsMap || internsMap.size === 0) {
     // ensures interns are loaded
-    console.error("Interns map is empty or not loaded.");
-    return [];
+    logToPage("Error: No Interns Found");
+    return null;
   }
 
   // Get the checkbox element
@@ -113,8 +113,8 @@ function unique_location(cityTokens, internsMap) {
   let filteredInterns = interns;
 
   if (cityTokens.length === 1) {
-    console.log("Please pick at least two cities");
-    return [];
+    logToPage("Please select at least two cities");
+    return null;
   }
 
   if (cityTokens.length > 1) {
@@ -182,8 +182,8 @@ function unique_department(departmentTokens, internsMap) {
   let filteredInterns = interns;
 
   if (departmentTokens.length === 1) {
-    console.log("Please pick at least two departments");
-    return [];
+    logToPage("Please pick at least two departments");
+    return null;
   }
 
   if (departmentTokens.length > 1) {
@@ -250,8 +250,8 @@ function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   let filteredInterns = interns;
 
   if (departmentTokens.length === 1 || cityTokens.length === 1) {
-    console.log("Please pick at least two cities and two departments");
-    return [];
+    logToPage("Please pick at least two cities and two departments");
+    return null;
   }
 
   // Filter interns based on the provided department and city tokens
@@ -321,4 +321,16 @@ function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   console.log("Unique Pairs:", pairs);
 
   return pairs;
+}
+
+function logToPage(message) {
+  const logDiv = document.getElementById("logOutput");
+  // Check if the current log message is already displayed
+  if (logDiv.textContent === message) {
+    return; // Don't append the same message again
+  }
+  logDiv.innerHTML = "";
+  const newLog = document.createElement("p");
+  newLog.textContent = message;
+  logDiv.appendChild(newLog);
 }
