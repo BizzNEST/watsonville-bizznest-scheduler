@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tbody = document.createElement("tbody");
   
     const rowTop = document.createElement("tr");
+
     const filters = ['', 'Name', 'Location', 'Department'];
     const topWords = elementArrCreator(filters, "th");
     appendChildren(rowTop, topWords);
@@ -174,43 +175,49 @@ document.addEventListener("DOMContentLoaded", () => {
         this.querySelector('input[type="text"]').value.toLowerCase();
       filterTableBySearch(searchValue);
     });
-    document.getElementById("select-all").addEventListener("click", () => {
-      const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
-  
-      checkboxes.forEach((checkbox) => {
-          const internRow = checkbox.closest("tr");
-          const isVisible = internRow.style.display !== "none";
-  
-          if (isVisible) {
-              checkbox.checked = true;
-              const internName = internRow.querySelector("td:nth-child(2)").textContent;
-              if (!selectedInterns.includes(internName)) {
-                  selectedInterns.push(internName);
-              }
-          }
-      });
-  
-      console.log("Selected Interns after Select All:", selectedInterns);
-  });
-  
-  document.getElementById("deselect-all-button").addEventListener("click", () => {
+  document.getElementById("select-all").addEventListener("click", () => {
     const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
 
     checkboxes.forEach((checkbox) => {
+      const internRow = checkbox.closest("tr");
+      const isVisible = internRow.style.display !== "none";
+
+      if (isVisible) {
+        checkbox.checked = true;
+        const internName =
+          internRow.querySelector("td:nth-child(2)").textContent;
+        if (!selectedInterns.includes(internName)) {
+          selectedInterns.push(internName);
+        }
+      }
+    });
+
+    console.log("Selected Interns after Select All:", selectedInterns);
+  });
+
+  document
+    .getElementById("deselect-all-button")
+    .addEventListener("click", () => {
+      const checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+
+      checkboxes.forEach((checkbox) => {
         const internRow = checkbox.closest("tr");
-         // Check if the row is visible
+        // Check if the row is visible
         const isVisible = internRow.style.display !== "none";
 
         if (isVisible) {
-            checkbox.checked = false;
+          checkbox.checked = false;
 
-            const internName = internRow.querySelector("td:nth-child(2)").textContent;
-            selectedInterns = selectedInterns.filter(name => name !== internName);
+          const internName =
+            internRow.querySelector("td:nth-child(2)").textContent;
+          selectedInterns = selectedInterns.filter(
+            (name) => name !== internName,
+          );
         }
-    });
+      });
 
-    console.log("Selected Interns after Deselect All:", selectedInterns);
-});
+      console.log("Selected Interns after Deselect All:", selectedInterns);
+    });
 
   uniqueCheckbox.addEventListener("click", () => {
     console.log("Unique Checkbox Status:", uniqueCheckbox.checked);
@@ -233,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateDepartmentTokens();
     });
   });
+
 
 document.getElementById('reset-button').addEventListener('click', function() {
   internsMap.clear();
@@ -320,6 +328,7 @@ document.querySelector('.reset-all-buttons').addEventListener('click', function(
   
 });
 
+
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
     document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
@@ -333,8 +342,14 @@ document.querySelector('.reset-all-buttons').addEventListener('click', function(
         selectedInterns,
         internsMap,
       );
-      console.log("Intern Pairings:", pairs);
-      displayPairs(pairs); // Display pairs in the table
+      if (pairs) {
+        console.log("Intern Pairings:", pairs);
+        const logDiv = document.getElementById("logOutput");
+        logDiv.innerHTML = "";
+        displayPairs(pairs); // Only display pairs if no error occurred
+      } else {
+        console.log("Pairing skipped due to error");
+      }
     });
   });
 });
