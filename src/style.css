@@ -286,8 +286,22 @@ input[type="checkbox"] {
   accent-color: #72c5a3;
 }
 
+@keyframes fade-right {
+  from{
+    opacity: 0%;
+    right: 500px;
+  } 
+  to{
+    opacity: 100%;
+    right: 0px;
+  }
+}
+
 .locations-div {
   margin-bottom: 20px;
+  position: relative;
+  
+  animation: fade-right 0.3s ease-out forwards;
 }
 .locations-div > h2 {
   font-family: lato-bold;
@@ -298,6 +312,10 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  position: relative;
+  right: 500px;
+
+  animation: fade-right 0.3s 0.3s ease-out forwards;
 }
 .department-col > h2 {
   font-family: lato-bold;
@@ -305,6 +323,10 @@ input[type="checkbox"] {
 }
 .unique-div {
   margin-bottom: 50px;
+  position: relative;
+  right: 500px;
+
+  animation: fade-right 0.4s 0.4s ease-out forwards;
 }
 .unique-div > h2 {
   font-family: lato-bold;
@@ -316,9 +338,25 @@ input[type="checkbox"] {
   flex-direction: column;
   padding-left: 10px;
 }
+
+@keyframes table-fade {
+  from{
+    opacity: 0%;
+    top: 300px;
+  }
+  to {
+    opacity: 100%;
+    top: 0px;
+  }
+}
 .table {
   font-family: lato-reg;
   width: 68%;
+  opacity: 0%;
+  position: relative;
+  top: 300px;
+
+  animation: table-fade 0.5s ease-out 0.3s forwards;
 }
 .table-functions {
   display: flex;
@@ -375,6 +413,19 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  opacity: 0%;
+
+  animation: fade-up 0.3s  linear 0.9s forwards;
+}
+
+@keyframes fade-up {
+  from{
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+  
 }
 
 .modal-footer button{
