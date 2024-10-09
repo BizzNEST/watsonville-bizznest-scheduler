@@ -22,8 +22,8 @@ body{
   background-color: transparent;
   border: 1px solid;
   border-radius: 8px;
-  padding: 8px 20px;
-  margin: 5px;
+  padding: 8px 24px;
+  margin: 5px 0px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -328,7 +328,7 @@ input[type="checkbox"] {
 
 .table-container {
   max-height: 420px; /* Set the max height you want for the table */
-  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-y: scroll;
 }
 
 .table-container table {
@@ -346,6 +346,7 @@ input[type="checkbox"] {
   flex-direction: row;
   align-items: center;
   border-bottom: 1px silver solid;
+  overflow-x: scroll;
 }
 
 #selection-btns{
@@ -370,6 +371,7 @@ input[type="checkbox"] {
 }
 
 .modal-footer{
+  font-family: lato-reg;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -390,4 +392,8 @@ input[type="checkbox"] {
 }
 #reset-all:hover{
   background-color: rgb(202, 131, 0);
+}
+
+tr:nth-child(even){
+  background-color: #72c5a349;
 }
