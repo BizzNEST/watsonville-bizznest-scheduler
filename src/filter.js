@@ -22,7 +22,7 @@ export function displayFilters() {
 
   const locationLabel = document.createElement("label");
   locationLabel.htmlFor = "locations";
-  locationLabel.textContent = "Choose a location:";
+  locationLabel.textContent = "Location";
 
   // Create Department Dropdown
   const departments = [
@@ -47,7 +47,7 @@ export function displayFilters() {
 
   const departmentLabel = document.createElement("label");
   departmentLabel.htmlFor = "department";
-  departmentLabel.textContent = "Choose a department:";
+  departmentLabel.textContent = "Department";
 
   // Append everything to the dropdowns container
   const dropdownsContainer = document.getElementById("dropdowns-container");
