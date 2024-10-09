@@ -90,10 +90,15 @@ body{
   color: white;
 }
 
+.filter-col{
+  width: 100%;
+}
+
 #filter-options {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   align-items: center;
-  gap: 10px;
 }
 
 #filter-options button {
@@ -106,6 +111,12 @@ body{
 
 #filter-options select {
   margin-right: 20px;
+}
+
+#dropdowns-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .pairing-table {
@@ -338,10 +349,46 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-bottom: 1px silver solid;
 }
 
-.selection-btns{
+#selection-btns{
   display: flex;
   flex-direction: row;
-  border: 1px red solid;
+  justify-content: space-evenly;
+  margin-top: -5px;
+}
+
+#selection-btns button {
+  color:white;
+  background-color: #72c5a3;
+  border: 0px;
+  border-radius: 5px;
+  margin-right: 5px;
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+#selection-btns button:hover{
+  background-color: #538a73;
+}
+
+.modal-footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.modal-footer button{
+  border-radius: 5px;
+  padding: 8px 20px;
+  border: 0px;
+  background-color: #72c5a3;
+  color: white;
+}
+.modal-footer button:hover{
+  background-color: #538a73;
+}
+#reset-all{
+  background-color: orange;
 }
