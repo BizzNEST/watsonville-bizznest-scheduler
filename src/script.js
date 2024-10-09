@@ -263,6 +263,7 @@ document.getElementById('reset-button').addEventListener('click', function() {
 });
 
 document.querySelector('.reset-all-buttons').addEventListener('click', function() {
+  internsMap.clear();
   selectedInterns = [];
   checkedInterns = [];
   
