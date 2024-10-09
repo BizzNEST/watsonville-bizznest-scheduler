@@ -71,6 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       displayInternRows(intern, tbody);
     });
   }
+
   function loadInterns() {
     // Load interns into the hashmap along with their details
     internsMap = new Map(); // Clear the previous map
@@ -345,7 +346,7 @@ document.querySelector('.reset-all-buttons').addEventListener('click', function(
       if (pairs) {
         console.log("Intern Pairings:", pairs);
         const logDiv = document.getElementById("logOutput");
-        logDiv.innerHTML = "";
+        // logDiv.innerHTML = "";
         displayPairs(pairs); // Only display pairs if no error occurred
       } else {
         console.log("Pairing skipped due to error");
@@ -353,3 +354,4 @@ document.querySelector('.reset-all-buttons').addEventListener('click', function(
     });
   });
 });
+
