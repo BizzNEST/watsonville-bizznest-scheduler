@@ -281,10 +281,6 @@ body{
   background-color: #72c5a3;
 }
 
-.modal-content {
-  height: 90vh;
-}
-
 input[type="checkbox"] {
   scale: 120%;
   accent-color: #72c5a3;
@@ -391,4 +387,7 @@ input[type="checkbox"] {
 }
 #reset-all{
   background-color: orange;
+}
+#reset-all:hover{
+  background-color: rgb(202, 131, 0);
 }
