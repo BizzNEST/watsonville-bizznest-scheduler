@@ -118,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Create cells for the interns in the group
       group.forEach((intern) => {
         const internCell = document.createElement("td");
+        internCell.contentEditable = true;
         internCell.textContent =
           intern.name + ", " + intern.location + ", " + intern.department; // Access intern name
         row.appendChild(internCell);
