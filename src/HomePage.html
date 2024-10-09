@@ -149,7 +149,7 @@
                         <th>Interns</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="the-table">
                       <!-- Pairs will be inserted here -->
                     </tbody>
                   </table>
@@ -195,14 +195,13 @@
           const doc = new jsPDF();
 
           // Add content to PDF
-          doc.text("Your PDF File", 10, 10);
-          doc.text("This is an exported PDF.", 10, 20);
-
-          // Save the PDF
+          doc.autoTable({html:'#the-table'}) 
+          // Save the PDF;
           doc.save("Randomized-Intern-Pairs.pdf");
         });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.8.3/dist/jspdf.plugin.autotable.js" ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
