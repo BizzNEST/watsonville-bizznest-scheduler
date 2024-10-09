@@ -246,6 +246,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById('reset-button').addEventListener('click', function() {
   internsMap.clear();
+  selectedInterns = [];
+  checkedInterns = [];
   
   const tbody = document.querySelector("#interns-display tbody");
   tbody.innerHTML = "";
@@ -261,6 +263,9 @@ document.getElementById('reset-button').addEventListener('click', function() {
 });
 
 document.querySelector('.reset-all-buttons').addEventListener('click', function() {
+  internsMap.clear();
+  selectedInterns = [];
+  checkedInterns = [];
   
   let locationButtons = document.querySelectorAll('.location-button');
   locationButtons.forEach(button => {
