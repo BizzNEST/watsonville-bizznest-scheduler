@@ -111,6 +111,10 @@
                     </div>
                   </div>
                 </div>
+                <div class="generation-btns">
+                  <button id="generate-pairs">Generate Random Pairs</button>
+                  <button class="reset-all-buttons" id="reset-all">Reset</button>
+                </div>
                 <div id="pairs-display"></div>
               </div>
               <!--TOOLBAR END-->
@@ -125,7 +129,6 @@
                   </div>
                   <div class="selection-tools">
                     <div id="selection-btns" class="button-contatiner">
-                      <button id="reset-button">Reset Table</button>
                       <button id="select-all">Select All</button>
                       <button id="deselect-all-button" class="button-spacing">
                         Deselect All
@@ -153,32 +156,25 @@
                       <!-- Pairs will be inserted here -->
                     </tbody>
                   </table>
-                </div> <!-- End of container div -->
+                </div>
+                <!--Footer Beneath Table-->
+                <div class="d-flex flex-column mb-3"></div>
+                <div class="modal-footer">
+                  <div class="log-text">
+                    <p id="logOutput">This is the error text.</p>
+                  </div>
+                  <div class="footer-btns">
+                    <button id="export-pdf"><img id="dl-icon" src="images/download.svg" alt=""></button>
+                    <button id="reset-button"><img id="reset-icon" src="images/arrow-clockwise.svg" alt=""></button>
+                  </div>
+                </div>
               </div>
               <!--TABLE END-->
             </div>
             <!--------------------------------------->
-            <div class="d-flex flex-column mb-3"></div>
-            <div class="modal-footer">
-              <!-- reset all buttons including table after generating pairs ***might need to make itds own div** -->
-              <button class="reset-all-buttons" id="reset-all">Reset</button>
-              <div>
-                <p id="error-text">This is the error text.</p>
-                <button type="button" class="btn btn-secondary" id="export-pdf">
-                  Export as PDF
-                </button>
-                <button type="button" class="btn btn-primary" id="generate-pairs">
-                  Generate Random Pairs
-                </button>
-              </div>
-            </div>
             <!--Modal Table END-->
           </div>
         </div>
-      </div>
-      <!--Website Banner-->
-      <div class="banner">
-        <img src="images/bee_2@7x.png" alt="" class="home-cover" />
       </div>
       <!--Website Banner-->
       <div class="banner">
