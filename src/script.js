@@ -28,30 +28,32 @@ document.addEventListener("DOMContentLoaded", () => {
     displayTable.className = "table table-hover";
 
     displayTable.innerHTML = "";
-   
+
     const thead = document.createElement("thead");
     const tbody = document.createElement("tbody");
-  
+
     const rowTop = document.createElement("tr");
 
-    const filters = ['', 'Name', 'Location', 'Department'];
+    const filters = ["", "Name", "Location", "Department"];
     const topWords = elementArrCreator(filters, "th");
     appendChildren(rowTop, topWords);
-   
+
     thead.appendChild(rowTop);
     displayTable.appendChild(thead);
     displayTable.appendChild(tbody);
-  
-    loadInterns().then((map) => {
-      internsMap = map;
-      internsMap.forEach((intern, name) => {
-        displayInternRows(intern, tbody, checkedInterns);
+
+    loadInterns()
+      .then((map) => {
+        internsMap = map;
+        internsMap.forEach((intern, name) => {
+          displayInternRows(intern, tbody, checkedInterns);
+        });
+      })
+      .catch((error) => {
+        console.error("Error loading:", error);
       });
-    }).catch(error => {
-      console.error("Error loading:", error);
-    });
   }
-  
+
   function excludeSelectedInterns() {
     // Add checked interns to selectedInterns
     selectedInterns.push(...checkedInterns);
@@ -76,16 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // Load interns into the hashmap along with their details
     internsMap = new Map(); // Clear the previous map
     return fetch("interns.json")
-        .then((response) => response.json())
-        .then((data) => {
-            data.intern.forEach((intern) => {
-                internsMap.set(intern.name, intern);
-            });
-            console.log("Loaded Interns:", internsMap); // Log the map after loading
-            return internsMap; // Return the map
-        })
-        .catch((error) => console.error("Error loading JSON:", error));
-}
+      .then((response) => response.json())
+      .then((data) => {
+        data.intern.forEach((intern) => {
+          internsMap.set(intern.name, intern);
+        });
+        console.log("Loaded Interns:", internsMap); // Log the map after loading
+        return internsMap; // Return the map
+      })
+      .catch((error) => console.error("Error loading JSON:", error));
+  }
 
   // function loadInterns() {
   //   //simply loads interns into the hashmap along with their details
@@ -243,98 +245,108 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  document
+    .getElementById("reset-button")
+    .addEventListener("click", function () {
+      internsMap.clear();
+      selectedInterns = [];
+      checkedInterns = [];
 
-document.getElementById('reset-button').addEventListener('click', function() {
-  internsMap.clear();
-  selectedInterns = [];
-  checkedInterns = [];
-  
-  const tbody = document.querySelector("#interns-display tbody");
-  tbody.innerHTML = "";
-  loadInterns().then(() => {
-  document.getElementById('interns-display').style.display = 'table';
-  document.getElementById('pairing-intern-display').style.display = 'none';
+      const tbody = document.querySelector("#interns-display tbody");
+      tbody.innerHTML = "";
+      loadInterns()
+        .then(() => {
+          document.getElementById("interns-display").style.display = "table";
+          document.getElementById("pairing-intern-display").style.display =
+            "none";
 
-    displayInterns();
-  }).catch(error => {
-    console.error("Error reloading interns in reset:", error);
-  });
-  
-});
+          displayInterns();
+        })
+        .catch((error) => {
+          console.error("Error reloading interns in reset:", error);
+        });
+    });
 
-document.querySelector('.reset-all-buttons').addEventListener('click', function() {
-  internsMap.clear();
-  selectedInterns = [];
-  checkedInterns = [];
-  
-  let locationButtons = document.querySelectorAll('.location-button');
-  locationButtons.forEach(button => {
-    button.classList.remove('active');
-  });
+  document
+    .querySelector(".reset-all-buttons")
+    .addEventListener("click", function () {
+      internsMap.clear();
+      selectedInterns = [];
+      checkedInterns = [];
 
- 
-  let departmentButtons = document.querySelectorAll('.department-button');
-  departmentButtons.forEach(button => {
-    button.classList.remove('active');
-  });
+      let locationButtons = document.querySelectorAll(".location-button");
+      locationButtons.forEach((button) => {
+        button.classList.remove("active");
+      });
 
- 
-  let checkboxes = document.querySelectorAll('.unique-boxes input[type="checkbox"]');
-  checkboxes.forEach(checkbox => {
-    checkbox.checked = false;
-  });
+      let departmentButtons = document.querySelectorAll(".department-button");
+      departmentButtons.forEach((button) => {
+        button.classList.remove("active");
+      });
 
-  
-  const searchBar = document.getElementById("search-bar");
-  if (searchBar) {
-    searchBar.value = ""; 
-  }
+      let checkboxes = document.querySelectorAll(
+        '.unique-boxes input[type="checkbox"]',
+      );
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
 
-  filterTableBySearch(""); 
+      const searchBar = document.getElementById("search-bar");
+      if (searchBar) {
+        searchBar.value = "";
+      }
 
-  const locationDropdown = document.getElementById("locations");
-  const departmentDropdown = document.getElementById("department");
+      filterTableBySearch("");
 
-  if (locationDropdown) {
-    locationDropdown.value = ""; 
-  }
-  
-  if (departmentDropdown) {
-    departmentDropdown.value = "";
-  }
-  filterTable(); 
-  const table_checkboxes = displayTable.querySelectorAll("input.intern-checkbox");
+      const locationDropdown = document.getElementById("locations");
+      const departmentDropdown = document.getElementById("department");
 
-  table_checkboxes.forEach((checkbox) => {
-      const internRow = checkbox.closest("tr");
-       // Check if the row is visible
-      const isVisible = internRow.style.display !== "none";
+      if (locationDropdown) {
+        locationDropdown.value = "";
+      }
 
-      if (isVisible) {
+      if (departmentDropdown) {
+        departmentDropdown.value = "";
+      }
+      filterTable();
+      const table_checkboxes = displayTable.querySelectorAll(
+        "input.intern-checkbox",
+      );
+
+      table_checkboxes.forEach((checkbox) => {
+        const internRow = checkbox.closest("tr");
+        // Check if the row is visible
+        const isVisible = internRow.style.display !== "none";
+
+        if (isVisible) {
           checkbox.checked = false;
 
-          const internName = internRow.querySelector("td:nth-child(2)").textContent;
-          selectedInterns = selectedInterns.filter(name => name !== internName);
-      }
-  });
-  console.log("Selected Interns after Deselect All:", selectedInterns);
-  internsMap.clear();
-  
-  // Clear
-  const tbody = document.querySelector("#interns-display tbody");
-  tbody.innerHTML = "";
+          const internName =
+            internRow.querySelector("td:nth-child(2)").textContent;
+          selectedInterns = selectedInterns.filter(
+            (name) => name !== internName,
+          );
+        }
+      });
+      console.log("Selected Interns after Deselect All:", selectedInterns);
+      internsMap.clear();
 
-  loadInterns().then(() => {
-  document.getElementById('interns-display').style.display = 'table';
-  document.getElementById('pairing-intern-display').style.display = 'none';
+      // Clear
+      const tbody = document.querySelector("#interns-display tbody");
+      tbody.innerHTML = "";
 
-    displayInterns();
-  }).catch(error => {
-    console.error("Error reloading interns in reset all:", error);
-  });
-  
-});
+      loadInterns()
+        .then(() => {
+          document.getElementById("interns-display").style.display = "table";
+          document.getElementById("pairing-intern-display").style.display =
+            "none";
 
+          displayInterns();
+        })
+        .catch((error) => {
+          console.error("Error reloading interns in reset all:", error);
+        });
+    });
 
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
@@ -360,4 +372,3 @@ document.querySelector('.reset-all-buttons').addEventListener('click', function(
     });
   });
 });
-
