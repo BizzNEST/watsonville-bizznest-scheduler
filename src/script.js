@@ -118,13 +118,26 @@ document.addEventListener("DOMContentLoaded", () => {
       row.appendChild(groupCell);
 
       // Create cells for the interns in the group
+      const internName = document.createElement("td");
       group.forEach((intern) => {
-        const internCell = document.createElement("td");
-        internCell.contentEditable = true;
-        internCell.textContent =
-          intern.name + ", " + intern.location + ", " + intern.department; // Access intern name
-        row.appendChild(internCell);
+        internName.contentEditable = true;
+        internName.textContent += intern.name + '\r\n';;
       });
+      row.appendChild(internName);
+
+      const internLocation = document.createElement("td");
+      group.forEach((intern) => {
+        internLocation.contentEditable = true;
+        internLocation.textContent += intern.location + '\r\n';;
+      });
+      row.appendChild(internLocation);
+
+      const internDepartment = document.createElement("td");
+      group.forEach((intern) => {
+        internDepartment.contentEditable = true;
+        internDepartment.textContent += intern.department + '\r\n';;
+      });
+      row.appendChild(internDepartment);
 
       // Check if it's the first group and adjust accordingly
       if (index === 0 && group.length > 0) {
