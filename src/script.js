@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const excludeButton = document.createElement("button");
   excludeButton.textContent = "Remove Selected";
+  excludeButton.id = "remove-btn";
   excludeButton.addEventListener("click", excludeSelectedInterns);
   document.getElementById("selection-btns").appendChild(excludeButton);
 

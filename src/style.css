@@ -297,14 +297,14 @@ input[type="checkbox"] {
 .locations-div {
   margin-bottom: 20px;
   position: relative;
-  
+  align-items: center;
+
   animation: fade-right 0.3s ease-out forwards;
 }
-.locations-div > h2 {
+.locations-div  h2 {
   font-family: lato-bold;
-  margin-bottom: 15px;
+  display: inline-block;
 }
-
 .department-col {
   display: flex;
   flex-direction: column;
@@ -314,9 +314,9 @@ input[type="checkbox"] {
 
   animation: fade-right 0.3s 0.3s ease-out forwards;
 }
-.department-col > h2 {
+.department-col h2 {
   font-family: lato-bold;
-  margin-bottom: 15px;
+  display: inline-block;
 }
 .unique-div {
   margin-bottom: 50px;
@@ -325,9 +325,9 @@ input[type="checkbox"] {
 
   animation: fade-right 0.4s 0.4s ease-out forwards;
 }
-.unique-div > h2 {
+.unique-div h2 {
   font-family: lato-bold;
-  margin-bottom: 15px;
+  display: inline-block;
 }
 .unique-boxes {
   font-family: lato-reg;
@@ -405,6 +405,14 @@ input[type="checkbox"] {
 #selection-btns button:hover{
   background-color: #538a73;
 }
+#remove-btn{
+  background-color: transparent !important;
+  border: 2px #72c5a3 solid !important;
+  color:#72c5a3 !important;
+}
+#remove-btn:hover{
+  background-color: #f1f1f1 !important;
+}
 
 .modal-footer{
   font-family: lato-reg;
@@ -429,6 +437,9 @@ input[type="checkbox"] {
 #reset-button{
   background-color: orange;
 }
+#reset-button:hover{
+  background-color: rgb(193, 132, 19);
+}
 #reset-icon{
   filter: invert(100%);
   scale: 150%;
@@ -452,7 +463,7 @@ input[type="checkbox"] {
 .modal-footer button{
   border-radius: 5px;
   margin-left: 10px;
-  padding: 8px 20px;
+  padding: 10px 20px;
   border: 0px;
   background-color: #72c5a3;
   color: white;
@@ -463,7 +474,7 @@ input[type="checkbox"] {
 #logOutput {
   color: red;
   display: inline;
-  visibility: visible;
+  visibility: hidden;
   margin-right: 5px;
 }
 
@@ -480,17 +491,34 @@ tr:nth-child(even){
 
 .generation-btns{
   display: flex;
-  flex-direction: row;
-  margin-top: 69px;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
 .generation-btns button{
   background-color: #72c5a3;
   color: white;
+  font-size: large;
   border: 0px;
   border-radius: 5px;
-  padding: 8px 20px;
+  padding: 10px 20px;
   white-space: nowrap;
+  width: 100%;
+}
+.info{
+  opacity: 20%;
+  scale: 130%;
+  padding-bottom: 5px;
+}
+.info:hover{
+  opacity: 40%;
+}
+.toolbar-div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.clear{
+  text-align: right;
+  padding-right: 5px;
 }
