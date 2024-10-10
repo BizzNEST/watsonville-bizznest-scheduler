@@ -89,20 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error loading JSON:", error));
   }
 
-  // function loadInterns() {
-  //   //simply loads interns into the hashmap along with their details
-  //   return fetch("interns.json")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       internsMap = new Map();
-  //       data.intern.forEach((intern) => {
-  //         internsMap.set(intern.name, intern);
-  //       });
-  //       return internsMap; // Return the map
-  //     })
-  //     .catch((error) => console.error("Error loading JSON:", error));
-  // }
-
   function displayPairs(pairs) {
     const pairingTableBody = document
       .getElementById("pairing-intern-display")

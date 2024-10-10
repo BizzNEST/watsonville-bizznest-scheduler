@@ -153,12 +153,14 @@ function unique_location(cityTokens, internsMap) {
   let leftoverInternsAmt = leftoverInterns.length;
 
   if (leftoverInternsAmt >= 1) {
-    // logToPage(`There are ${leftoverInternsAmt} leftover intern(s).`);
+    logToPage(
+      `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger`,
+    );
     let pairIndex = 0;
     while (leftoverInterns.length > 0) {
       const intern = leftoverInterns.shift(); // Get the first leftover intern
-        pairs[pairIndex].push(intern); // Add the leftover intern to the pair
-        pairedInterns.add(intern.name);
+      pairs[pairIndex].push(intern); // Add the leftover intern to the pair
+      pairedInterns.add(intern.name);
       pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
     }
   }
@@ -168,7 +170,7 @@ function unique_location(cityTokens, internsMap) {
   console.log("Unique Pairs:", pairs);
   // Log the leftover interns (there should be none after the above logic)
   console.log("Leftover Interns:", leftoverInternsAmt);
-
+  validate(pairs, "location");
   return pairs;
 }
 
@@ -217,26 +219,26 @@ function unique_department(departmentTokens, internsMap) {
     (intern) => !pairedInterns.has(intern.name),
   );
 
-  // Keep creating pairs from leftover interns if possible
-  while (leftoverInterns.length > 1) {
-    const [first, second, ...rest] = leftoverInterns;
-    pairs.push([first, second]); // Pair the first two leftover interns
-    pairedInterns.add(first.name);
-    pairedInterns.add(second.name);
-    leftoverInterns = rest; // Update the leftover interns
-  }
+  let leftoverInternsAmt = leftoverInterns.length;
 
-  // If there's exactly one intern left, add them to the last pair
-  if (leftoverInterns.length === 1) {
-    const lastPair = pairs[pairs.length - 1];
-    lastPair.push(leftoverInterns[0]); // Add the last leftover intern to the last pair
-    pairedInterns.add(leftoverInterns[0].name);
+  if (leftoverInternsAmt >= 1) {
+    logToPage(
+      `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger`,
+    );
+    let pairIndex = 0;
+    while (leftoverInterns.length > 0) {
+      const intern = leftoverInterns.shift(); // Get the first leftover intern
+      pairs[pairIndex].push(intern); // Add the leftover intern to the pair
+      pairedInterns.add(intern.name);
+      pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
+    }
   }
+  // Add leftover interns to existing pairs
 
   // Log the unique pairs found
   console.log("Unique Pairs:", pairs);
   // Log the leftover interns (there should be none after the above logic)
-  console.log("Leftover Interns:", leftoverInterns);
+  console.log("Leftover Interns:", leftoverInternsAmt);
 
   return pairs;
 }
@@ -290,33 +292,31 @@ function findUniquePairs(cityTokens, departmentTokens, internsMap) {
     }
   }
 
+  // Find leftover interns
   let leftoverInterns = shuffledInterns.filter(
     (intern) => !pairedInterns.has(intern.name),
   );
 
-  // Keep creating pairs from leftover interns if possible
-  while (leftoverInterns.length > 1) {
-    const [first, second, ...rest] = leftoverInterns;
-    pairs.push([first, second]); // Pair the first two leftover interns
-    pairedInterns.add(first.name);
-    pairedInterns.add(second.name);
-    leftoverInterns = rest; // Update the leftover interns
-  }
+  let leftoverInternsAmt = leftoverInterns.length;
 
-  // If there's exactly one intern left, add them to the last pair
-  if (leftoverInterns.length === 1) {
-    const lastPair = pairs[pairs.length - 1];
-    lastPair.push(leftoverInterns[0]); // Add the last leftover intern to the last pair
-    pairedInterns.add(leftoverInterns[0].name);
+  if (leftoverInternsAmt >= 1) {
+    logToPage(
+      `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger`,
+    );
+    let pairIndex = 0;
+    while (leftoverInterns.length > 0) {
+      const intern = leftoverInterns.shift(); // Get the first leftover intern
+      pairs[pairIndex].push(intern); // Add the leftover intern to the pair
+      pairedInterns.add(intern.name);
+      pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
+    }
   }
+  // Add leftover interns to existing pairs
 
   // Log the unique pairs found
   console.log("Unique Pairs:", pairs);
   // Log the leftover interns (there should be none after the above logic)
-  console.log("Leftover Interns:", leftoverInterns);
-
-  // Log the unique pairs found
-  console.log("Unique Pairs:", pairs);
+  console.log("Leftover Interns:", leftoverInternsAmt);
 
   return pairs;
 }
@@ -328,7 +328,30 @@ function logToPage(message) {
     return; // Don't append the same message again
   }
   logDiv.innerHTML = "";
-  const newLog = document.createElement("p");
-  newLog.textContent = message;
-  logDiv.appendChild(newLog);
+  /*const newLog = document.createElement("p");
+  newLog.textContent = message;*/
+  logDiv.textContent = message;
+  logDiv.style.visibility = "visible";
+  /*logDiv.appendChild(newLog);*/
+}
+
+function validate(pairs, token) {
+  let total = 0;
+  let mismatch = 0;
+
+  // Loop through each pair of interns
+  if (token == "location") {
+    console.log("validation triggered");
+    pairs.forEach((pair) => {
+      if (pair.length === 2) {
+        total++; // Count valid pairs
+        // Check if interns are from different locations
+        if (pair[0].location !== pair[1].location) {
+          mismatch++; 
+        }
+      }
+    });
+    let accuracy = (mismatch / total) * 100;
+    return console.log(accuracy);
+  }
 }
