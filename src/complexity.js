@@ -153,14 +153,12 @@ function unique_location(cityTokens, internsMap) {
   let leftoverInternsAmt = leftoverInterns.length;
 
   if (leftoverInternsAmt >= 1) {
-    logToPage(`There are ${leftoverInternsAmt} leftover intern(s).`);
+    // logToPage(`There are ${leftoverInternsAmt} leftover intern(s).`);
     let pairIndex = 0;
     while (leftoverInterns.length > 0) {
       const intern = leftoverInterns.shift(); // Get the first leftover intern
-      if (pairs[pairIndex].length < 3) {
         pairs[pairIndex].push(intern); // Add the leftover intern to the pair
         pairedInterns.add(intern.name);
-      }
       pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
     }
   }
