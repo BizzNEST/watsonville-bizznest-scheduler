@@ -88,43 +88,45 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch((error) => console.error("Error loading JSON:", error));
   }
-
   function displayPairs(pairs) {
     const pairingTableBody = document
       .getElementById("pairing-intern-display")
       .querySelector("tbody");
     pairingTableBody.innerHTML = ""; // Clear existing rows
-
+  
     pairs.forEach((group, index) => {
       const row = document.createElement("tr");
-
+  
       // Create cell for the group
       const groupCell = document.createElement("td");
       groupCell.textContent = `Group ${index + 1}`;
       row.appendChild(groupCell);
-
+  
       // Create cells for the interns in the group
       const internName = document.createElement("td");
-      group.forEach((intern) => {
+      group.forEach((intern, i) => {
+        if (i > 0) internName.appendChild(document.createElement("br")); // Add line break after each intern
         internName.contentEditable = true;
-        internName.textContent += intern.name + "\r\n";
+        internName.appendChild(document.createTextNode(intern.name));
       });
       row.appendChild(internName);
-
+  
       const internLocation = document.createElement("td");
-      group.forEach((intern) => {
+      group.forEach((intern, i) => {
+        if (i > 0) internLocation.appendChild(document.createElement("br")); // Add line break after each location
         internLocation.contentEditable = true;
-        internLocation.textContent += intern.location + "\r\n";
+        internLocation.appendChild(document.createTextNode(intern.location));
       });
       row.appendChild(internLocation);
-
+  
       const internDepartment = document.createElement("td");
-      group.forEach((intern) => {
+      group.forEach((intern, i) => {
+        if (i > 0) internDepartment.appendChild(document.createElement("br")); // Add line break after each department
         internDepartment.contentEditable = true;
-        internDepartment.textContent += intern.department + "\r\n";
+        internDepartment.appendChild(document.createTextNode(intern.department));
       });
       row.appendChild(internDepartment);
-
+  
       // Check if it's the first group and adjust accordingly
       if (index === 0 && group.length > 0) {
         // Add a placeholder for the third column if it's the first group
@@ -133,10 +135,11 @@ document.addEventListener("DOMContentLoaded", () => {
           row.appendChild(placeholderCell);
         }
       }
-
+  
       pairingTableBody.appendChild(row);
     });
   }
+  
 
   //token handling
 
