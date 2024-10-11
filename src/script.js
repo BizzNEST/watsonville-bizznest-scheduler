@@ -6,6 +6,7 @@ import {
   displayFilters,
   filterTable,
   filterTableBySearch,
+  searchPairs,
 } from "./filter.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -93,15 +94,15 @@ document.addEventListener("DOMContentLoaded", () => {
       .getElementById("pairing-intern-display")
       .querySelector("tbody");
     pairingTableBody.innerHTML = ""; // Clear existing rows
-  
+
     pairs.forEach((group, index) => {
       const row = document.createElement("tr");
-  
+
       // Create cell for the group
       const groupCell = document.createElement("td");
       groupCell.textContent = `Group ${index + 1}`;
       row.appendChild(groupCell);
-  
+
       // Create cells for the interns in the group
       const internName = document.createElement("td");
       group.forEach((intern, i) => {
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
         internName.appendChild(document.createTextNode(intern.name));
       });
       row.appendChild(internName);
-  
+
       const internLocation = document.createElement("td");
       group.forEach((intern, i) => {
         if (i > 0) internLocation.appendChild(document.createElement("br")); // Add line break after each location
@@ -118,15 +119,17 @@ document.addEventListener("DOMContentLoaded", () => {
         internLocation.appendChild(document.createTextNode(intern.location));
       });
       row.appendChild(internLocation);
-  
+
       const internDepartment = document.createElement("td");
       group.forEach((intern, i) => {
         if (i > 0) internDepartment.appendChild(document.createElement("br")); // Add line break after each department
         internDepartment.contentEditable = true;
-        internDepartment.appendChild(document.createTextNode(intern.department));
+        internDepartment.appendChild(
+          document.createTextNode(intern.department),
+        );
       });
       row.appendChild(internDepartment);
-  
+
       // Check if it's the first group and adjust accordingly
       if (index === 0 && group.length > 0) {
         // Add a placeholder for the third column if it's the first group
@@ -135,11 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
           row.appendChild(placeholderCell);
         }
       }
-  
+
       pairingTableBody.appendChild(row);
     });
   }
-  
 
   //token handling
 
@@ -175,11 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("selection-btns").appendChild(excludeButton);
 
   document
-    .getElementById("search-form")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
-      const searchValue =
-        this.querySelector('input[type="text"]').value.toLowerCase();
+    .getElementById("search-bar") // Targeting the input field directly
+    .addEventListener("input", function () {
+      const searchValue = this.value.toLowerCase();
       filterTableBySearch(searchValue);
     });
   document.getElementById("select-all").addEventListener("click", () => {
@@ -300,6 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       filterTableBySearch("");
+      searchPairs("");
 
       const locationDropdown = document.getElementById("locations");
       const departmentDropdown = document.getElementById("department");
@@ -335,6 +336,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const logDiv = document.getElementById("logOutput");
         // logDiv.innerHTML = "";
         displayPairs(pairs); // Only display pairs if no error occurred
+        document
+          .getElementById("search-bar") // Targeting the input field directly
+          .addEventListener("input", function () {
+            const searchValue = this.value.toLowerCase();
+            searchPairs(searchValue);
+          });
       } else {
         console.log("Pairing skipped due to error");
       }
