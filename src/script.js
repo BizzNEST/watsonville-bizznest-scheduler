@@ -193,13 +193,13 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.checked = true;
         const internName =
           internRow.querySelector("td:nth-child(2)").textContent;
-        if (!selectedInterns.includes(internName)) {
-          selectedInterns.push(internName);
+        if (!checkedInterns.includes(internName)) {
+          checkedInterns.push(internName);
         }
       }
     });
 
-    console.log("Selected Interns after Select All:", selectedInterns);
+    console.log("Checked Interns Interns after Select All:", checkedInterns);
   });
 
   document
@@ -217,13 +217,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const internName =
             internRow.querySelector("td:nth-child(2)").textContent;
-          selectedInterns = selectedInterns.filter(
-            (name) => name !== internName,
-          );
+          checkedInterns = checkedInterns.filter((name) => name !== internName);
         }
       });
 
-      console.log("Selected Interns after Deselect All:", selectedInterns);
+      console.log("Checked Interns after Deselect All:", checkedInterns);
     });
 
   uniqueCheckbox.addEventListener("click", () => {
