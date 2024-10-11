@@ -117,6 +117,25 @@ export function filterTableBySearch(searchValue) {
   }
 }
 
+export function searchPairs(searchValue) {
+  const displayTable = document.getElementById("pairing-intern-display");
+  const rows = displayTable.getElementsByTagName("tr");
+
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].getElementsByTagName("td");
+    const nameCell = cells[1].textContent.toLowerCase();
+    const locationCell = cells[2].textContent.toLowerCase();
+    const departmentCell = cells[3].textContent.toLowerCase();
+
+    rows[i].style.display =
+      nameCell.includes(searchValue) ||
+      locationCell.includes(searchValue) ||
+      departmentCell.includes(searchValue)
+        ? ""
+        : "none";
+  }
+}
+
 export function filterTable() {
   const locationDropdown = document.getElementById("locations");
   const selectedLocation = locationDropdown.value.trim();
