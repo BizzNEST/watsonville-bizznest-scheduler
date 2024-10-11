@@ -107,21 +107,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const internName = document.createElement("td");
       group.forEach((intern) => {
         internName.contentEditable = true;
-        internName.textContent += intern.name + '\r\n';;
+        internName.textContent += intern.name + "\r\n";
       });
       row.appendChild(internName);
 
       const internLocation = document.createElement("td");
       group.forEach((intern) => {
         internLocation.contentEditable = true;
-        internLocation.textContent += intern.location + '\r\n';;
+        internLocation.textContent += intern.location + "\r\n";
       });
       row.appendChild(internLocation);
 
       const internDepartment = document.createElement("td");
       group.forEach((intern) => {
         internDepartment.contentEditable = true;
-        internDepartment.textContent += intern.department + '\r\n';;
+        internDepartment.textContent += intern.department + "\r\n";
       });
       row.appendChild(internDepartment);
 

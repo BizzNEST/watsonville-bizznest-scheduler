@@ -57,7 +57,7 @@ export function displayFilters() {
   dropdownsContainer.appendChild(departmentSelect);
 }
 
-export function displayInternRows(intern, tbody, checkedInterns) {
+export function displayInternRows(intern, tbody, checkedInterns = []) {
   const row = document.createElement("tr");
 
   const checkboxCell = document.createElement("td");
@@ -65,14 +65,25 @@ export function displayInternRows(intern, tbody, checkedInterns) {
   checkbox.type = "checkbox";
   checkbox.classList.add("intern-checkbox");
 
+  if (checkedInterns.includes(intern.name)) {
+    checkbox.checked = true;
+  }
+
   // Update the temporary checkedInterns array when checkbox is clicked
   checkbox.addEventListener("change", () => {
     if (checkbox.checked) {
-      checkedInterns.push(intern.name);
+      if (!checkedInterns.includes(intern.name)) {
+        checkedInterns.push(intern.name); // Add intern to checkedInterns
+      }
     } else {
-      checkedInterns = checkedInterns.filter((name) => name !== intern.name);
+      const index = checkedInterns.indexOf(intern.name);
+      if (index > -1) {
+        checkedInterns.splice(index, 1); // Remove intern from checkedInterns
+      }
     }
+    console.log("Checked Interns:", checkedInterns);
   });
+
   checkboxCell.appendChild(checkbox);
   row.appendChild(checkboxCell);
 
