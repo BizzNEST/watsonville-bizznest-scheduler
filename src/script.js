@@ -1,6 +1,5 @@
 import { pairInterns } from "./complexity.js";
 import {
-  displayInternRows,
   elementArrCreator,
   appendChildren,
   displayFilters,
@@ -47,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((map) => {
         internsMap = map;
         internsMap.forEach((intern, name) => {
-          displayInternRows(intern, tbody, checkedInterns);
+          displayInternRows(intern, tbody);
         });
       })
       .catch((error) => {
@@ -73,6 +72,47 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredInterns.forEach(([, intern]) => {
       displayInternRows(intern, tbody);
     });
+  }
+
+  function displayInternRows(intern, tbody) {
+    const row = document.createElement("tr");
+
+    const checkboxCell = document.createElement("td");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("intern-checkbox");
+
+    if (checkedInterns.includes(intern.name)) {
+      checkbox.checked = true;
+    }
+
+    // Update the temporary checkedInterns array when checkbox is clicked
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        if (!checkedInterns.includes(intern.name)) {
+          checkedInterns.push(intern.name); // Add intern to checkedInterns
+        }
+      } else {
+        const index = checkedInterns.indexOf(intern.name);
+        if (index > -1) {
+          checkedInterns.splice(index, 1); // Remove intern from checkedInterns
+        }
+      }
+      console.log("Checked Interns:", checkedInterns);
+    });
+
+    checkboxCell.appendChild(checkbox);
+    row.appendChild(checkboxCell);
+
+    const internFilters = [
+      `${intern.name}`,
+      `${intern.location}`,
+      `${intern.department}`,
+    ];
+    const internsArray = elementArrCreator(internFilters, "td");
+    appendChildren(row, internsArray);
+
+    tbody.appendChild(row);
   }
 
   function loadInterns() {
@@ -193,13 +233,13 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.checked = true;
         const internName =
           internRow.querySelector("td:nth-child(2)").textContent;
-        if (!selectedInterns.includes(internName)) {
-          selectedInterns.push(internName);
+        if (!checkedInterns.includes(internName)) {
+          checkedInterns.push(internName);
         }
       }
     });
 
-    console.log("Selected Interns after Select All:", selectedInterns);
+    console.log("Checked Interns Interns after Select All:", checkedInterns);
   });
 
   document
@@ -217,13 +257,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const internName =
             internRow.querySelector("td:nth-child(2)").textContent;
-          selectedInterns = selectedInterns.filter(
-            (name) => name !== internName,
-          );
+          checkedInterns = checkedInterns.filter((name) => name !== internName);
         }
       });
 
-      console.log("Selected Interns after Deselect All:", selectedInterns);
+      console.log("Checked Interns after Deselect All:", checkedInterns);
     });
 
   uniqueCheckbox.addEventListener("click", () => {
