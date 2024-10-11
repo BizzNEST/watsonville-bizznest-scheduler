@@ -256,6 +256,10 @@ document.addEventListener("DOMContentLoaded", () => {
       checkedInterns = [];
 
       const tbody = document.querySelector("#interns-display tbody");
+      const logAcc = document.getElementById("accuracy-display");
+      const logDiv = document.getElementById("logOutput");
+      logAcc.innerHTML = "";
+      logDiv.innerHTML = "";
       tbody.innerHTML = "";
       loadInterns()
         .then(() => {
@@ -273,10 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".reset-all-buttons")
     .addEventListener("click", function () {
-      internsMap.clear();
-      selectedInterns = [];
-      checkedInterns = [];
-
       let locationButtons = document.querySelectorAll(".location-button");
       locationButtons.forEach((button) => {
         button.classList.remove("active");
@@ -311,49 +311,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (departmentDropdown) {
         departmentDropdown.value = "";
       }
-      filterTable();
-      const table_checkboxes = displayTable.querySelectorAll(
-        "input.intern-checkbox",
-      );
-
-      table_checkboxes.forEach((checkbox) => {
-        const internRow = checkbox.closest("tr");
-        // Check if the row is visible
-        const isVisible = internRow.style.display !== "none";
-
-        if (isVisible) {
-          checkbox.checked = false;
-
-          const internName =
-            internRow.querySelector("td:nth-child(2)").textContent;
-          selectedInterns = selectedInterns.filter(
-            (name) => name !== internName,
-          );
-        }
-      });
-      console.log("Selected Interns after Deselect All:", selectedInterns);
-      internsMap.clear();
-
-      // Clear
-      const tbody = document.querySelector("#interns-display tbody");
-      tbody.innerHTML = "";
-
-      loadInterns()
-        .then(() => {
-          document.getElementById("interns-display").style.display = "table";
-          document.getElementById("pairing-intern-display").style.display =
-            "none";
-
-          displayInterns();
-        })
-        .catch((error) => {
-          console.error("Error reloading interns in reset all:", error);
-        });
     });
 
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
     document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
+    const logAcc = document.getElementById("accuracy-display");
+    const logDiv = document.getElementById("logOutput");
+    logAcc.innerHTML = "";
+    logDiv.innerHTML = "";
     updateCityTokens(); // Update active cities before pairing
     loadInterns().then(() => {
       const pairs = pairInterns(
