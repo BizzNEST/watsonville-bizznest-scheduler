@@ -53,13 +53,13 @@ export function pairInterns(
   if (uniqueCheckboxValue == true && uniqueDepartmentValue == false) {
     // if unique is checked, calls complex algoritihm
     console.log("Calling uniqueInterns...");
-    return unique_location(cityTokens, internsMap);
+    return unique_location(cityTokens, departmentTokens, internsMap);
   }
 
   if (uniqueCheckboxValue == false && uniqueDepartmentValue == true) {
     // if unique is checked, calls complex algoritihm
     console.log("Calling uniqueInterns...");
-    return unique_department(departmentTokens, internsMap);
+    return unique_department(cityTokens, departmentTokens, internsMap);
   }
 
   let internsArray;
@@ -107,7 +107,7 @@ export function pairInterns(
 
 //case 1 only unique cities location
 
-function unique_location(cityTokens, internsMap) {
+function unique_location(cityTokens, departmentTokens, internsMap) {
   const pairs = [];
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
@@ -117,8 +117,14 @@ function unique_location(cityTokens, internsMap) {
     return null;
   }
 
+  if (departmentTokens.length > 0) {
+    filteredInterns = filteredInterns.filter((intern) =>
+      departmentTokens.includes(intern.department),
+    );
+  }
+
   if (cityTokens.length > 1) {
-    filteredInterns = interns.filter((intern) =>
+    filteredInterns = filteredInterns.filter((intern) =>
       cityTokens.includes(intern.location),
     );
   }
@@ -176,10 +182,16 @@ function unique_location(cityTokens, internsMap) {
 
 //case two only unique departments
 
-function unique_department(departmentTokens, internsMap) {
+function unique_department(cityTokens, departmentTokens, internsMap) {
   const pairs = [];
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
+
+  if (cityTokens.length > 0) {
+    filteredInterns = filteredInterns.filter((intern) =>
+      cityTokens.includes(intern.location),
+    );
+  }
 
   if (departmentTokens.length === 1) {
     logToPage("Please pick at least two departments");
@@ -187,7 +199,7 @@ function unique_department(departmentTokens, internsMap) {
   }
 
   if (departmentTokens.length > 1) {
-    filteredInterns = interns.filter((intern) =>
+    filteredInterns = filteredInterns.filter((intern) =>
       departmentTokens.includes(intern.department),
     );
   }
@@ -239,7 +251,7 @@ function unique_department(departmentTokens, internsMap) {
   console.log("Unique Pairs:", pairs);
   // Log the leftover interns (there should be none after the above logic)
   console.log("Leftover Interns:", leftoverInternsAmt);
-
+  validate(pairs, "department");
   return pairs;
 }
 
@@ -255,11 +267,15 @@ function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   }
 
   // Filter interns based on the provided department and city tokens
-  if (departmentTokens.length > 1 && cityTokens.length > 1) {
-    filteredInterns = interns.filter(
-      (intern) =>
-        departmentTokens.includes(intern.department) &&
-        cityTokens.includes(intern.location),
+  if (departmentTokens.length > 1) {
+    filteredInterns = filteredInterns.filter((intern) =>
+      departmentTokens.includes(intern.department),
+    );
+  }
+
+  if (cityTokens.length > 1) {
+    filteredInterns = filteredInterns.filter((intern) =>
+      cityTokens.includes(intern.location),
     );
   }
 
@@ -317,7 +333,7 @@ function findUniquePairs(cityTokens, departmentTokens, internsMap) {
   console.log("Unique Pairs:", pairs);
   // Log the leftover interns (there should be none after the above logic)
   console.log("Leftover Interns:", leftoverInternsAmt);
-
+  validate(pairs, "both");
   return pairs;
 }
 
@@ -341,17 +357,64 @@ function validate(pairs, token) {
 
   // Loop through each pair of interns
   if (token == "location") {
-    console.log("validation triggered");
+    console.log("validation triggered1");
     pairs.forEach((pair) => {
       if (pair.length === 2) {
         total++; // Count valid pairs
         // Check if interns are from different locations
-        if (pair[0].location !== pair[1].location) {
-          mismatch++; 
+        if (pair[0].location == pair[1].location) {
+          mismatch++;
         }
       }
     });
-    let accuracy = (mismatch / total) * 100;
-    return console.log(accuracy);
+    if (mismatch == 0) {
+      let accuracy = 100;
+      return console.log(accuracy);
+    } else {
+      let accuracy = (mismatch / total) * 100;
+      return console.log(accuracy);
+    }
+  }
+
+  if (token == "department") {
+    console.log("validation triggered2");
+    pairs.forEach((pair) => {
+      if (pair.length === 2) {
+        total++; // Count valid pairs
+        // Check if interns are from different locations
+        if (pair[0].department == pair[1].department) {
+          mismatch++;
+        }
+      }
+    });
+    if (mismatch == 0) {
+      let accuracy = 100;
+      return console.log(accuracy);
+    } else {
+      let accuracy = (mismatch / total) * 100;
+      return console.log(accuracy);
+    }
+  }
+  if (token == "both") {
+    console.log("validation triggered3");
+    pairs.forEach((pair) => {
+      if (pair.length === 2) {
+        total++; // Count valid pairs
+        // Check if interns are from different locations
+        if (
+          pair[0].location == pair[1].location ||
+          pair[0].department == pair[1].department
+        ) {
+          mismatch++;
+        }
+      }
+    });
+    if (mismatch == 0) {
+      let accuracy = 100;
+      return console.log(accuracy);
+    } else {
+      let accuracy = (mismatch / total) * 100;
+      return console.log(accuracy);
+    }
   }
 }
