@@ -351,6 +351,16 @@ function logToPage(message) {
   /*logDiv.appendChild(newLog);*/
 }
 
+function logAccuracy(message) {
+  const logDiv = document.getElementById("accuracy-display");
+  if (logDiv.textContent === message) {
+    return; // Don't append the same message again
+  }
+  logDiv.innerHTML = "";
+  logDiv.textContent = message;
+  logDiv.style.visibility = "visible";
+}
+
 function validate(pairs, token) {
   let total = 0;
   let mismatch = 0;
@@ -369,10 +379,10 @@ function validate(pairs, token) {
     });
     if (mismatch == 0) {
       let accuracy = 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     } else {
       let accuracy = (mismatch / total) * 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     }
   }
 
@@ -389,10 +399,10 @@ function validate(pairs, token) {
     });
     if (mismatch == 0) {
       let accuracy = 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     } else {
       let accuracy = (mismatch / total) * 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     }
   }
   if (token == "both") {
@@ -411,10 +421,10 @@ function validate(pairs, token) {
     });
     if (mismatch == 0) {
       let accuracy = 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     } else {
       let accuracy = (mismatch / total) * 100;
-      return console.log(accuracy);
+      return logAccuracy(`Accuracy: ${accuracy}`);
     }
   }
 }
