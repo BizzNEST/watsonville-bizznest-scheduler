@@ -156,7 +156,11 @@ body {
   align-items: center;
   height: 100vh;
 }
-
+.home-nav{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 200px;
+}
 .welcome {
   font-family: futura-bold;
   position: relative;
@@ -515,8 +519,13 @@ tr:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 .clear {
   text-align: right;
   padding-right: 5px;
+}
+.bizzNEST{
+  scale: 70%;
+  margin-bottom: 30px;
 }
