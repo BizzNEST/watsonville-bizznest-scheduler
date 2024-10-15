@@ -366,10 +366,9 @@ input[type="checkbox"] {
 
 .table-container {
   /* max-height: 420px; /* Set the max height you want for the table */
-  /* overflow-y: scroll; */
   height: 420px;
   overflow-y: auto;
-  border: 1px solid #ccc;
+
 }
 
 .table-container table {
