@@ -117,6 +117,14 @@ function unique_location(cityTokens, departmentTokens, internsMap) {
     return null;
   }
 
+  for (const city of cityTokens) {
+    const cityInterns = interns.filter((intern) => intern.location === city);
+    if (cityInterns.length === 0) {
+      logToPage(`Error: not enough Interns from ${city}`);
+      return null;
+    }
+  }
+
   if (departmentTokens.length > 0) {
     filteredInterns = filteredInterns.filter((intern) =>
       departmentTokens.includes(intern.department),
@@ -199,11 +207,28 @@ function unique_department(cityTokens, departmentTokens, internsMap) {
   }
 
   if (departmentTokens.length > 1) {
+    // Check for missing interns in each department within each selected city
+    for (const city of cityTokens) {
+      for (const department of departmentTokens) {
+        const departmentInterns = interns.filter(
+          (intern) =>
+            intern.location === city && intern.department === department,
+        );
+
+        if (departmentInterns.length === 0) {
+          logToPage(
+            `Error: no interns from department ${department} in ${city}`,
+          );
+          return null;
+        }
+      }
+    }
+
+    // Filter interns by selected departments
     filteredInterns = filteredInterns.filter((intern) =>
       departmentTokens.includes(intern.department),
     );
   }
-
   const shuffledInterns = shuffleArray(filteredInterns);
   const pairedInterns = new Set();
 
