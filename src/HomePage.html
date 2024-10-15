@@ -17,18 +17,19 @@
     <div class="background">
       <!-- Button to launch modal -->
       <div class="container main-con">
-        <img src="images/stars.png" alt="" class="stars" />
-        <!--Welcome Text-->
-        <h1 class="welcome">Welcome to bizzNEST</h1>
-        <!--Home Button-->
-        <button
-          type="button"
-          class="btn btn-primary home-btn"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          Nest Me Up!
-        </button>
+        <div class="home-nav">
+          <!--Welcome Text-->
+          <img src="images/bizzNEST.png" alt="" class="bizzNEST">
+          <!--Home Button-->
+          <button
+            type="button"
+            class="btn btn-primary home-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Nest Me Up!
+          </button>
+        </div>
       </div>
       <!-- Modal -->
       <div
@@ -103,14 +104,6 @@
                   <button class="department-button" value="Video">Video</button>
                 </div>
                 <div class="unique-div">
-                  <div class="toolbar-div">
-                    <h2>Select Unique:</h2>
-                    <img
-                      class="info"
-                      src="images/info-circle-fill.svg"
-                      alt=""
-                    />
-                  </div>
                   <div class="unique-boxes">
                     <div>
                       <input
@@ -119,7 +112,7 @@
                         name="unique"
                         value="True"
                       />
-                      <label for="unique">City</label><br />
+                      <label for="unique">Pair from different city</label><br />
                     </div>
                     <div>
                       <input
@@ -128,7 +121,7 @@
                         name="unique-department"
                         value="True"
                       />
-                      <label for="unique-department">Department</label><br />
+                      <label for="unique-department">Pair from different department</label><br />
                     </div>
                   </div>
                 </div>
