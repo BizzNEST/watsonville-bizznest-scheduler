@@ -13,7 +13,7 @@
 }
 
 body {
-  background: black;
+  background: url(images/background.jpg);
 }
 
 .location-button {
