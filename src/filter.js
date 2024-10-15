@@ -1,7 +1,7 @@
 export function displayFilters() {
   // Create Location Dropdown
   const locations = [
-    { value: "", text: "Select..." },
+    { value: "", text: "Locations" },
     { value: "Salinas", text: "Salinas" },
     { value: "Watsonville", text: "Watsonville" },
     { value: "Gilroy", text: "Gilroy" },
@@ -22,11 +22,11 @@ export function displayFilters() {
 
   const locationLabel = document.createElement("label");
   locationLabel.htmlFor = "locations";
-  locationLabel.textContent = "LOC";
+  locationLabel.textContent = "Filter by ";
 
   // Create Department Dropdown
   const departments = [
-    { value: "", text: "Select..." },
+    { value: "", text: "Departments" },
     { value: "Development", text: "Development" },
     { value: "Video", text: "Video" },
     { value: "Design", text: "Design" },
@@ -47,7 +47,7 @@ export function displayFilters() {
 
   const departmentLabel = document.createElement("label");
   departmentLabel.htmlFor = "department";
-  departmentLabel.textContent = "DEPT";
+  // departmentLabel.textContent = "DEPT";
 
   // Append everything to the dropdowns container
   const dropdownsContainer = document.getElementById("dropdowns-container");
