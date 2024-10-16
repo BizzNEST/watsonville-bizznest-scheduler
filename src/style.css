@@ -156,7 +156,7 @@ body {
   align-items: center;
   height: 100vh;
 }
-.home-nav{
+.home-nav {
   display: flex;
   flex-direction: column;
   margin-bottom: 200px;
@@ -368,7 +368,6 @@ input[type="checkbox"] {
   /* max-height: 420px; /* Set the max height you want for the table */
   height: 420px;
   overflow-y: auto;
-
 }
 
 .table-container table {
@@ -527,7 +526,7 @@ tr:nth-child(even) {
   text-align: right;
   padding-right: 5px;
 }
-.bizzNEST{
+.bizzNEST {
   scale: 70%;
   margin-bottom: 30px;
 }

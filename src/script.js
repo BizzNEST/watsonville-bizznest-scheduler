@@ -354,12 +354,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("generate-pairs").addEventListener("click", () => {
     document.getElementById("interns-display").style.display = "none";
-    document.getElementById("pairing-intern-display").style.display = "table"; // Ensure table is visible
+    document.getElementById("pairing-intern-display").style.display = "table";
+
+    // Reset pairing table before generating new pairs
+    const pairingTableBody = document
+      .getElementById("pairing-intern-display")
+      .querySelector("tbody");
+    pairingTableBody.innerHTML = ""; // Clear any old pairs
+
     const logAcc = document.getElementById("accuracy-display");
     const logDiv = document.getElementById("logOutput");
     logAcc.innerHTML = "";
     logDiv.innerHTML = "";
-    updateCityTokens(); // Update active cities before pairing
+
+    updateCityTokens();
+    console.log(internsMap);
+
     loadInterns().then(() => {
       const pairs = pairInterns(
         uniqueCheckbox,
@@ -369,17 +379,10 @@ document.addEventListener("DOMContentLoaded", () => {
         selectedInterns,
         internsMap,
       );
+
       if (pairs) {
         console.log("Intern Pairings:", pairs);
-        const logDiv = document.getElementById("logOutput");
-        // logDiv.innerHTML = "";
-        displayPairs(pairs); // Only display pairs if no error occurred
-        document
-          .getElementById("search-bar") // Targeting the input field directly
-          .addEventListener("input", function () {
-            const searchValue = this.value.toLowerCase();
-            searchPairs(searchValue);
-          });
+        displayPairs(pairs);
       } else {
         console.log("Pairing skipped due to error");
       }
