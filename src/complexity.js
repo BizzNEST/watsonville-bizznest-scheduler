@@ -112,42 +112,47 @@ function unique_location(cityTokens, departmentTokens, internsMap) {
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
 
+  // Check if only one city is selected
   if (cityTokens.length === 1) {
     logToPage("Please select at least two cities");
     return null;
   }
 
+  // Ensure there are interns from each city
   for (const city of cityTokens) {
     const cityInterns = interns.filter((intern) => intern.location === city);
     if (cityInterns.length === 0) {
-      logToPage(`Error: not enough Interns from ${city}`);
+      logToPage(`Error: not enough interns from ${city}`);
       return null;
     }
   }
 
+  // Filter interns by department if department tokens are provided
   if (departmentTokens.length > 0) {
     filteredInterns = filteredInterns.filter((intern) =>
       departmentTokens.includes(intern.department),
     );
   }
 
+  // Filter interns by location if multiple cities are selected
   if (cityTokens.length > 1) {
     filteredInterns = filteredInterns.filter((intern) =>
       cityTokens.includes(intern.location),
     );
   }
 
+  // Shuffle interns for random pairing
   const shuffledInterns = shuffleArray(filteredInterns);
   const pairedInterns = new Set();
 
-  // Pair the interns based on unique location
+  // Pair the interns based on unique locations
   for (let i = 0; i < shuffledInterns.length; i++) {
     if (pairedInterns.has(shuffledInterns[i].name)) continue; // Skip already paired interns
 
     for (let j = i + 1; j < shuffledInterns.length; j++) {
-      // Check if both interns are from different locations
+      // Ensure interns are from different locations
       if (
-        shuffledInterns[j] && // Ensure that shuffledInterns[j] exists
+        shuffledInterns[j] && // Check if intern exists
         !pairedInterns.has(shuffledInterns[j].name) && // Skip if already paired
         shuffledInterns[i].location !== shuffledInterns[j].location
       ) {
@@ -159,13 +164,14 @@ function unique_location(cityTokens, departmentTokens, internsMap) {
     }
   }
 
-  // Find leftover interns
+  // Handle leftover interns
   let leftoverInterns = shuffledInterns.filter(
     (intern) => !pairedInterns.has(intern.name),
   );
 
   let leftoverInternsAmt = leftoverInterns.length;
 
+  // Redistribute leftover interns to pairs
   if (leftoverInternsAmt >= 1) {
     logToPage(
       `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger`,
@@ -175,15 +181,15 @@ function unique_location(cityTokens, departmentTokens, internsMap) {
       const intern = leftoverInterns.shift(); // Get the first leftover intern
       pairs[pairIndex].push(intern); // Add the leftover intern to the pair
       pairedInterns.add(intern.name);
-      pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
+      pairIndex = (pairIndex + 1) % pairs.length; // Distribute leftover interns circularly
     }
   }
-  // Add leftover interns to existing pairs
 
   // Log the unique pairs found
   console.log("Unique Pairs:", pairs);
-  // Log the leftover interns (there should be none after the above logic)
   console.log("Leftover Interns:", leftoverInternsAmt);
+
+  // Validate the pairs based on location uniqueness
   validate(pairs, "location");
   return pairs;
 }
@@ -195,17 +201,126 @@ function unique_department(cityTokens, departmentTokens, internsMap) {
   const interns = Array.from(internsMap.values());
   let filteredInterns = interns;
 
+  // Filter interns based on selected city tokens
   if (cityTokens.length > 0) {
     filteredInterns = filteredInterns.filter((intern) =>
       cityTokens.includes(intern.location),
     );
   }
 
+  // Ensure at least two departments are selected
   if (departmentTokens.length === 1) {
     logToPage("Please pick at least two departments");
     return null;
   }
 
+  // Ensure there are enough interns from different departments
+  const uniqueDepartments = new Set(
+    filteredInterns.map((intern) => intern.department),
+  );
+  if (uniqueDepartments.size < 2) {
+    logToPage("Error: Not enough interns from different departments");
+    return null;
+  }
+
+  // Ensure there are interns from selected cities
+  for (const city of cityTokens) {
+    const cityInterns = interns.filter((intern) => intern.location === city);
+    if (cityInterns.length === 0) {
+      logToPage(`Error: not enough interns from ${city}`);
+      return null;
+    }
+  }
+
+  // Filter interns by selected departments
+  if (departmentTokens.length > 1) {
+    // Ensure there are interns from each department within selected cities
+    for (const city of cityTokens) {
+      for (const department of departmentTokens) {
+        const departmentInterns = interns.filter(
+          (intern) =>
+            intern.location === city && intern.department === department,
+        );
+        if (departmentInterns.length === 0) {
+          logToPage(
+            `Error: no interns from department ${department} in ${city}`,
+          );
+          return null;
+        }
+      }
+    }
+    filteredInterns = filteredInterns.filter((intern) =>
+      departmentTokens.includes(intern.department),
+    );
+  }
+
+  const shuffledInterns = shuffleArray(filteredInterns);
+  const pairedInterns = new Set();
+
+  // Pair interns based on unique location and different departments
+  for (let i = 0; i < shuffledInterns.length; i++) {
+    if (pairedInterns.has(shuffledInterns[i].name)) continue; // Skip already paired interns
+
+    for (let j = i + 1; j < shuffledInterns.length; j++) {
+      // Check if both interns are from different departments
+      if (
+        shuffledInterns[j] &&
+        !pairedInterns.has(shuffledInterns[j].name) &&
+        shuffledInterns[i].department !== shuffledInterns[j].department
+      ) {
+        pairs.push([shuffledInterns[i], shuffledInterns[j]]);
+        pairedInterns.add(shuffledInterns[i].name);
+        pairedInterns.add(shuffledInterns[j].name);
+        break;
+      }
+    }
+  }
+
+  // Handle leftover interns
+  let leftoverInterns = shuffledInterns.filter(
+    (intern) => !pairedInterns.has(intern.name),
+  );
+  let leftoverInternsAmt = leftoverInterns.length;
+
+  if (leftoverInternsAmt >= 1) {
+    logToPage(
+      `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger.`,
+    );
+    let pairIndex = 0;
+    while (leftoverInterns.length > 0) {
+      const intern = leftoverInterns.shift();
+      pairs[pairIndex].push(intern);
+      pairedInterns.add(intern.name);
+      pairIndex = (pairIndex + 1) % pairs.length;
+    }
+  }
+
+  console.log("Unique Pairs:", pairs);
+  console.log("Leftover Interns:", leftoverInternsAmt);
+  validate(pairs, "department");
+  return pairs;
+}
+
+////////////////case three both options selected
+function findUniquePairs(cityTokens, departmentTokens, internsMap) {
+  const pairs = [];
+  const interns = Array.from(internsMap.values()); // Convert the hashmap to an array of intern objects
+  let filteredInterns = interns;
+
+  if (departmentTokens.length === 1 || cityTokens.length === 1) {
+    logToPage("Please pick at least two cities and two departments");
+    return null;
+  }
+
+  for (const city of cityTokens) {
+    const cityInterns = interns.filter((intern) => intern.location === city);
+    if (cityInterns.length === 0) {
+      logToPage(`Error: not enough Interns from ${city}`);
+      return null;
+    }
+  }
+
+  // Filter interns based on the provided department and city tokens
   if (departmentTokens.length > 1) {
     // Check for missing interns in each department within each selected city
     for (const city of cityTokens) {
@@ -229,75 +344,6 @@ function unique_department(cityTokens, departmentTokens, internsMap) {
       departmentTokens.includes(intern.department),
     );
   }
-  const shuffledInterns = shuffleArray(filteredInterns);
-  const pairedInterns = new Set();
-
-  // Pair the interns based on unique location
-  for (let i = 0; i < shuffledInterns.length; i++) {
-    if (pairedInterns.has(shuffledInterns[i].name)) continue; // Skip already paired interns
-
-    for (let j = i + 1; j < shuffledInterns.length; j++) {
-      // Check if both interns are from different locations
-      if (
-        shuffledInterns[j] && // Ensure that shuffledInterns[j] exists
-        !pairedInterns.has(shuffledInterns[j].name) && // Skip if already paired
-        shuffledInterns[i].department !== shuffledInterns[j].department
-      ) {
-        pairs.push([shuffledInterns[i], shuffledInterns[j]]);
-        pairedInterns.add(shuffledInterns[i].name);
-        pairedInterns.add(shuffledInterns[j].name);
-        break; // Move to the next intern after pairing
-      }
-    }
-  }
-
-  // Find leftover interns
-  let leftoverInterns = shuffledInterns.filter(
-    (intern) => !pairedInterns.has(intern.name),
-  );
-
-  let leftoverInternsAmt = leftoverInterns.length;
-
-  if (leftoverInternsAmt >= 1) {
-    logToPage(
-      `There are ${leftoverInternsAmt} leftover intern(s). Pairs may be bigger`,
-    );
-    let pairIndex = 0;
-    while (leftoverInterns.length > 0) {
-      const intern = leftoverInterns.shift(); // Get the first leftover intern
-      pairs[pairIndex].push(intern); // Add the leftover intern to the pair
-      pairedInterns.add(intern.name);
-      pairIndex = (pairIndex + 1) % pairs.length; // Move to the next pair in a circular manner
-    }
-  }
-  // Add leftover interns to existing pairs
-
-  // Log the unique pairs found
-  console.log("Unique Pairs:", pairs);
-  // Log the leftover interns (there should be none after the above logic)
-  console.log("Leftover Interns:", leftoverInternsAmt);
-  validate(pairs, "department");
-  return pairs;
-}
-
-////////////////case three both options selected
-function findUniquePairs(cityTokens, departmentTokens, internsMap) {
-  const pairs = [];
-  const interns = Array.from(internsMap.values()); // Convert the hashmap to an array of intern objects
-  let filteredInterns = interns;
-
-  if (departmentTokens.length === 1 || cityTokens.length === 1) {
-    logToPage("Please pick at least two cities and two departments");
-    return null;
-  }
-
-  // Filter interns based on the provided department and city tokens
-  if (departmentTokens.length > 1) {
-    filteredInterns = filteredInterns.filter((intern) =>
-      departmentTokens.includes(intern.department),
-    );
-  }
-
   if (cityTokens.length > 1) {
     filteredInterns = filteredInterns.filter((intern) =>
       cityTokens.includes(intern.location),
