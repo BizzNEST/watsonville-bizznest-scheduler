@@ -32,13 +32,14 @@ Different city pairing: Interns are paired with others from different cities.
     Users should be able to turn these rules on or off depending on their requirements.
 
 ### Selection and Filtering: yuliana
+Provide a user interface for selecting which interns to include or exclude from the scheduling. Program should include “Select All” and “Deselect All” options for easy management of selections. It should also allow filtering of interns by location and department.
 
 
 ### Rule Configuration: ali
     
 
 ### Manual Override: yuliana
-
+Enable users to manually adjust the random pairings after they are generated, providing flexibility to accommodate specific needs or preferences.
 
 ### Edge Case Handling: ali
  
@@ -53,7 +54,8 @@ Ensured the application meets accesibility standards (e.g. WCAG 2.1) for visuall
    
 
 ### Data Storage: yuliana
- 
+ Use a static JSON file or object to store intern data. Intern data should be loaded into the application using JavaScript and manipulated within the client-side environment.
+
 
 ### Integration:
 There is an export feature where users can either print the file directly from the internet, or download the PDF.
