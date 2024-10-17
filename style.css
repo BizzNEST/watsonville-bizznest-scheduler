@@ -530,3 +530,32 @@ tr:nth-child(even) {
   scale: 70%;
   margin-bottom: 30px;
 }
+
+.info-loc-div:hover .info-loc{
+  visibility: visible;
+}
+.info-loc{
+  position: absolute;
+  left: 75px;
+  top: 0px;
+  background-color: rgb(81, 81, 81);
+  color: white;
+  padding: 8px 15px;
+  white-space: nowrap;
+  border-radius: 8px;
+  visibility: hidden;
+}
+.info-dept-div:hover .info-dept{
+  visibility: visible;
+}
+.info-dept{
+  position: absolute;
+  left: 50px;
+  top: 0px;
+  background-color: rgb(81, 81, 81);
+  color: white;
+  padding: 8px 15px;
+  white-space: nowrap;
+  border-radius: 8px;
+  visibility: hidden;
+}
