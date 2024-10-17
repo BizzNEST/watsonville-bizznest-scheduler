@@ -43,10 +43,11 @@ Different city pairing: Interns are paired with others from different cities.
 ### Edge Case Handling: ali
  
 
-### User Interface: joel
+### User Interface:
+An organized and user-friendly interface that is accessible on both desktop and mobile devices. The modal displays available pairing rules, and allows users to select or deselect interns easily for maximum efficiency.
 
-### Accessibility: joel
-   
+### Accessibility:
+Ensured the application meets accesibility standards (e.g. WCAG 2.1) for visually impaired users.
 
 ### Technical Requirements: ali
    
@@ -54,8 +55,8 @@ Different city pairing: Interns are paired with others from different cities.
 ### Data Storage: yuliana
  
 
-### Integration: joel
-
+### Integration:
+There is an export feature where users can either print the file directly from the internet, or download the PDF.
 
 ## Project Setup
 
