@@ -31,18 +31,20 @@ Different city pairing: Interns are paired with others from different cities.
  Interns are paired with others from different departments.
     Users should be able to turn these rules on or off depending on their requirements.
 
-### Selection and Filtering: yuliana
+### Selection and Filtering:
 Provide a user interface for selecting which interns to include or exclude from the scheduling. Program should include “Select All” and “Deselect All” options for easy management of selections. It should also allow filtering of interns by location and department.
 
-
-### Rule Configuration: ali
+### Rule Configuration:
+User is able to trigger rules such as choosing specific cities or departments for randomization. User can also trigger the "Pair from a Different City/Department" settings to trigger a more complex algorithm that ensures pairings based on the rules triggered.
     
 
-### Manual Override: yuliana
+### Manual Override:
 Enable users to manually adjust the random pairings after they are generated, providing flexibility to accommodate specific needs or preferences.
 
-### Edge Case Handling: ali
- 
+
+### Edge Case Handling:
+
+If there are an uneven amount of interns and all rules cannot be satisfied, the user will be informed that there are leftover interns and that there may be pairs bigger than two to account for them. In the case for errors, such as all interns being deleted, the user will see an error message below. 
 
 ### User Interface:
 An organized and user-friendly interface that is accessible on both desktop and mobile devices. The modal displays available pairing rules, and allows users to select or deselect interns easily for maximum efficiency.
@@ -50,12 +52,18 @@ An organized and user-friendly interface that is accessible on both desktop and 
 ### Accessibility:
 Ensured the application meets accesibility standards (e.g. WCAG 2.1) for visually impaired users.
 
-### Technical Requirements: ali
+### Technical Requirements:
+The application will be built using HTML, CSS, and JavaScript.
+
+Used JavaScript to handle the logic for schedule generation, rule application, selection management, and edge case handling.
+
+CSS for styling to create a responsive and visually appealing user interface.
+
    
 
-### Data Storage: yuliana
- Use a static JSON file or object to store intern data. Intern data should be loaded into the application using JavaScript and manipulated within the client-side environment.
-
+### Data Storage:
+Use a static JSON file or object to store intern data. Intern data should be loaded into the application using JavaScript and manipulated within the client-side environment.
+ 
 
 ### Integration:
 There is an export feature where users can either print the file directly from the internet, or download the PDF.
@@ -75,8 +83,8 @@ Step-by-step instructions on how to get the development environment running.
     ```
 
 3. Create the necessary files:
-   - Create `HomePage.html`, `style.css`, `complexity.js`, `filters.js`, `script.js` files in the project directory.
-   - Ensure that `HomePage.html` properly links to both `style.css` for styling and `script.js` for functionality.
+   - Create `index.html`, `style.css`, `complexity.js`, `filters.js`, `script.js` files in the project directory.
+   - Ensure that `index.html` properly links to both `style.css` for styling and `script.js` for functionality.
 
 4. Install dependencies:
     ```sh
