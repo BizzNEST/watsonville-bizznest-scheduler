@@ -383,6 +383,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (pairs) {
         console.log("Intern Pairings:", pairs);
         displayPairs(pairs);
+        document
+        .getElementById("search-bar") // Targeting the input field directly
+        .addEventListener("input", function () {
+          const searchValue = this.value.toLowerCase();
+          searchPairs(searchValue);
+        });
       } else {
         console.log("Pairing skipped due to error");
       }
