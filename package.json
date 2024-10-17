@@ -8,7 +8,8 @@
     "lint:style": "stylelint '**/*.css' --fix",
     "lint:html": "htmlhint '**/*.html'",
     "format": "prettier --write \"src/**/*.js\"",
-    "check": "npm run format && npm run lint:eslint && npm run lint:style && npm run lint:html"
+    "check": "npm run format && npm run lint:eslint && npm run lint:style && npm run lint:html",
+    "deploy": "gh-pages -d src"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "eslint": "9.10.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
+    "gh-pages": "^6.2.0",
     "globals": "15.9.0",
     "htmlhint": "1.1.4",
     "prettier": "3.3.3",
@@ -25,3 +27,4 @@
     "stylelint-config-standard": "36.0.1"
   }
 }
+
