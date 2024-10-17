@@ -58,6 +58,7 @@
             <div class="modal-row">
               <!--TOOLBAR START-->
               <div class="modal-toolbar">
+                <!--Toolbar - Locations Section-->
                 <div class="locations-div">
                   <div class="toolbar-div">
                     <h2>Select Locations:</h2>
@@ -86,6 +87,7 @@
                     Stockton 🍇
                   </button>
                 </div>
+                <!--Toolbar - Department Section-->
                 <div class="department-col">
                   <div class="toolbar-div">
                     <h2>Select Department:</h2>
@@ -103,6 +105,7 @@
                   </button>
                   <button class="department-button" value="Video">Video</button>
                 </div>
+                <!--Toolbar - Unique Section-->
                 <div class="unique-div">
                   <div class="unique-boxes">
                     <div>
@@ -127,6 +130,7 @@
                     </div>
                   </div>
                 </div>
+                <!--Pair Generation Button / Reset-->
                 <div class="generation-btns">
                   <p class="clear reset-all-buttons"><a href="#">Clear</a></p>
                   <button id="generate-pairs">Generate Random Pairs</button>
@@ -137,7 +141,9 @@
 
               <!--TABLE START-->
               <div class="table">
+                <!--The 'Header' of the table. Holds several tools.-->
                 <div class="table-functions">
+                  <!--Table - Search Bar-->
                   <div>
                     <form id="search-form">
                       <input
@@ -147,13 +153,16 @@
                       />
                     </form>
                   </div>
+                  <!--Table - Batch Editing Row-->
                   <div class="selection-tools">
+                    <!--Editing Buttons-->
                     <div id="selection-btns" class="button-contatiner">
                       <button id="select-all">Select All</button>
                       <button id="deselect-all-button" class="button-spacing">
                         Deselect All
                       </button>
                     </div>
+                    <!--Dropdown Menus-->
                     <div class="filter-col">
                       <div id="filter-options">
                         <div id="dropdowns-container"></div>
@@ -165,7 +174,7 @@
                 </div>
 
                 <div class="table-container">
-                  <!-- New container div -->
+                  <!-- Where the interns are displayed -->
                   <table id="interns-display"></table>
                   <table
                     id="pairing-intern-display"
@@ -188,10 +197,12 @@
                 <!--Footer Beneath Table-->
                 <div class="d-flex flex-column mb-3"></div>
                 <div class="modal-footer">
+                  <!--Footer - Error Text-->
                   <div class="log-text">
                     <p id="logOutput">This is the error text.</p>
                     <p id="accuracy-display"></p>
                   </div>
+                  <!--Footer - Export/Reset Buttons-->
                   <div class="footer-btns">
                     <button id="export-pdf">
                       <img id="dl-icon" src="images/download.svg" alt="" />
@@ -208,10 +219,10 @@
               </div>
               <!--TABLE END-->
             </div>
-            <!--------------------------------------->
             <!--Modal Table END-->
           </div>
         </div>
+        <!--Modal Content END-->
       </div>
       <!--Website Banner-->
       <div class="banner">
@@ -220,6 +231,7 @@
     </div>
 
     <!-- Bootstrap JS -->
+    <!--Sript to convert the table into a formatted PDF.-->
     <script>
       document
         .getElementById("export-pdf")

@@ -1,3 +1,4 @@
+/*Fonts*/
 @font-face {
   font-family: futura-bold;
   src: url(fonts/Futura\ Bold\ Oblique.otf);
@@ -12,10 +13,103 @@
   src: url(fonts/LatoWeb-Bold.ttf);
 }
 
+/*Direct Element Styling*/
 body {
   background: url(images/background.jpg);
 }
 
+input[type="checkbox"] {
+  scale: 120%;
+  accent-color: #72c5a3;
+}
+
+tr:nth-child(even) {
+  background-color: #72c5a349;
+}
+
+/*Animations*/
+@keyframes move-banner {
+  from {
+    bottom: -45vh;
+  }
+  to {
+    bottom: 0vh;
+  }
+}
+
+@keyframes fade-button {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes fade-welcome {
+  from {
+    opacity: 0%;
+    bottom: 50px;
+  }
+  to {
+    opacity: 100%;
+    bottom: 100px;
+  }
+}
+
+@keyframes show-stars {
+  from {
+    opacity: 0%;
+    top: -300px;
+  }
+  to {
+    opacity: 100%;
+    top: 0px;
+  }
+}
+
+@keyframes rotate-globe {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-right {
+  from {
+    opacity: 0%;
+    right: 500px;
+  }
+  to {
+    opacity: 100%;
+    right: 0px;
+  }
+}
+
+@keyframes table-fade {
+  from {
+    opacity: 0%;
+    top: 300px;
+  }
+  to {
+    opacity: 100%;
+    top: 0px;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+/*Toolbar Styling*/
+/*Toolbar Styling - Location*/
 .location-button {
   font-family: lato-reg;
   background-color: transparent;
@@ -72,6 +166,19 @@ body {
   background-color: purple;
 }
 
+.locations-div {
+  margin-bottom: 20px;
+  position: relative;
+  align-items: center;
+
+  animation: fade-right 0.3s ease-out forwards;
+}
+.locations-div h2 {
+  font-family: lato-bold;
+  display: inline-block;
+}
+
+/*Toolbar Styling - Department*/
 .department-button {
   font-family: lato-reg;
   background-color: transparent;
@@ -85,48 +192,80 @@ body {
   color: #72c5a3;
 }
 .department-button.active {
-  background-color: #72c5a3; /* Color when active */
+  background-color: #72c5a3;
   color: white;
 }
 
-.filter-col {
+.department-col {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  position: relative;
+  right: 500px;
+
+  animation: fade-right 0.3s 0.3s ease-out forwards;
+}
+
+.department-col h2 {
+  font-family: lato-bold;
+  display: inline-block;
+}
+
+/*Toolbar Styling - Unique*/
+.unique-div {
+  margin-bottom: 50px;
+  position: relative;
+  right: 500px;
+
+  animation: fade-right 0.4s 0.4s ease-out forwards;
+}
+.unique-div h2 {
+  font-family: lato-bold;
+  display: inline-block;
+}
+.unique-boxes {
+  font-family: lato-reg;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+/*Toolbar Styling - Generation+ */
+.generation-btns {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.generation-btns button {
+  background-color: #72c5a3;
+  color: white;
+  font-size: large;
+  border: 0px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  white-space: nowrap;
+  width: 100%;
+}
+.info {
+  opacity: 20%;
+  scale: 130%;
+  padding-bottom: 5px;
+}
+.info:hover {
+  opacity: 40%;
+}
+.toolbar-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
 }
 
-#filter-options {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-#filter-options button {
-  margin-left: 10px;
-}
-
-#filter-options label {
-  margin-right: 10px;
-  margin-left: 10px;
-}
-
-#dropdowns-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.pairing-table {
-  font-family: lato-reg;
-  width: 100%;
-  border-collapse: collapse;
-}
-.pairing-table td,
-.pairing-table th {
-  /* cell borders */
-  font-family: lato-reg;
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
+/*Home Page - Landing*/
+.bizzNEST {
+  scale: 70%;
+  margin-bottom: 30px;
 }
 
 .stars {
@@ -135,17 +274,6 @@ body {
   opacity: 0%;
 
   animation: show-stars 0.7s ease-in-out 0.8s forwards;
-}
-
-@keyframes show-stars {
-  from {
-    opacity: 0%;
-    top: -300px;
-  }
-  to {
-    opacity: 100%;
-    top: 0px;
-  }
 }
 
 .main-con {
@@ -175,17 +303,6 @@ body {
   animation: fade-welcome 0.6s ease-out forwards;
 }
 
-@keyframes fade-welcome {
-  from {
-    opacity: 0%;
-    bottom: 50px;
-  }
-  to {
-    opacity: 100%;
-    bottom: 100px;
-  }
-}
-
 .home-btn {
   font-family: lato-reg;
   margin-bottom: 150px;
@@ -203,15 +320,6 @@ body {
   opacity: 0%;
   animation: fade-button 0.6s ease-out forwards;
   animation-delay: 0.7s;
-}
-
-@keyframes fade-button {
-  from {
-    opacity: 0%;
-  }
-  to {
-    opacity: 100%;
-  }
 }
 
 .home-btn:hover {
@@ -241,30 +349,13 @@ body {
   animation: move-banner 0.8s ease-in-out 0.3s forwards;
 }
 
-@keyframes move-banner {
-  from {
-    bottom: -45vh;
-  }
-  to {
-    bottom: 0vh;
-  }
-}
-
 .home-cover {
   position: relative;
   top: 63vh;
   animation: rotate-globe 240s linear infinite;
 }
 
-@keyframes rotate-globe {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
+/*Modal Styling*/
 .modal-row {
   display: flex;
   flex-direction: row;
@@ -281,74 +372,7 @@ body {
   background-color: #72c5a3;
 }
 
-input[type="checkbox"] {
-  scale: 120%;
-  accent-color: #72c5a3;
-}
-
-@keyframes fade-right {
-  from {
-    opacity: 0%;
-    right: 500px;
-  }
-  to {
-    opacity: 100%;
-    right: 0px;
-  }
-}
-
-.locations-div {
-  margin-bottom: 20px;
-  position: relative;
-  align-items: center;
-
-  animation: fade-right 0.3s ease-out forwards;
-}
-.locations-div h2 {
-  font-family: lato-bold;
-  display: inline-block;
-}
-.department-col {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  position: relative;
-  right: 500px;
-
-  animation: fade-right 0.3s 0.3s ease-out forwards;
-}
-.department-col h2 {
-  font-family: lato-bold;
-  display: inline-block;
-}
-.unique-div {
-  margin-bottom: 50px;
-  position: relative;
-  right: 500px;
-
-  animation: fade-right 0.4s 0.4s ease-out forwards;
-}
-.unique-div h2 {
-  font-family: lato-bold;
-  display: inline-block;
-}
-.unique-boxes {
-  font-family: lato-reg;
-  display: flex;
-  flex-direction: column;
-  padding-left: 10px;
-}
-
-@keyframes table-fade {
-  from {
-    opacity: 0%;
-    top: 300px;
-  }
-  to {
-    opacity: 100%;
-    top: 0px;
-  }
-}
+/*Table Styling*/
 .table {
   font-family: lato-reg;
   width: 68%;
@@ -358,10 +382,50 @@ input[type="checkbox"] {
 
   animation: table-fade 0.5s ease-out 0.3s forwards;
 }
+.pairing-table {
+  font-family: lato-reg;
+  width: 100%;
+  border-collapse: collapse;
+}
+.pairing-table td,
+.pairing-table th {
+  /* cell borders */
+  font-family: lato-reg;
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+/*Table Functions*/
 .table-functions {
   display: flex;
   flex-direction: column;
   margin-left: -5px;
+}
+/*Table Functions - Filters*/
+.filter-col {
+  width: 100%;
+}
+
+#filter-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#filter-options button {
+  margin-left: 10px;
+}
+
+#filter-options label {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+#dropdowns-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .table-container {
@@ -373,13 +437,13 @@ input[type="checkbox"] {
 .table-container table {
   width: 100%; /* Ensure table takes full width */
 }
-
+/*Table Functions - Search*/
 #search-bar {
   width: 100%;
   height: 40px;
   border-radius: 30px;
 }
-
+/*Table Functions - Selection*/
 .selection-tools {
   display: flex;
   flex-direction: row;
@@ -418,6 +482,7 @@ input[type="checkbox"] {
   background-color: #f1f1f1 !important;
 }
 
+/*Footer Styling*/
 .modal-footer {
   font-family: lato-reg;
   display: flex;
@@ -454,15 +519,6 @@ input[type="checkbox"] {
   align-items: center;
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0%;
-  }
-  to {
-    opacity: 100%;
-  }
-}
-
 .modal-footer button {
   border-radius: 5px;
   margin-left: 10px;
@@ -488,45 +544,8 @@ input[type="checkbox"] {
   background-color: rgb(202, 131, 0);
 }
 
-tr:nth-child(even) {
-  background-color: #72c5a349;
-}
-
-.generation-btns {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-}
-.generation-btns button {
-  background-color: #72c5a3;
-  color: white;
-  font-size: large;
-  border: 0px;
-  border-radius: 5px;
-  padding: 10px 20px;
-  white-space: nowrap;
-  width: 100%;
-}
-.info {
-  opacity: 20%;
-  scale: 130%;
-  padding-bottom: 5px;
-}
-.info:hover {
-  opacity: 40%;
-}
-.toolbar-div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
 .clear {
   text-align: right;
   padding-right: 5px;
 }
-.bizzNEST {
-  scale: 70%;
-  margin-bottom: 30px;
-}
+
